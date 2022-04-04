@@ -14,23 +14,15 @@ header.homeHeader img.logo {
   top: -250px;
 }
 
-section {
+section.homeSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-section h2.sectionTitle {
+section.popularBooks h2.sectionTitle {
   width: 100%;
 
   text-align: center;
   font-size: 30px;
-}
-
-section div.popularBooks ul {
-  height: 400px;
-
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
 }
