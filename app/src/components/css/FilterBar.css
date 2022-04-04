@@ -1,0 +1,30 @@
+div.filterBar {
+  width: 90%;
+  height: 100px;
+
+  margin-left: 5%;
+  margin-top: 10px;
+
+  background-color: aqua;
+
+  display: flex;
+}
+
+div.filterBar div.filterBarSmallTitleContainer {
+  display: flex;
+  justify-content: center;
+
+  height: 100%;
+  width: 100px;
+
+  background-color: white;
+}
+div.filterBar div.filterBarSmallTitleContainer p.filterBarSmallTitle {
+  font-size: 30;
+
+  height: 20px;
+  width: 100%;
+
+  text-align: center;
+  background-color: blue;
+}
