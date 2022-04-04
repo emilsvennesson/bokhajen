@@ -1,8 +1,9 @@
+import './css/BookList.css';
 
 interface BookListProps {
     books: Array<String>;
     createCard: Function;
-    length: Number;
+    length: number;
 }
 
 /**
@@ -14,8 +15,8 @@ interface BookListProps {
  */
 function BookList(props: BookListProps) {
     return ( 
-    <ul>
-        {props.books.map((title) => props.createCard(title))}
+    <ul className='bookList'>
+        {props.books.slice(0, props.length).map((title) => props.createCard(title))}
     </ul> 
     );
 }
