@@ -26,3 +26,11 @@ section h2.sectionTitle {
   text-align: center;
   font-size: 30px;
 }
+
+section div.popularBooks ul {
+  height: 400px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
