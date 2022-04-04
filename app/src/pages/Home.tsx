@@ -1,12 +1,12 @@
 import { Component } from 'react';
 import './css/home.css';
-import * as React from 'react';
+import BookList from '../components/BookList';
 
 
 class Home extends Component {
 
   state={
-    books:[{ title: "book1"}, { title: "book1"}, { title: "book1"}],
+    books:["book1","book2","book3"],
   };
 
   /**
@@ -16,7 +16,7 @@ class Home extends Component {
    */
   createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return <li>{book.title}</li>
+    return <li>{book}</li>
   }
 
 
@@ -29,9 +29,7 @@ class Home extends Component {
         <section>
           <h2 className="sectionTitle">Most popular books</h2>
           <div className="popularBooks">
-            <ul className="bookList">
-              {this.state.books.map((book) => this.createBookItem(book))}
-            </ul>
+            <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
           </div>
         </section>
       </div>
