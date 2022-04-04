@@ -16,7 +16,7 @@ class Home extends Component {
    */
   createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return <li>{book}</li>
+    return <li key= {book}>{book}</li>
   }
 
 
@@ -26,11 +26,9 @@ class Home extends Component {
         <header className='homeHeader'>
           <img className='logo' src={require('../assets/images/bok..png')} />
         </header>
-        <section>
+        <section className='popularBooks homeSection'>
           <h2 className="sectionTitle">Most popular books</h2>
-          <div className="popularBooks">
-            <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
-          </div>
+          <BookList books={this.state.books} length={1} createCard={this.createBookItem} ></BookList>
         </section>
       </div>
 
