@@ -6,7 +6,7 @@ import BookList from '../components/BookList';
 class Home extends Component {
 
   state={
-    books:["book1","book2","book3"],
+    books:["book1","book2","book3","book4","book5","book6","book7"],
   };
 
   /**
@@ -28,7 +28,8 @@ class Home extends Component {
         </header>
         <section className='popularBooks homeSection'>
           <h2 className="sectionTitle">Most popular books</h2>
-          <BookList books={this.state.books} length={1} createCard={this.createBookItem} ></BookList>
+          <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
+        </section>
         </section>
       </div>
 
