@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import './css/home.css';
 import BookList from '../components/BookList';
+import FilterBar from '../components/FilterBar';
 
 
 class Home extends Component {
@@ -30,6 +31,12 @@ class Home extends Component {
           <h2 className="sectionTitle">Most popular books</h2>
           <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
         </section>
+        <section className="homeSection filterList">
+          <FilterBar 
+            programSortHandler={() => console.log("filter")} 
+            courseSortHandler={() => console.log("filter")} 
+            conditionSortHandler={() => console.log("filter")}
+          />
         </section>
       </div>
 
