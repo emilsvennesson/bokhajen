@@ -4,6 +4,7 @@
   "description": "A small library for getting books from the Chalmers store.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "files": [
     "/dist"
   ],
@@ -21,5 +22,8 @@
   "license": "MIT",
   "devDependencies": {
     "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@open-rpc/client-js": "^1.7.1"
   }
 }
