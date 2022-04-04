@@ -10,6 +10,17 @@ class Home extends Component {
 
   };
 
+  /**
+   * This will return the book item that will be shown in the book list
+   * @param book an object with {name, condition, price}
+   * @returns A list item with a book card
+   */
+  createBookItem = (book: any) =>{
+    // This will return a card when the card is done
+    return <li>{book.title}</li>
+  }
+
+
   render(){
     return (
       <div>
