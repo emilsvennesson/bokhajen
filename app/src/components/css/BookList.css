@@ -1,0 +1,7 @@
+ul.bookList {
+  height: 400px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
