@@ -1,13 +1,12 @@
 import { Component } from 'react';
 import './css/home.css';
-
-
+import * as React from 'react';
 
 
 class Home extends Component {
 
   state={
-
+    books:[{ title: "book1"}, { title: "book1"}, { title: "book1"}],
   };
 
   /**
@@ -31,7 +30,7 @@ class Home extends Component {
           <h2 className="sectionTitle">Most popular books</h2>
           <div className="popularBooks">
             <ul className="bookList">
-              
+              {this.state.books.map((book) => this.createBookItem(book))}
             </ul>
           </div>
         </section>
