@@ -5,9 +5,14 @@ const NavigationBar = () => {
 
     return (
         <nav className="nav">
-            <p>BokTrading</p>
+            <p className="title">BokTrading</p>
             <div className="links">
-                <NavLink to="/article">Article</NavLink>
+                <NavLink className='link'
+                to="/article">Article</NavLink>
+                <NavLink className='link'
+                to="/article">Article</NavLink>
+                <NavLink className='link'
+                to="/article">Article</NavLink>
             </div>
         </nav>
     );
