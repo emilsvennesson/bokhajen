@@ -41,6 +41,13 @@ div.filterBar button{
   font-size: 15px;
   font-weight: bold;
 
+  cursor: pointer;
+}
+
+div.filterBar button:active{
+  transition: 0.01s;
+  box-shadow: 2px 2px 2px grey;
+
 }
 
 div.filterBar div.filterButtons{
