@@ -21,19 +21,32 @@ class Home extends Component {
   }
 
 
+  /**
+   * This is a sorting 
+   */
+  onProgramSort = () =>{
+    console.log("Program sort");
+  }
+
+
   render(){
     return (
       <div>
+        {/* Header */}
         <header className='homeHeader'>
           <img className='logo' src={require('../assets/images/bok..png')} />
         </header>
+
+        {/* Popular books */}
         <section className='popularBooks homeSection'>
           <h2 className="sectionTitle">Most popular books</h2>
           <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
         </section>
+
+        {/* Filter list */}
         <section className="homeSection filterList">
           <FilterBar 
-            programSortHandler={() => console.log("filter")} 
+            programSortHandler={this.onProgramSort} 
             courseSortHandler={() => console.log("filter")} 
             conditionSortHandler={() => console.log("filter")}
           />

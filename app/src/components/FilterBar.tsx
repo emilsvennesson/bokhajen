@@ -17,9 +17,12 @@ interface FilterBarProps{
  const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler }) => {
     return ( 
     <div className="filterBar">
+        {/*Small title */}
         <div className='filterBarSmallTitleContainer'>
             <p className="filterBarSmallTitle">Sort by</p>
         </div>
+
+        {/* Buttons */}
         <button onClick={programSortHandler()}>Program</button>
         <button onClick={courseSortHandler()}>Course</button>
         <button onClick={conditionSortHandler()}>Condition</button>
