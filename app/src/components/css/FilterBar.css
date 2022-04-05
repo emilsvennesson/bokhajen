@@ -15,8 +15,6 @@ div.filterBar div.filterBarSmallTitleContainer {
   height: 100%;
   width: 100px;
 
-  background-color: white;
-
   display: flex;
   justify-content: center;
   align-items: center;
