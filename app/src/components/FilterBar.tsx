@@ -23,9 +23,11 @@ interface FilterBarProps{
         </div>
 
         {/* Buttons (This will have own made button components later)*/}
-        <button onClick={programSortHandler()}>Program</button>
-        <button onClick={courseSortHandler()}>Course</button>
-        <button onClick={conditionSortHandler()}>Condition</button>
+        <div className='filterButtons'>
+            <button onClick={programSortHandler()}>Program</button>
+            <button onClick={courseSortHandler()}>Course</button>
+            <button onClick={conditionSortHandler()}>Condition</button>
+        </div>
     </div> 
     );
 };
