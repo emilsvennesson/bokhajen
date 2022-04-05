@@ -22,7 +22,7 @@ interface FilterBarProps{
             <p className="filterBarSmallTitle">Sort by</p>
         </div>
 
-        {/* Buttons */}
+        {/* Buttons (This will have own made button components later)*/}
         <button onClick={programSortHandler()}>Program</button>
         <button onClick={courseSortHandler()}>Course</button>
         <button onClick={conditionSortHandler()}>Condition</button>

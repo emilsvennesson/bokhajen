@@ -24,7 +24,7 @@ class Home extends Component {
    * @param value sortvalue : String
    */
   sortHandler = (value: String) =>{
-    //Value should be changed to an enum or be fetcjed from a config file in the future
+    //Value should be changed to an enum or be fetched from a config file in the future
     switch(value){
       case "program":
         console.log("Sort by program");

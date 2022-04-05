@@ -7,7 +7,7 @@ interface BookListProps {
 }
 
 /**
- * This will represent a list of books
+ * This component shows a list of bookcards
  * @param props books: Array of books
  * @param props createCard: Function that takes a book an returns a card
  * @param props length: total number of list items
