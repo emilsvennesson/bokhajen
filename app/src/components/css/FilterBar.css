@@ -5,48 +5,34 @@ div.filterBar {
   margin-left: 5%;
   margin-top: 10px;
 
-  
   border-bottom: 1px solid grey;
 
   display: flex;
-
   align-items: center;
 }
 
 div.filterBar div.filterBarSmallTitleContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
   height: 100%;
   width: 100px;
 
   background-color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 div.filterBar div.filterBarSmallTitleContainer p.filterBarSmallTitle {
-  font-size: 30;
-
   height: 20px;
   width: 100%;
 
+  font-size: 30;
   text-align: center;
 }
 
-div.filterBar div.filterButtons{
-  height: 100%;
-  
-  display: flex;
-  flex-direction: row;
-
-  align-items: center;
-  justify-content: center;
-}
-
-div.filterBar div.filterButtons button{
+div.filterBar button{
   height: 60%;
   width: 150px;
-
   margin-left: 30px;
 
   border: none;
@@ -58,3 +44,16 @@ div.filterBar div.filterButtons button{
   font-weight: bold;
 
 }
+
+div.filterBar div.filterButtons{
+  height: 100%;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 4;
+}
+
+
+
+
