@@ -1,29 +1,18 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import './css/home.css';
 import BookList from '../components/BookList';
 import FilterBar from '../components/FilterBar';
 
-class Home extends Component {
 
-  state={
-    books:["book1","book2","book3","book4","book5","book6","book7"],
-  };
+const Home: React.FC =({}) => {
 
-  /**
-   * This will return the book item that will be shown in the book list
-   * @param book an object with {name, condition, price}
-   * @returns A list item with a book card
-   */
-  createBookItem = (book: any) =>{
-    // This will return a card when the card is done
-    return <li key= {book}>{book}</li>
-  }
-
+  const [books, setBooks] = useState(["book1","book2","book3","book4","book5","book6","book7"]);
+  
   /**
    * This is a placeholder untill the backend is set up for handling filters
    * @param value sortvalue : String
    */
-  sortHandler = (value: String) =>{
+   const sortHandler = (value: String) =>{
     //Value should be changed to an enum or be fetched from a config file in the future
     switch(value){
       case "program":
@@ -39,40 +28,51 @@ class Home extends Component {
   } 
 
   /**
-   * This shows all the more specific available filters
+   * Executes when all filters is clicked
    */
-  allFiltersHandler = () =>{
+  const  allFiltersHandler = () =>{
     console.log("All filters clicked");
   }
 
+  /**
+   * This will return the book item that will be shown in the book list
+   * @param book an object with {name, condition, price}
+   * @returns A list item with a book card
+   */
+  const createBookItem = (book: any) =>{
+    // This will return a card when the card is done
+    return <li key= {book}>{book}</li>
+  }
 
-  render(){
-    return (
-      <div>
-        {/* Header */}
-        <header className='homeHeader'>
-          <img className='logo' src={require('../assets/images/bok..png')} />
-        </header>
-
-        {/* Popular books */}
-        <section className='popularBooks homeSection'>
-          <h2 className="sectionTitle">Most popular books</h2>
-          <BookList books={this.state.books} length={10} createCard={this.createBookItem} ></BookList>
-        </section>
-
-        {/* Filter list */}
-        <section className="homeSection filterList">
-          <FilterBar 
-            programSortHandler={() => this.sortHandler("program")} 
-            courseSortHandler={() => this.sortHandler("course")} 
-            conditionSortHandler={() => this.sortHandler("condition")}
-            allFiltersHandler= {this.allFiltersHandler}
-          />
-        </section>
-      </div>
+ 
+  return (
+    <div> 
+      
+     {/* Header */}      
+      <header className='homeHeader'>
+       <img className='logo' src={require('../assets/images/bok..png')} />
+      </header>
+      
+      
+      {/* Popular books */}
+      <section className='popularBooks homeSection'>
+        <h2 className="sectionTitle">Most popular books</h2>
+        <BookList books={books} length={10} createCard={createBookItem} ></BookList>
+      </section>
+      
+      {/* Filter list */}
+      <section className="homeSection filterList">
+        <FilterBar 
+            programSortHandler={() => sortHandler("program")} 
+            courseSortHandler={() => sortHandler("course")} 
+            conditionSortHandler={() => sortHandler("condition")}
+            allFiltersHandler= {allFiltersHandler}
+        />
+       </section>
+     </div>
 
     )
   }
-}
+
 
 export default Home;
