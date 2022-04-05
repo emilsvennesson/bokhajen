@@ -38,6 +38,13 @@ class Home extends Component {
     }
   } 
 
+  /**
+   * This shows all the more specific available filters
+   */
+  allFiltersHandler = () =>{
+    console.log("All filters clicked");
+  }
+
 
   render(){
     return (
@@ -59,6 +66,7 @@ class Home extends Component {
             programSortHandler={() => this.sortHandler("program")} 
             courseSortHandler={() => this.sortHandler("course")} 
             conditionSortHandler={() => this.sortHandler("condition")}
+            allFiltersHandler= {this.allFiltersHandler}
           />
         </section>
       </div>
