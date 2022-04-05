@@ -3,7 +3,6 @@ import './css/home.css';
 import BookList from '../components/BookList';
 import FilterBar from '../components/FilterBar';
 
-
 class Home extends Component {
 
   state={
@@ -20,13 +19,24 @@ class Home extends Component {
     return <li key= {book}>{book}</li>
   }
 
-
   /**
-   * This is a sorting 
+   * This is a placeholder untill the backend is set up for handling filters
+   * @param value sortvalue : String
    */
-  onProgramSort = () =>{
-    console.log("Program sort");
-  }
+  sortHandler = (value: String) =>{
+    //Value should be changed to an enum or be fetcjed from a config file in the future
+    switch(value){
+      case "program":
+        console.log("Sort by program");
+        break;
+      case "course":
+        console.log("Sort by course");
+        break;
+      case "condition":
+        console.log("Sort by condition");
+        break;  
+    }
+  } 
 
 
   render(){
@@ -46,9 +56,9 @@ class Home extends Component {
         {/* Filter list */}
         <section className="homeSection filterList">
           <FilterBar 
-            programSortHandler={this.onProgramSort} 
-            courseSortHandler={() => console.log("filter")} 
-            conditionSortHandler={() => console.log("filter")}
+            programSortHandler={() => this.sortHandler("program")} 
+            courseSortHandler={() => this.sortHandler("course")} 
+            conditionSortHandler={() => this.sortHandler("condition")}
           />
         </section>
       </div>
