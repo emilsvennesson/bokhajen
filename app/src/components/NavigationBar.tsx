@@ -5,15 +5,26 @@ const NavigationBar = () => {
 
     return (
         <nav className="nav">
-            <p className="title">BokTrading</p>
+                           <NavLink className='title'
+                to="/article">bok</NavLink>
             <div className="links">
                 <NavLink className='link'
-                to="/article">Article</NavLink>
+                to="/article">Köp</NavLink>
                 <NavLink className='link'
-                to="/article">Article</NavLink>
+                to="/article">Sälj</NavLink>
                 <NavLink className='link'
-                to="/article">Article</NavLink>
+                to="/article">Om oss</NavLink>
             </div>
+            <div className='rightNav'>
+            <form>
+                <input
+                className="searchBar"
+                type="search"/>
+            </form>
+            <NavLink className='login'
+                to="/article">LOGIN</NavLink>
+            </div>
+            
         </nav>
     );
 }
