@@ -1,5 +1,3 @@
-import { Book } from './book';
-import { Client } from './cremona';
+import { Client } from './Client.js';
 
-export { Book }
-export default { Client }
+export default Client;

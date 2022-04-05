@@ -1,13 +1,13 @@
 import { RequestManager, Client as rClient, WebSocketTransport } from "@open-rpc/client-js";
-import { Book } from './book.js';
+import { Book } from './Book.js';
 
-const baseWebSocket = 'wss://admin.abicart.se/backend/jsonrpc/v1'
+const baseWebSocket = 'wss://admin.abicart.se/backend/jsonrpc/v1';
 const baseParams = {
     auth: '',
     language: 'sv',
     session: '',
     webshop: '22777'
-}
+};
 const transport = new WebSocketTransport(`${baseWebSocket}?${new URLSearchParams(baseParams).toString()}`);
 const requestManager = new RequestManager([transport]);
 const rclient = new rClient(requestManager);
@@ -16,7 +16,7 @@ const getSearchArticles = async (query: string) => {
     const result = await rclient.request({
         'method': 'Article.search',
         'params': [query]
-    })
+    });
     return result;
 }
 
@@ -30,7 +30,7 @@ export class Client {
     async search(query: string) {
         const searchArticles = await getSearchArticles(query);
         if (!searchArticles)
-            return []
+            return [];
 
         const payload = {
             method: 'Article.list',
@@ -50,7 +50,7 @@ export class Client {
                     'ean': true
                 }
                 , { 'filters': { '/uid': { 'in': searchArticles } } }]
-        }
+        };
 
         const result = await rclient.request(payload);
         return resultToBooksArray(result);
@@ -69,8 +69,3 @@ export class Client {
         rclient.close();
     }
 }
-
-const client = new Client();
-const data = await client.search('tmv210');
-console.log(data);
-

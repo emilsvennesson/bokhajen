@@ -24,6 +24,7 @@ coverage
 
 # Dependency directory
 node_modules
+test_folder
 bower_components
 
 # Editors
