@@ -5,6 +5,7 @@ interface FilterBarProps{
     programSortHandler: Function;
     conditionSortHandler: Function;
     courseSortHandler: Function;
+    allFiltersHandler: Function;
 }
 
 /**
@@ -12,9 +13,10 @@ interface FilterBarProps{
  * @param props programSortHandler : Handler executed when filter by program is clicked
  * @param props courseSortHandler : Executed when filter by course is clicked
  * @param props conditionSortHandler : Executed when filter by condition is clicked
+ * @param props allFiltersHandler : Executed when all filters button is clicked
  * @returns FilterBar component
  */
- const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler }) => {
+ const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler, allFiltersHandler }) => {
     return ( 
     <div className="filterBar">
         {/*Small title */}
@@ -28,6 +30,7 @@ interface FilterBarProps{
             <button onClick={courseSortHandler()}>Course</button>
             <button onClick={conditionSortHandler()}>Condition</button>
         </div>
+        <button onClick={allFiltersHandler()}>All Filters</button>
     </div> 
     );
 };
