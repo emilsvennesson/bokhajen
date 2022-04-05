@@ -13,10 +13,10 @@ interface BookListProps {
  * @param props length: total number of list items
  * @returns a BookList component
  */
-function BookList(props: BookListProps) {
+ const BookList: React.FC<BookListProps> = ({ books, createCard, length }) => {
     return ( 
     <ul className='bookList'>
-        {props.books.slice(0, props.length).map((title) => props.createCard(title))}
+        {books.slice(0, length).map((title) => createCard(title))}
     </ul> 
     );
 }

@@ -14,17 +14,17 @@ interface FilterBarProps{
  * @param props conditionSortHandler : Executed when filter by condition is clicked
  * @returns FilterBar component
  */
-function FilterBar(props: FilterBarProps) {
+ const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler }) => {
     return ( 
     <div className="filterBar">
         <div className='filterBarSmallTitleContainer'>
             <p className="filterBarSmallTitle">Sort by</p>
         </div>
-        <button onClick={props.programSortHandler()}>Program</button>
-        <button onClick={props.courseSortHandler()}>Course</button>
-        <button onClick={props.conditionSortHandler()}>Condition</button>
+        <button onClick={programSortHandler()}>Program</button>
+        <button onClick={courseSortHandler()}>Course</button>
+        <button onClick={conditionSortHandler()}>Condition</button>
     </div> 
     );
-}
+};
 
 export default FilterBar;
