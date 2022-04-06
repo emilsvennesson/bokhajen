@@ -16,7 +16,9 @@ export class Book {
         this.name = props.name.sv;
         this.uid = props.uid;
         this.articleNumber = props.articleNumber;
-        this.description = props.description.sv.replace(/(<([^>]+)>)/gi, ' ');  // strip out HTML tags
+        props.description !== undefined ?
+        this.description = props.description.sv.replace(/(<([^>]+)>)/gi, ' ') :  // strip out HTML tags
+        this.description = null;
         this.price = props.price.current.SEK;
         this.url = props.url;
         this.image = props.images[0];
