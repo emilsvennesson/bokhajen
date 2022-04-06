@@ -40,3 +40,4 @@ export class Book {
         this.weight = props.weight;
     }
 }
+
