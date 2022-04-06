@@ -1,11 +1,10 @@
 # cremona #
-**cremona** is a small library for getting books from the Chalmers store.
+**cremona** is a module for getting books from the Chalmers store.
 
 ## Installation ##
 ```
 npm i cremona
 ```
-
 
 ## Example ##
 ```javascript
@@ -13,8 +12,8 @@ import Client from 'cremona';
 
 const client = new Client();
 const books = await client.search('algebra och diskret matematik');
-console.log(books);
 client.close();
+console.log(books);
 ```
 console.log:
 ```javascript
@@ -41,4 +40,5 @@ console.log:
 
 
 ## License ##
-This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](LICENSE.txt) file for details.
+This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](https://github.com/emilsvennesson/dat257-xzibit/cremona/LICENSE.txt) file for details.
+
