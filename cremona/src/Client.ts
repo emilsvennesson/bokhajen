@@ -8,6 +8,7 @@ const baseParams = {
     session: '',
     webshop: '22777'
 };
+const bookCategories = [3331049, 3331050, 3331051]
 const transport = new WebSocketTransport(`${baseWebSocket}?${new URLSearchParams(baseParams).toString()}`);
 const requestManager = new RequestManager([transport]);
 const rclient = new rClient(requestManager);
@@ -49,7 +50,12 @@ export class Client {
                     'attributes': true,
                     'ean': true
                 }
-                , { 'filters': { '/uid': { 'in': searchArticles } } }]
+                , {
+                    'filters': {
+                        '/showInArticlegroups': bookCategories,
+                        '/uid': { 'in': searchArticles }
+                    }
+                }]
         };
 
         const result = await rclient.request(payload);
@@ -63,6 +69,36 @@ export class Client {
         }
         const result = await rclient.request(payload);
         return new Book(result);
+    }
+
+    async getAllBooks() {
+        const payload = {
+            method: 'Article.list',
+            params: [
+                {
+                    'name': { 'sv': true },
+                    'articleNumber': true,
+                    'uid': true,
+                    'url': true,
+                    'type': true,
+                    'price': true,
+                    'introductionText': { 'sv': true },
+                    'images': true,
+                    'description': { 'sv': true },
+                    'weight': true,
+                    'showPricesIncludingVat': true,
+                    'attributes': true,
+                    'ean': true
+                }
+                , {
+                    'filters': {
+                        '/showInArticlegroups': bookCategories
+                    }
+                }]
+        };
+
+        const result = await rclient.request(payload);
+        return resultToBooksArray(result);
     }
 
     close() {
