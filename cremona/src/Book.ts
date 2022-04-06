@@ -2,15 +2,15 @@ export class Book {
     readonly name: string;
     readonly uid: number;
     readonly articleNumber: string;
-    readonly description: string;
+    readonly description: string | null;
     readonly price: number;
     readonly url: string[];
     readonly image: string;
     readonly courseCodes: string[];
     readonly authors: string[];
-    readonly isbn: number;
+    readonly isbn: number | null;
     readonly weight: number;
-    readonly year: number;
+    readonly year: number | null;
 
     constructor(props : { [key: string]: any }) {
         this.name = props.name.sv;
