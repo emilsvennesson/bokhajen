@@ -68,7 +68,7 @@ export class Client {
             'params': [uid, true]
         }
         const result = await rclient.request(payload);
-        return new Book(result);
+        return [new Book(result)];
     }
 
     async getBooks(limit: number, offset: number) {
