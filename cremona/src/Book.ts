@@ -16,9 +16,11 @@ export class Book {
         this.name = props.name.sv;
         this.uid = props.uid;
         this.articleNumber = props.articleNumber;
-        props.description !== undefined ?
-        this.description = props.description.sv.replace(/(<([^>]+)>)/gi, ' ') :  // strip out HTML tags
-        this.description = null;
+        try {
+            this.description = props.description.sv.replace(/(<([^>]+)>)/gi, ' ') // strip out HTML tags
+          } catch (error) {
+            this.description = null;
+          }
         this.price = props.price.current.SEK;
         this.url = props.url;
         this.image = props.images[0];
@@ -31,7 +33,10 @@ export class Book {
         props['attributes'][1422] !== undefined ?
             this.year = parseInt(props['attributes'][1422]['sv']) :
             this.year = null;
-        this.isbn = parseInt(props.ean);
+        if (props.ean)
+            this.isbn = parseInt(props.ean);
+        else
+            this.isbn = null;
         this.weight = props.weight;
     }
 }
