@@ -12,15 +12,15 @@ export class Book {
     readonly weight: number;
     readonly year: number | null;
 
-    constructor(props : { [key: string]: any }) {
+    constructor(props: { [key: string]: any }) {
         this.name = props.name.sv;
         this.uid = props.uid;
         this.articleNumber = props.articleNumber;
         try {
             this.description = props.description.sv.replace(/(<([^>]+)>)/gi, ' ') // strip out HTML tags
-          } catch (error) {
+        } catch (error) {
             this.description = null;
-          }
+        }
         this.price = props.price.current.SEK;
         this.url = props.url;
         this.image = props.images[0];
