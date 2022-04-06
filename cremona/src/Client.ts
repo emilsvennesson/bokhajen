@@ -42,7 +42,13 @@ const resultToBooksArray = (result: []) => {
 }
 
 export class Client {
-    async search(query: string) {
+
+    /**
+    * Returns a promise of a list of Book objects matching the specified search query.
+    * @param {string} query - The search query to filter out books based on.
+    * @returns {Promise<Book[]} Promise object representing the Book objects list.
+    */
+    async search(query: string): Promise<Book[]> {
         const searchArticles = await getSearchArticles(query);
         if (!searchArticles)
             return [];
@@ -62,6 +68,11 @@ export class Client {
         return resultToBooksArray(result);
     }
 
+    /**
+    * Returns a promise of a single Book object wrapped in a list.
+    * @param {number} uid - The unique identifier (UID) to get a book for.
+    * @returns {Promise<Book[]} Promise object representing the single Book object wrapped in a list.
+    */
     async getBook(uid: number) {
         const payload = {
             'method': 'Article.get',
@@ -71,6 +82,12 @@ export class Client {
         return [new Book(result)];
     }
 
+    /**
+    * Returns a promise of a list of Book objects from all of Chalmers Store's available books.
+    * @param {number} [limit] - Limits the amount of returned books to the specified number.
+    * @param {number} [offset] - The start offset to get the books from.
+    * @returns {Promise<Book[]} Promise object representing the Book objects list.
+    */
     async getBooks(limit: number = 48, offset: number = 0) {
         const payload = {
             method: 'Article.list',
@@ -88,6 +105,9 @@ export class Client {
         return resultToBooksArray(result);
     }
 
+    /**
+    * Closes the WebSocket connection.
+    */
     close() {
         rclient.close();
     }
