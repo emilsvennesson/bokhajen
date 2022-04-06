@@ -12,7 +12,7 @@ export class Book {
     readonly weight: number;
     readonly year: number;
 
-    constructor(props) {
+    constructor(props : { [key: string]: any }) {
         this.name = props.name.sv;
         this.uid = props.uid;
         this.articleNumber = props.articleNumber;
