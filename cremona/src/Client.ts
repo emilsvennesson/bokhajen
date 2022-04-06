@@ -21,8 +21,8 @@ const baseSearchParams = {
     'showPricesIncludingVat': true,
     'attributes': true,
     'ean': true
-}
-const bookCategories = [3331049, 3331050, 3331051]
+};
+const bookCategories = [3331049, 3331050, 3331051];
 const transport = new WebSocketTransport(`${baseWebSocket}?${new URLSearchParams(baseSocketParams).toString()}`);
 const requestManager = new RequestManager([transport]);
 const rclient = new rClient(requestManager);
@@ -46,7 +46,7 @@ export class Client {
     /**
     * Returns a promise of a list of Book objects matching the specified search query.
     * @param {string} query - The search query to filter out books based on.
-    * @returns {Promise<Book[]} Promise object representing the Book objects list.
+    * @returns {Promise<Book[]>} Promise object representing the Book objects list.
     */
     async search(query: string): Promise<Book[]> {
         const searchArticles = await getSearchArticles(query);
@@ -71,7 +71,7 @@ export class Client {
     /**
     * Returns a promise of a single Book object wrapped in a list.
     * @param {number} uid - The unique identifier (UID) to get a book for.
-    * @returns {Promise<Book[]} Promise object representing the single Book object wrapped in a list.
+    * @returns {Promise<Book[]>} Promise object representing the single Book object wrapped in a list.
     */
     async getBook(uid: number) {
         const payload = {
@@ -86,7 +86,7 @@ export class Client {
     * Returns a promise of a list of Book objects from all of Chalmers Store's available books.
     * @param {number} [limit] - Limits the amount of returned books to the specified number.
     * @param {number} [offset] - The start offset to get the books from.
-    * @returns {Promise<Book[]} Promise object representing the Book objects list.
+    * @returns {Promise<Book[]>} Promise object representing the Book objects list.
     */
     async getBooks(limit: number = 48, offset: number = 0) {
         const payload = {
