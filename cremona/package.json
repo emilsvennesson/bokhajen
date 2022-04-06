@@ -1,6 +1,6 @@
 {
   "name": "cremona",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "cremona is a small library for getting books from the Chalmers store.",
   "repository": "https://github.com/emilsvennesson/dat257-xzibit/cremona",
   "main": "dist/index.js",

@@ -11,8 +11,6 @@ npm i cremona
 ```javascript
 import Client from 'cremona';
 
-import Client from 'cremona';
-
 const client = new Client();
 const books = await client.search('algebra och diskret matematik');
 console.log(books);
