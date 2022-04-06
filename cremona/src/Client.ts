@@ -2,14 +2,28 @@ import { RequestManager, Client as rClient, WebSocketTransport } from "@open-rpc
 import { Book } from './Book.js';
 
 const baseWebSocket = 'wss://admin.abicart.se/backend/jsonrpc/v1';
-const baseParams = {
+const baseSocketParams = {
     auth: '',
     language: 'sv',
     session: '',
     webshop: '22777'
 };
+const baseSearchParams = {
+    'name': { 'sv': true },
+    'articleNumber': true,
+    'uid': true,
+    'url': true,
+    'price': true,
+    'introductionText': { 'sv': true },
+    'images': true,
+    'description': { 'sv': true },
+    'weight': true,
+    'showPricesIncludingVat': true,
+    'attributes': true,
+    'ean': true
+}
 const bookCategories = [3331049, 3331050, 3331051]
-const transport = new WebSocketTransport(`${baseWebSocket}?${new URLSearchParams(baseParams).toString()}`);
+const transport = new WebSocketTransport(`${baseWebSocket}?${new URLSearchParams(baseSocketParams).toString()}`);
 const requestManager = new RequestManager([transport]);
 const rclient = new rClient(requestManager);
 
@@ -35,22 +49,8 @@ export class Client {
 
         const payload = {
             method: 'Article.list',
-            params: [
+            params: [baseSearchParams,
                 {
-                    'name': { 'sv': true },
-                    'articleNumber': true,
-                    'uid': true,
-                    'url': true,
-                    'price': true,
-                    'introductionText': { 'sv': true },
-                    'images': true,
-                    'description': { 'sv': true },
-                    'weight': true,
-                    'showPricesIncludingVat': true,
-                    'attributes': true,
-                    'ean': true
-                }
-                , {
                     'filters': {
                         '/showInArticlegroups': bookCategories,
                         '/uid': { 'in': searchArticles }
@@ -71,29 +71,16 @@ export class Client {
         return new Book(result);
     }
 
-    async getAllBooks() {
+    async getBooks(limit: number, offset: number) {
         const payload = {
             method: 'Article.list',
-            params: [
+            params: [baseSearchParams,
                 {
-                    'name': { 'sv': true },
-                    'articleNumber': true,
-                    'uid': true,
-                    'url': true,
-                    'type': true,
-                    'price': true,
-                    'introductionText': { 'sv': true },
-                    'images': true,
-                    'description': { 'sv': true },
-                    'weight': true,
-                    'showPricesIncludingVat': true,
-                    'attributes': true,
-                    'ean': true
-                }
-                , {
                     'filters': {
                         '/showInArticlegroups': bookCategories
-                    }
+                    },
+                    'limit': limit,
+                    'offset': offset
                 }]
         };
 
