@@ -71,7 +71,7 @@ export class Client {
         return [new Book(result)];
     }
 
-    async getBooks(limit: number, offset: number) {
+    async getBooks(limit: number = 48, offset: number = 0) {
         const payload = {
             method: 'Article.list',
             params: [baseSearchParams,
