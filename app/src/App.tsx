@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import Home from './pages/Home';
 import NavigationBar from './components/NavigationBar';
+import Cards from './components/Cards';
 import Article from './pages/Article';
 import { mainTheme } from './theme';
 
