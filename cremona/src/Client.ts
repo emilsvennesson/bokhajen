@@ -41,7 +41,7 @@ const resultToBooksArray = (result: []) => {
     return books;
 }
 
-export class Client {
+export class CremonaClient {
 
     /**
     * Returns a promise of a list of Book objects matching the specified search query.

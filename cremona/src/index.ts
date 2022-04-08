@@ -1,3 +1,3 @@
-import { Client } from './Client.js';
+import { CremonaClient } from './Client.js';
 
-export default Client;
+export default CremonaClient;
