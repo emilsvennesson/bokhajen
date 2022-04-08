@@ -1,8 +1,8 @@
 {
   "name": "cremona",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "cremona is a module for getting books from the Chalmers store.",
-  "repository": "https://github.com/emilsvennesson/dat257-xzibit/cremona",
+  "repository": "https://github.com/emilsvennesson/dat257-xzibit/tree/main/cremona",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
