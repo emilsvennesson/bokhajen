@@ -102,22 +102,25 @@ const Home: React.FC =({}) => {
       </Grid>
       
       {/* Filter list */}
-      <FilterBar 
-          programSortHandler={() => sortHandler('program')} 
-          courseSortHandler={() => sortHandler('course')} 
-          conditionSortHandler={() => sortHandler('condition')}
-          allFiltersHandler= {allFiltersHandler}
-      />
       <Box
-        component='section'
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: 10,
-          marginBottom: 20
-        }}
+      component='section'
+      sx={{
+        width: '100%',
+        display: 'flex',
+
+        alignItems: 'center',
+        flexDirection:'column',
+        marginTop: 10,
+        marginBottom: 20
+      }}
       >
+        <FilterBar
+            programSortHandler={() => sortHandler('program')}
+            courseSortHandler={() => sortHandler('course')}
+            conditionSortHandler={() => sortHandler('condition')}
+            allFiltersHandler= {allFiltersHandler}
+        />
+
         <Grid
         container
         direction='row'
@@ -125,6 +128,7 @@ const Home: React.FC =({}) => {
         rowGap={5}
         justifyContent= 'center'
         width = '95%'
+        sx={{marginTop: 10}}
 
         >
           {filteredBooks.map(book => createBookItem(book))}

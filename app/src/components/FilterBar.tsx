@@ -1,5 +1,5 @@
-import './css/FilterBar.css';
-
+import { Box, Button, Grid, Typography} from "@mui/material";
+import { grey } from "@mui/material/colors";
 
 interface FilterBarProps{
     programSortHandler: Function;
@@ -7,6 +7,9 @@ interface FilterBarProps{
     courseSortHandler: Function;
     allFiltersHandler: Function;
 }
+
+
+
 
 /**
  * A bar with different filtering options
@@ -17,21 +20,84 @@ interface FilterBarProps{
  * @returns FilterBar component
  */
  const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler, allFiltersHandler }) => {
+ 
+
+
     return ( 
-    <div className="filterBar">
+    <Grid
+        component="div"
+        container
+        flexDirection="row"
+        alignItems="center"
+        height="100px"
+
+        sx={{
+            borderBottom: 1,
+            borderColor: "grey",
+            width: "95%"
+        }}
+    >
         {/*Small title */}
-        <div className='filterBarSmallTitleContainer'>
+        <Typography
+            variant="h6"
+            sx={{marginLeft: 10, marginRight: 10}}
+        >
+        Sort by 
+        </Typography>
+        {/* <div className='filterBarSmallTitleContainer'>
             <p className="filterBarSmallTitle">Sort by</p>
-        </div>
+        </div> */}
 
         {/* Buttons (This will have own made button components later)*/}
-        <div className='filterButtons'>
-            <button onClick={programSortHandler()}>Program</button>
-            <button onClick={courseSortHandler()}>Course</button>
-            <button onClick={conditionSortHandler()}>Condition</button>
-        </div>
-        <button onClick={allFiltersHandler()}>All Filters</button>
-    </div> 
+        <Grid 
+            item
+            flexGrow={4}
+        >
+            <Button 
+            variant="contained" 
+            onClick={programSortHandler()}
+            sx={{       
+                width: 130,
+                height: 50,
+                marginRight: 2
+            }}
+
+            >Program</Button>
+            <Button 
+            variant="contained" 
+            onClick={courseSortHandler()}
+            sx={{       
+                width: 130,
+                height: 50,
+                marginRight: 2
+            }}
+
+            
+            >Course</Button>
+            <Button 
+            variant="contained" 
+            onClick={conditionSortHandler()}
+
+            sx={{       
+                width: 130,
+                height: 50,
+                marginRight: 2
+            }}
+            
+            >Condition</Button>
+        </Grid>
+        <Button
+        variant="contained"
+        sx={{       
+            width: 130,
+            height: 50,
+            marginRight: 2
+        }}
+        
+        onClick={allFiltersHandler()}
+        
+        >All Filters</Button>
+    </Grid> 
     );
 };
 
