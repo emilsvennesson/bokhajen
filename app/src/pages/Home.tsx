@@ -1,13 +1,13 @@
+import { Box, Typography, Grid, Card, CardContent} from '@mui/material';
+import { red } from '@mui/material/colors';
 import { Component, useState } from 'react';
-import './css/home.css';
 import BookList from '../components/BookList';
 import FilterBar from '../components/FilterBar';
-
 
 const Home: React.FC =({}) => {
 
   const [books, setBooks] = useState(["book1","book2","book3","book4","book5","book6","book7"]);
-  
+  const [filteredBooks, setFilteredBooks] = useState(["book1","book2","book3","book4","book5","book6","book7","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8"]);
   /**
    * This is a placeholder untill the backend is set up for handling filters
    * @param value sortvalue : String
@@ -41,35 +41,101 @@ const Home: React.FC =({}) => {
    */
   const createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return <li key= {book}>{book}</li>
+    return  <Card sx={{width: 200, height: 250}} >
+              <CardContent>
+                <Typography>{book}</Typography>
+              </CardContent>
+            </Card>
   }
 
  
   return (
-    <div> 
+    <Box
+      component="div"
+      sx = {{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: 'center'
+      }}
+    > 
       
-     {/* Header */}      
-      <header className='homeHeader'>
-       <img className='logo' src={require('../assets/images/bok..png')} />
-      </header>
-      
-      
+     {/* Header */}
+
+      <Box 
+      component="div"
+      sx = {{
+        width: "100%",
+        height: 400,
+        display:'flex',
+        justifyContent: 'center'
+      }}
+      >
+        {/* LOGO */}
+      <Box 
+        component="img"
+        sx={{
+          height: 900,
+          position: "relative",
+          top: -250,
+        }}
+        src={require('../assets/images/bok..png')}
+        />
+      </Box>
+        
       {/* Popular books */}
-      <section className='popularBooks homeSection'>
-        <h2 className="sectionTitle">Most popular books</h2>
-        <BookList books={books} length={10} createCard={createBookItem} ></BookList>
-      </section>
+      
+      <Typography
+        variant='h4'
+        component="h2"
+        align='center'
+        sx={{ marginBottom: 10}}
+      >
+        Most popular books
+      </Typography>
+
+      <Grid
+        container
+        columns={5}
+        columnGap={5}
+        direction= 'row'
+        justifyContent="center"
+      >
+        {books.map(book => createBookItem(book))}
+      </Grid>
       
       {/* Filter list */}
-      <section className="homeSection filterList">
-        <FilterBar 
-            programSortHandler={() => sortHandler("program")} 
-            courseSortHandler={() => sortHandler("course")} 
-            conditionSortHandler={() => sortHandler("condition")}
-            allFiltersHandler= {allFiltersHandler}
-        />
-       </section>
-     </div>
+      
+      <FilterBar 
+          programSortHandler={() => sortHandler("program")} 
+          courseSortHandler={() => sortHandler("course")} 
+          conditionSortHandler={() => sortHandler("condition")}
+          allFiltersHandler= {allFiltersHandler}
+      />
+      <Box
+        component="section"
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: 10,
+          marginBottom: 20
+        }}
+      >
+        <Grid
+        container
+        direction="row"
+        columnGap={5}
+        rowGap={5}
+        justifyContent= "center"
+        width = "95%"
+
+
+        >
+          {filteredBooks.map(book => createBookItem(book))}
+
+        </Grid>
+      </Box>
+     </Box>
 
     )
   }
