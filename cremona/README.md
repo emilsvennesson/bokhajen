@@ -7,11 +7,12 @@ npm i cremona
 ```
 
 ## Example ##
+Below is an example of a search query. Based on testing (as there is no public documentation to be found), the query will match against any data available in the Book object - such as course codes, title, authors etc.
 ```javascript
 import Client from 'cremona';
 
-const client = new Client();
-const books = await client.search('algebra och diskret matematik');
+const client = new CremonaClient();
+const books = await client.search('TMV210');
 client.close();
 console.log(books);
 ```
@@ -37,7 +38,6 @@ console.log:
     }
   ]
   ```
-
 
 ## License ##
 This module is licensed under the **The MIT License**. Please see the [LICENSE.txt](https://github.com/emilsvennesson/dat257-xzibit/cremona/LICENSE.txt) file for details.
