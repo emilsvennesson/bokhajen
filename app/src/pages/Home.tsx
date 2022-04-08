@@ -6,8 +6,8 @@ import FilterBar from '../components/FilterBar';
 
 const Home: React.FC =({}) => {
 
-  const [books, setBooks] = useState(["book1","book2","book3","book4","book5","book6","book7"]);
-  const [filteredBooks, setFilteredBooks] = useState(["book1","book2","book3","book4","book5","book6","book7","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8","book8"]);
+  const [books, setBooks] = useState(['book1','book2','book3','book4','book5','book6','book7']);
+  const [filteredBooks, setFilteredBooks] = useState(['book1','book2','book3','book4','book5','book6','book7','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8']);
   /**
    * This is a placeholder untill the backend is set up for handling filters
    * @param value sortvalue : String
@@ -15,14 +15,14 @@ const Home: React.FC =({}) => {
    const sortHandler = (value: String) =>{
     //Value should be changed to an enum or be fetched from a config file in the future
     switch(value){
-      case "program":
-        console.log("Sort by program");
+      case 'program':
+        console.log('Sort by program');
         break;
-      case "course":
-        console.log("Sort by course");
+      case 'course':
+        console.log('Sort by course');
         break;
-      case "condition":
-        console.log("Sort by condition");
+      case 'condition':
+        console.log('Sort by condition');
         break;  
     }
   } 
@@ -31,7 +31,7 @@ const Home: React.FC =({}) => {
    * Executes when all filters is clicked
    */
   const  allFiltersHandler = () =>{
-    console.log("All filters clicked");
+    console.log('All filters clicked');
   }
 
   /**
@@ -51,20 +51,19 @@ const Home: React.FC =({}) => {
  
   return (
     <Box
-      component="div"
+      component='div'
       sx = {{
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center'
       }}
     > 
       
      {/* Header */}
-
       <Box 
-      component="div"
+      component='header'
       sx = {{
-        width: "100%",
+        width: '100%',
         height: 400,
         display:'flex',
         justifyContent: 'center'
@@ -72,10 +71,10 @@ const Home: React.FC =({}) => {
       >
         {/* LOGO */}
       <Box 
-        component="img"
+        component='img'
         sx={{
           height: 900,
-          position: "relative",
+          position: 'relative',
           top: -250,
         }}
         src={require('../assets/images/bok..png')}
@@ -83,10 +82,9 @@ const Home: React.FC =({}) => {
       </Box>
         
       {/* Popular books */}
-      
       <Typography
         variant='h4'
-        component="h2"
+        component='h2'
         align='center'
         sx={{ marginBottom: 10}}
       >
@@ -98,41 +96,38 @@ const Home: React.FC =({}) => {
         columns={5}
         columnGap={5}
         direction= 'row'
-        justifyContent="center"
+        justifyContent='center'
       >
         {books.map(book => createBookItem(book))}
       </Grid>
       
       {/* Filter list */}
-      
       <FilterBar 
-          programSortHandler={() => sortHandler("program")} 
-          courseSortHandler={() => sortHandler("course")} 
-          conditionSortHandler={() => sortHandler("condition")}
+          programSortHandler={() => sortHandler('program')} 
+          courseSortHandler={() => sortHandler('course')} 
+          conditionSortHandler={() => sortHandler('condition')}
           allFiltersHandler= {allFiltersHandler}
       />
       <Box
-        component="section"
+        component='section'
         sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
           marginTop: 10,
           marginBottom: 20
         }}
       >
         <Grid
         container
-        direction="row"
+        direction='row'
         columnGap={5}
         rowGap={5}
-        justifyContent= "center"
-        width = "95%"
-
+        justifyContent= 'center'
+        width = '95%'
 
         >
           {filteredBooks.map(book => createBookItem(book))}
-
         </Grid>
       </Box>
      </Box>
