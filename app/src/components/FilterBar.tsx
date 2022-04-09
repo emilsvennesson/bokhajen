@@ -30,7 +30,7 @@ interface FilterBarProps{
         flexDirection="row"
         alignItems="center"
         justifyContent={'center'}
-        paddingBottom={10}
+        paddingBottom={2}
 
         columnGap={10}
         rowGap={10}
@@ -79,7 +79,9 @@ interface FilterBarProps{
             sx={{       
                 width: 130,
                 height: 50,
-                marginRight: 2
+                marginRight: 2,
+                backgroundColor: '#C4C4C4',
+                color: 'black'
             }}
 
             >Program</Button>
@@ -89,8 +91,11 @@ interface FilterBarProps{
             sx={{       
                 width: 130,
                 height: 50,
-                marginRight: 2
+                marginRight: 2,
+                backgroundColor: '#C4C4C4',
+                color: 'black'
             }}
+           
 
             
             >Course</Button>
@@ -101,7 +106,9 @@ interface FilterBarProps{
             sx={{       
                 width: 130,
                 height: 50,
-                marginRight: 2
+                marginRight: 2,
+                backgroundColor: '#C4C4C4',
+                color: 'black'
             }}
             
             >Condition</Button>
@@ -119,7 +126,9 @@ interface FilterBarProps{
             sx={{       
                 width: 130,
                 height: 50,
-                marginRight: 2
+                marginRight: 2,
+                backgroundColor: '#C4C4C4',
+                color: 'black'
             }}
             
             onClick={allFiltersHandler()}
