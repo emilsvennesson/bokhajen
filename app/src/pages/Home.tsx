@@ -64,18 +64,19 @@ const Home: React.FC =({}) => {
       component='header'
       sx = {{
         width: '100%',
-        height: 400,
+        height: 450,
         display:'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#DFDDDD'
       }}
       >
         {/* LOGO */}
       <Box 
         component='img'
         sx={{
-          height: 900,
+          height: 1000,
           position: 'relative',
-          top: -250,
         }}
         src={require('../assets/images/bok..png')}
         />
@@ -86,7 +87,7 @@ const Home: React.FC =({}) => {
         variant='h4'
         component='h2'
         align='center'
-        sx={{ marginBottom: 10}}
+        sx={{ marginBottom: 10, marginTop: 10}}
       >
         Most popular books
       </Typography>
