@@ -6,11 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+defaults:
+  run:
+    working-directory: ./app
+
 jobs:
   build:
-  defaults:
-      run:
-        working-directory: app
     runs-on: ubuntu-latest
 
     steps:
