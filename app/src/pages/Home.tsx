@@ -1,18 +1,17 @@
 import { Box, Typography, Grid, Card, CardContent} from '@mui/material';
-import { red } from '@mui/material/colors';
 import { Component, useState } from 'react';
-import BookList from '../components/BookList';
 import FilterBar from '../components/FilterBar';
 
 const Home: React.FC =({}) => {
 
   const [books, setBooks] = useState(['book1','book2','book3','book4','book5']);
-  const [filteredBooks, setFilteredBooks] = useState(['book1','book2','book3','book4','book5','book6','book7','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8']);
+  const [filteredBooks, setFilteredBooks] = useState(['book1','book2','book3','book4','book5','book6','book7','book8','book9','book10','book11','book12','book13','book14','book15','book16','book17','book18','book19','book20','book21','book22','book23']);
   /**
    * This is a placeholder untill the backend is set up for handling filters
    * @param value sortvalue : String
    */
    const sortHandler = (value: String) =>{
+     console.log("hej");
     //Value should be changed to an enum or be fetched from a config file in the future
     switch(value){
       case 'program':
@@ -41,7 +40,7 @@ const Home: React.FC =({}) => {
    */
   const createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return  <Grid item xs={12} sm={3.7} lg={2} xl={1.3} display= 'flex' justifyContent={'center'} marginLeft={5}>
+    return  <Grid item xs={12} sm={3.7} lg={2} xl={1.3} display= 'flex' justifyContent={'center'} marginLeft={5} key={book}>
               <Card sx={{width: 200, height: 250}} >
                 <CardContent>
                   <Typography>{book}</Typography>
