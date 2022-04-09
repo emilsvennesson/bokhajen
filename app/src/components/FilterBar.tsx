@@ -29,7 +29,11 @@ interface FilterBarProps{
         container
         flexDirection="row"
         alignItems="center"
-        height="100px"
+        justifyContent={'center'}
+        paddingBottom={10}
+
+        columnGap={10}
+        rowGap={10}
 
         sx={{
             borderBottom: 1,
@@ -38,12 +42,21 @@ interface FilterBarProps{
         }}
     >
         {/*Small title */}
-        <Typography
-            variant="h6"
-            sx={{marginLeft: 10, marginRight: 10}}
+        <Grid 
+        item
+        xs={7}
+        sm={5}
+        md={1}
         >
-        Sort by 
-        </Typography>
+            <Typography
+                variant="h6"
+                sx={{marginLeft: 10, marginRight: 10}}
+                width={100}
+            >
+            Sort by 
+            
+            </Typography>
+        </Grid>
         {/* <div className='filterBarSmallTitleContainer'>
             <p className="filterBarSmallTitle">Sort by</p>
         </div> */}
@@ -52,6 +65,13 @@ interface FilterBarProps{
         <Grid 
             item
             flexGrow={4}
+            xs={12}
+            sm={7.9}
+            md={6}
+            lg={7}
+            xl={8}
+            flexDirection={'row'}
+            justifyContent={'left'}
         >
             <Button 
             variant="contained" 
@@ -86,17 +106,26 @@ interface FilterBarProps{
             
             >Condition</Button>
         </Grid>
+        <Grid
+        item
+        xs={12}
+        sm={3}
+        md={1}
+        lg={1}
+        xl={1}
+        >
         <Button
-        variant="contained"
-        sx={{       
-            width: 130,
-            height: 50,
-            marginRight: 2
-        }}
-        
-        onClick={allFiltersHandler()}
-        
-        >All Filters</Button>
+            variant="contained"
+            sx={{       
+                width: 130,
+                height: 50,
+                marginRight: 2
+            }}
+            
+            onClick={allFiltersHandler()}
+            
+            >All Filters</Button>
+        </Grid>
     </Grid> 
     );
 };

@@ -6,7 +6,7 @@ import FilterBar from '../components/FilterBar';
 
 const Home: React.FC =({}) => {
 
-  const [books, setBooks] = useState(['book1','book2','book3','book4','book5','book6','book7']);
+  const [books, setBooks] = useState(['book1','book2','book3','book4','book5']);
   const [filteredBooks, setFilteredBooks] = useState(['book1','book2','book3','book4','book5','book6','book7','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8','book8']);
   /**
    * This is a placeholder untill the backend is set up for handling filters
@@ -41,7 +41,7 @@ const Home: React.FC =({}) => {
    */
   const createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return  <Grid item xs={3} lg={2} xl={1.3}>
+    return  <Grid item xs={12} sm={3.7} lg={2} xl={1.3} display= 'flex' justifyContent={'center'} marginLeft={5}>
               <Card sx={{width: 200, height: 250}} >
                 <CardContent>
                   <Typography>{book}</Typography>
@@ -78,7 +78,7 @@ const Home: React.FC =({}) => {
       </Box>
         
       {/* Popular books */}
-      <Box component='section'>
+      <Box component='section' width={'100%'} display='flex' justifyContent={'center'} flexDirection='column'>
         {/* Small title */}
         <Typography
           variant='h4'
@@ -88,14 +88,18 @@ const Home: React.FC =({}) => {
         >
           Most popular books
         </Typography>
+
         {/* Popular books list*/}
         <Grid
           container
-          columns={7}
-          columnGap={2}
+
+          columnGap={4}
+          rowGap={2}
           direction= 'row'
-          justifyContent='center'
-          flexWrap='nowrap'
+          justifyContent={'center'}
+
+          flexWrap='wrap'
+          
           
         >
           {books.map(book => createBookItem(book))}
@@ -124,9 +128,11 @@ const Home: React.FC =({}) => {
         marginTop={10}
         container
         direction='row'
-        columnGap={5}
+        columnGap={2}
         rowGap={5}
         justifyContent= 'center'
+        alignItems={'center'}
+        alignContent={'center'}
         >
           {filteredBooks.map(book => createBookItem(book))}
         </Grid>
