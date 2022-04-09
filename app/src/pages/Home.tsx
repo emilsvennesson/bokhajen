@@ -11,7 +11,6 @@ const Home: React.FC =({}) => {
    * @param value sortvalue : String
    */
    const sortHandler = (value: String) =>{
-     console.log("hej");
     //Value should be changed to an enum or be fetched from a config file in the future
     switch(value){
       case 'program':
@@ -31,6 +30,7 @@ const Home: React.FC =({}) => {
    */
   const  allFiltersHandler = () =>{
     console.log('All filters clicked');
+    
   }
 
   /**
@@ -71,7 +71,7 @@ const Home: React.FC =({}) => {
         {/* LOGO */}
         <Box 
         component='img'
-        height={1000}
+        height={900}
         src={require('../assets/images/bok..png')}
         />
       </Box>
@@ -83,6 +83,7 @@ const Home: React.FC =({}) => {
           variant='h4'
           component='h2'
           align='center'
+          fontStyle={'bold'}
           sx={{ marginBottom: 10, marginTop: 10}}
         >
           Most popular books
@@ -113,7 +114,7 @@ const Home: React.FC =({}) => {
       display={'flex'}
       alignItems={'center'}
       flexDirection={'column'}
-      marginTop={10} marginBottom={10}
+      marginTop={40} marginBottom={10}
       >
         <FilterBar
             programSortHandler={() => sortHandler('program')}

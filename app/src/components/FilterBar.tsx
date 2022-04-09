@@ -22,7 +22,6 @@ interface FilterBarProps{
  const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler, allFiltersHandler }) => {
  
 
-
     return ( 
     <Grid
         component="div"
@@ -75,7 +74,7 @@ interface FilterBarProps{
         >
             <Button 
             variant="contained" 
-            onClick={programSortHandler()}
+            onClick={()=> programSortHandler()}
             sx={{       
                 width: 130,
                 height: 50,
@@ -87,7 +86,7 @@ interface FilterBarProps{
             >Program</Button>
             <Button 
             variant="contained" 
-            onClick={courseSortHandler()}
+            onClick={() => courseSortHandler()}
             sx={{       
                 width: 130,
                 height: 50,
@@ -101,7 +100,7 @@ interface FilterBarProps{
             >Course</Button>
             <Button 
             variant="contained" 
-            onClick={conditionSortHandler()}
+            onClick={() =>conditionSortHandler()}
 
             sx={{       
                 width: 130,
@@ -131,7 +130,7 @@ interface FilterBarProps{
                 color: 'black'
             }}
             
-            onClick={allFiltersHandler()}
+            onClick={() => allFiltersHandler()}
             
             >All Filters</Button>
         </Grid>
