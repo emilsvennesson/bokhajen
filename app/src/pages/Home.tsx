@@ -41,79 +41,76 @@ const Home: React.FC =({}) => {
    */
   const createBookItem = (book: any) =>{
     // This will return a card when the card is done
-    return  <Card sx={{width: 200, height: 250}} >
-              <CardContent>
-                <Typography>{book}</Typography>
-              </CardContent>
-            </Card>
+    return  <Grid item xs={3} lg={2} xl={1.3}>
+              <Card sx={{width: 200, height: 250}} >
+                <CardContent>
+                  <Typography>{book}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
   }
 
  
   return (
     <Box
       component='div'
-      sx = {{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
-      }}
+      display= 'flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
     > 
       
      {/* Header */}
       <Box 
       component='header'
-      sx = {{
-        width: '100%',
-        height: 450,
-        display:'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#DFDDDD'
-      }}
+      width='100%' height={450}
+      display='flex'
+      justifyContent='center'
+      alignItems='center'
+      bgcolor={'#DFDDDD'}
       >
         {/* LOGO */}
-      <Box 
+        <Box 
         component='img'
-        sx={{
-          height: 1000,
-          position: 'relative',
-        }}
+        height={1000}
         src={require('../assets/images/bok..png')}
         />
       </Box>
         
       {/* Popular books */}
-      <Typography
-        variant='h4'
-        component='h2'
-        align='center'
-        sx={{ marginBottom: 10, marginTop: 10}}
-      >
-        Most popular books
-      </Typography>
-
-      <Grid
-        container
-        columns={5}
-        columnGap={5}
-        direction= 'row'
-        justifyContent='center'
-      >
-        {books.map(book => createBookItem(book))}
-      </Grid>
+      <Box component='section'>
+        {/* Small title */}
+        <Typography
+          variant='h4'
+          component='h2'
+          align='center'
+          sx={{ marginBottom: 10, marginTop: 10}}
+        >
+          Most popular books
+        </Typography>
+        {/* Popular books list*/}
+        <Grid
+          container
+          columns={7}
+          columnGap={2}
+          direction= 'row'
+          justifyContent='center'
+          flexWrap='nowrap'
+          
+        >
+          {books.map(book => createBookItem(book))}
+        </Grid>
+      </Box>
       
       {/* Filter list */}
       <Box
-      component='section'
-      sx={{
-        width: '100%',
-        display: 'flex',
-
-        alignItems: 'center',
-        flexDirection:'column',
-        marginTop: 10,
-        marginBottom: 20
-      }}
+      component={'section'}
+      width={'100%'}
+      
+      display={'flex'}
+      alignItems={'center'}
+      flexDirection={'column'}
+      marginTop={10} marginBottom={10}
       >
         <FilterBar
             programSortHandler={() => sortHandler('program')}
@@ -123,14 +120,13 @@ const Home: React.FC =({}) => {
         />
 
         <Grid
+        width = '95%'
+        marginTop={10}
         container
         direction='row'
         columnGap={5}
         rowGap={5}
         justifyContent= 'center'
-        width = '95%'
-        sx={{marginTop: 10}}
-
         >
           {filteredBooks.map(book => createBookItem(book))}
         </Grid>
