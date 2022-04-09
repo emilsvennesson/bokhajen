@@ -49,7 +49,6 @@ const Home: React.FC =({}) => {
             </Grid>
   }
 
- 
   return (
     <Box
       component='div'
@@ -141,6 +140,5 @@ const Home: React.FC =({}) => {
 
     )
   }
-
 
 export default Home;

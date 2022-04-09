@@ -8,9 +8,6 @@ interface FilterBarProps{
     allFiltersHandler: Function;
 }
 
-
-
-
 /**
  * A bar with different filtering options
  * @param props programSortHandler : Handler executed when filter by program is clicked
@@ -21,7 +18,6 @@ interface FilterBarProps{
  */
  const FilterBar: React.FC<FilterBarProps> = ({ programSortHandler, conditionSortHandler, courseSortHandler, allFiltersHandler }) => {
  
-
     return ( 
     <Grid
         component="div"
