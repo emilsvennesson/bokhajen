@@ -63,9 +63,9 @@ const NavigationBar = () => {
 
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                    <Search>
+                        <Search>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Boktitel/ISBN/Kurskod"
               inputProps={{ 'aria-label': 'search' }}
                 />
             </Search>
