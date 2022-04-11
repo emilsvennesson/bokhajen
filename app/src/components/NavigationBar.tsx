@@ -50,7 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function NavigationBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box component="nav" sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
