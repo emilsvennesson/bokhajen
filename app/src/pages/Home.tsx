@@ -104,7 +104,7 @@ function Home() {
         bgcolor="#DFDDDD"
       >
         {/* LOGO */}
-        <Box component="img" height={900} src={bok} />
+        <Box component="img" height={300} src={bok} />
       </Box>
 
       {/* Popular books */}
