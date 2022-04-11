@@ -6,6 +6,11 @@ import NavigationBar from './components/NavigationBar';
 import Article from './pages/Article';
 import { mainTheme } from './theme';
 
+import '@fontsource/nunito/300.css';
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/500.css';
+import '@fontsource/nunito/700.css';
+
 function App() {
   return (
     <ThemeProvider theme={mainTheme}>

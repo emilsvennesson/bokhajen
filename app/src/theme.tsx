@@ -9,4 +9,8 @@ export const mainTheme = createTheme({
       main: '#036AAB',
     },
   },
+  typography: {
+    fontFamily: 'nunito',
+    fontSize: 14,
+  },
 });
