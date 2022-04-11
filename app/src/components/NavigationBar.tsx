@@ -15,7 +15,6 @@ import {
   Avatar,
   Menu,
 } from "@mui/material";
-import App from "../App";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
