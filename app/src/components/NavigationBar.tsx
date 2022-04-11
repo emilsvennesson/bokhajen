@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import './css/NavigationBar.css';
 import {
   IconButton,
   Button,
