@@ -1,9 +1,9 @@
 import { NavLink, Link } from "react-router-dom";
 import "./css/NavigationBar.css";
 import {
-  Stack,
+  IconButton,
   Button,
-  TextField,
+  Tooltip,
   Typography,
   Box,
   AppBar,
@@ -12,6 +12,8 @@ import {
   styled,
   alpha,
   InputBase,
+  Avatar,
+  Menu,
 } from "@mui/material";
 import App from "../App";
 
@@ -96,6 +98,34 @@ const NavigationBar = () => {
                 />
               </Search>
               {/*<TextField id="search" label="Sök" variant="outlined" />*/}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open account settings">
+                <IconButton sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={false}
+              >
+                {/*settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))*/}
+              </Menu>
             </Box>
           </Toolbar>
         </Container>
