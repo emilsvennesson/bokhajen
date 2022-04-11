@@ -42,7 +42,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "25ch",
+      width: "30ch",
       "&:focus": {
         width: "30ch",
       },
@@ -60,17 +60,13 @@ const NavigationBar = () => {
                     Now we have to import Link from react-router-dom and
                     MUI Button uses the Link component
                 */}
-            <Button
-              sx={{ display: { xs: "none", sm: "block" } }}
-              component={Link}
-              to=""
-            >
+            <Button sx={{ display: "block" }} component={Link} to="">
               <Typography variant="h6" color="common.white">
                 bok
               </Typography>
             </Button>
 
-            <Box sx={{ flexGrow: 5, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 5, display: "flex", justifyContent: "right" }}>
               <Button
                 component={Link}
                 to="/article"
@@ -90,14 +86,15 @@ const NavigationBar = () => {
                 Sälj
               </Button>
             </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}
+            >
               <Search>
                 <StyledInputBase
                   placeholder="Boktitel/ISBN/Kurskod"
                   inputProps={{ "aria-label": "search" }}
                 />
               </Search>
-              {/*<TextField id="search" label="Sök" variant="outlined" />*/}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
