@@ -48,7 +48,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const NavigationBar = () => {
+function NavigationBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -114,41 +114,12 @@ const NavigationBar = () => {
                   horizontal: 'right',
                 }}
                 open={false}
-              >
-                {/*settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))*/}
-              </Menu>
+              />
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
     </Box>
   );
-};
+}
 export default NavigationBar;
-/*
-        <nav className="nav">
-                           <NavLink className='title'
-                to="/article">bok</NavLink>
-            <div className="links">
-                <NavLink className='link'
-                to="/article">Köp</NavLink>
-                <NavLink className='link'
-                to="/article">Sälj</NavLink>
-                <NavLink className='link'
-                to="/article">Om oss</NavLink>
-            </div>
-            <div className='rightNav'>
-            <form>
-                <input
-                className="searchBar"
-                type="search"/>
-            </form>
-            <NavLink className='login'
-                to="/article">LOGIN</NavLink>
-            </div>
-            
-        </nav>*/
