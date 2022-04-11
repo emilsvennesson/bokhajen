@@ -31,7 +31,8 @@
     "style:lint": "eslint \"**/*.{ts,tsx}\"",
     "style:lint-fix": "eslint \"**/*.{ts,tsx}\" --fix",
     "style:prettier": "prettier --check .",
-    "make-pretty": "prettier --write ."
+    "style:make-pretty": "prettier --write .",
+    "style:fix-all": "eslint \"**/*.{ts,tsx}\" --fix && prettier --write ."
   },
   "eslintConfig": {
     "extends": [
