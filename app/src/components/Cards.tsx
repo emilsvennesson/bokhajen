@@ -2,54 +2,32 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Tooltip } from '@mui/material';
-import bok from '../assets/images/bok.png';
-import { mainTheme } from '../theme';
 
-function Cards() {
-  const text =
-    'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores libero molestiae consequuntur fuga magni ab. Facilis corporis magni sapiente vel.';
-  return (
-    <div>
-      <Card>
-        <CardActionArea
-          sx={{ '&:hover': { color: mainTheme.palette.secondary.main } }}
-        >
-          <CardMedia
-            sx={{
-              marginLeft: '5%',
-              marginTop: '5%',
-              width: '90%',
-              height: '100%',
-              paddingTop: 5,
-              paddingBottom: 5,
-            }}
+
+
+const Cards = () => {
+  return ( 
+      <Card sx={{maxWidth:195, maxHeight:245}}> 
+        <CardMedia
             component="img"
-            image={bok}
+            height="140"
+            image="bokhajen.png"
             alt="cardImg"
-          />
-          <Tooltip title={text} enterDelay={600}>
-            <CardContent>
-              <Typography
-                sx={{
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  display: '-webkit-box',
-                  WebkitLineClamp: '2',
-                  WebkitBoxOrient: 'vertical',
-                }}
-                gutterBottom
-                variant="h6"
-                component="div"
-              >
-                {text}
-              </Typography>
-            </CardContent>
-          </Tooltip>
-        </CardActionArea>
+        />
+        <CardContent sx={{textOverflow: "ellipsis", overflow: "hidden"}}>
+            <Typography noWrap gutterBottom variant="h6" component="div">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Praesentium veritatis aliquid repudiandae totam. Iure asperiores ipsa eum voluptatibus eius itaque illum doloribus sequi perspiciatis! Ratione quis reiciendis magnam facilis consequatur?
+            </Typography>
+        </CardContent>
       </Card>
-    </div>
-  );
+  )
 }
 
 export default Cards;
+
+
+
+
+
+
+
