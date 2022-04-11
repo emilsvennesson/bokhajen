@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./css/NavigationBar.css";
 import {
   IconButton,
@@ -70,7 +70,7 @@ const NavigationBar = () => {
               </Typography>
             </Button>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ flexGrow: 5, display: { xs: "none", md: "flex" } }}>
               <Button
                 component={Link}
                 to="/article"
@@ -103,7 +103,7 @@ const NavigationBar = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open account settings">
                 <IconButton sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src="../assets/images/bok.png" />
                 </IconButton>
               </Tooltip>
               <Menu
