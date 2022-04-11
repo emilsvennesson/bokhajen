@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import "./css/NavigationBar.css";
+import { Link } from 'react-router-dom';
+import './css/NavigationBar.css';
 import {
   IconButton,
   Button,
@@ -14,36 +14,36 @@ import {
   InputBase,
   Avatar,
   Menu,
-} from "@mui/material";
+} from '@mui/material';
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.common.black,
   backgroundColor: alpha(theme.palette.common.white, 1),
-  "&:hover": {
+  '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.95),
   },
   marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(0),
-    width: "auto",
+    width: 'auto',
   },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
+  color: 'inherit',
+  '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(0)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "30ch",
-      "&:focus": {
-        width: "30ch",
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '30ch',
+      '&:focus': {
+        width: '30ch',
       },
     },
   },
@@ -59,13 +59,13 @@ const NavigationBar = () => {
                     Now we have to import Link from react-router-dom and
                     MUI Button uses the Link component
                 */}
-            <Button sx={{ display: "block" }} component={Link} to="">
+            <Button sx={{ display: 'block' }} component={Link} to="">
               <Typography variant="h6" color="common.white">
                 bok
               </Typography>
             </Button>
 
-            <Box sx={{ flexGrow: 5, display: "flex", justifyContent: "right" }}>
+            <Box sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}>
               <Button
                 component={Link}
                 to="/article"
@@ -86,12 +86,12 @@ const NavigationBar = () => {
               </Button>
             </Box>
             <Box
-              sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}
+              sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
             >
               <Search>
                 <StyledInputBase
                   placeholder="Boktitel/ISBN/Kurskod"
-                  inputProps={{ "aria-label": "search" }}
+                  inputProps={{ 'aria-label': 'search' }}
                 />
               </Search>
             </Box>
@@ -103,16 +103,16 @@ const NavigationBar = () => {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{ mt: '45px' }}
                 id="menu-appbar"
                 anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+                  vertical: 'top',
+                  horizontal: 'right',
                 }}
                 open={false}
               >

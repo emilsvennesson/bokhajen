@@ -1,0 +1,30 @@
+{
+  "name": "cremona",
+  "version": "1.0.5",
+  "description": "cremona is a module for getting books from the Chalmers store.",
+  "repository": "https://github.com/emilsvennesson/dat257-xzibit/tree/main/cremona",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chalmers",
+    "store",
+    "cremona",
+    "books"
+  ],
+  "author": "emilsvennesson",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@open-rpc/client-js": "^1.7.1"
+  }
+}
