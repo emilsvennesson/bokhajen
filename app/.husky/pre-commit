@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 cd app
 
-npm run style:fix-all
+npm run style:all
