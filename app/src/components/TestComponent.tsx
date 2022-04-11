@@ -1,7 +1,3 @@
-const TestComponent = () => {
-
-    return(
-        <p>Sup NoOB</p>
-    );
+export function TestComponent() {
+  return <div>TestComponent</div>;
 }
-export default TestComponent;
