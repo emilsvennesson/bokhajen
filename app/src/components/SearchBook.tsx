@@ -14,6 +14,14 @@ export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
   const [books] = React.useState([
     { name: 'Mattematisk statistik', thing: 'hej1' },
     { name: 'Linjär algebra', thing: 'hej2' },
+    { name: 'Descret mattematik', thing: 'hej2' },
+    { name: 'University physics', thing: 'hej2' },
+    { name: 'Maskinorienterad programmering', thing: 'hej2' },
+    { name: 'Java, steg för steg', thing: 'hej2' },
+    { name: 'ABOUT FACE', thing: 'hej2' },
+    { name: 'Shed, a guide for life', thing: 'hej2' },
+    { name: 'Mattlabb intro 200000 sidor', thing: 'hej2' },
+    { name: 'Sjuka grabbar', thing: 'hej2' },
   ]);
   /**
    * Returns an array of objects that are in the autocomplete
