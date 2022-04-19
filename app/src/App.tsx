@@ -5,23 +5,28 @@ import Home from './pages/Home';
 import NavigationBar from './components/NavigationBar';
 import Article from './pages/Article';
 import { mainTheme } from './theme';
+import { FBAuthProvider } from './hooks/FBAuthProvider';
 
 import '@fontsource/nunito/300.css';
 import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/500.css';
 import '@fontsource/nunito/700.css';
+import AuthTest from './pages/AuthTest';
 
 function App() {
   return (
-    <ThemeProvider theme={mainTheme}>
-      <div className="App">
-        <NavigationBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/article" element={<Article />} />
-        </Routes>
-      </div>
-    </ThemeProvider>
+    <FBAuthProvider>
+      <ThemeProvider theme={mainTheme}>
+        <div className="App">
+          <NavigationBar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/article" element={<Article />} />
+            <Route path="authtest" element={<AuthTest />} />
+          </Routes>
+        </div>
+      </ThemeProvider>
+    </FBAuthProvider>
   );
 }
 
