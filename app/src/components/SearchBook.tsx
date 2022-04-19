@@ -1,16 +1,23 @@
 import React from 'react';
 import { Autocomplete, Box, TextField } from '@mui/material';
 
-const books = [
-  { name: 'Mattematisk statistik', thing: 'hej1' },
-  { name: 'Linjär algebra', thing: 'hej2' },
-];
-
 interface SearchBookProps {
   bookSearchHandler: Function;
 }
 
+/**
+ * This component fixes an autocomplete with books and fires a handler when a bbok is autocompleted
+ * @param bookSearchHandler (String) => {....} Handles when a book is searched
+ * @returns SearchBook component
+ */
 export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
+  const [books] = React.useState([
+    { name: 'Mattematisk statistik', thing: 'hej1' },
+    { name: 'Linjär algebra', thing: 'hej2' },
+  ]);
+  /**
+   * Returns an array of objects that are in the autocomplete
+   */
   const options = books.map((option) => {
     const firstLetter = option.name[0].toUpperCase();
     return {
