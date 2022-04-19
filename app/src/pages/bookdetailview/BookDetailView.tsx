@@ -6,5 +6,5 @@ interface Props {
 
 export default function BookDetailView({ newBook }: Props) {
   const book: Book = newBook;
-  return <div>{book}</div>;
+  return <div>{book.name}</div>;
 }
