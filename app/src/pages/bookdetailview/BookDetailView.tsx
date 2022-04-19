@@ -1,10 +1,10 @@
-import { Book } from "cremona/dist/Book";
+import { Book } from 'cremona/dist/Book';
 
 interface Props {
-    newBook: Book;
+  newBook: Book;
 }
 
-export default function BookDetailView({newBook}: Props) {
-    const book: Book = newBook;
-    console.log(book);
+export default function BookDetailView({ newBook }: Props) {
+  const book: Book = newBook;
+  return <div>{book}</div>;
 }
