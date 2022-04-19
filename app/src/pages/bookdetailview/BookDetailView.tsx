@@ -1,3 +1,4 @@
+import { Container } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 import BookDetailViewDescription from './BookDetailViewDescription';
 
@@ -9,7 +10,14 @@ export default function BookDetailView({ newBook }: Props) {
   const book: Book = newBook;
   return (
     <div>
-      <BookDetailViewDescription newBook={book} />
+      <Container sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
+        <Container sx={{ flexGrow: 1, width: '50%' }}>
+          <BookDetailViewDescription newBook={book} />
+        </Container>
+        <Container sx={{ flexGrow: 1, width: '50%' }}>
+          <BookDetailViewDescription newBook={book} />
+        </Container>
+      </Container>
     </div>
   );
 }
