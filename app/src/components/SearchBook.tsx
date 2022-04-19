@@ -1,5 +1,5 @@
 import React from 'react';
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 
 interface SearchBookProps {
   bookSearchHandler: Function;
@@ -43,6 +43,9 @@ export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
       justifyContent="center"
       alignItems="center"
     >
+      <Typography variant="h2" sx={{ position: 'absolute', left: '80px' }}>
+        Step 1
+      </Typography>
       <Autocomplete
         id="grouped-books"
         options={options.sort(
