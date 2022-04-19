@@ -1,7 +1,8 @@
-import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
+import { Box, Typography, Grid } from '@mui/material';
 import { useState } from 'react';
 import FilterBar from '../components/FilterBar';
 import bok from '../assets/images/bok.png';
+import Cards from '../components/Cards';
 
 function Home() {
   const [books] = useState(['book1', 'book2', 'book3', 'book4', 'book5']);
@@ -77,11 +78,7 @@ function Home() {
       marginLeft={5}
       key={book}
     >
-      <Card sx={{ width: 200, height: 250 }}>
-        <CardContent>
-          <Typography>{book}</Typography>
-        </CardContent>
-      </Card>
+      <Cards />
     </Grid>
   );
 
