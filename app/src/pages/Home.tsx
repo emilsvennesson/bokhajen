@@ -79,11 +79,6 @@ function Home() {
       key={book}
     >
       <Cards />
-      {/*       <Card sx={{ width: 200, height: 250 }}>
-        <CardContent>
-          <Typography>{book}</Typography>
-        </CardContent>
-      </Card> */}
     </Grid>
   );
 

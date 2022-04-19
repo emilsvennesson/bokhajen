@@ -10,45 +10,42 @@ function Cards() {
   const text =
     'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores libero molestiae consequuntur fuga magni ab. Facilis corporis magni sapiente vel.';
   return (
-    <div>
-      <Card>
-        <CardActionArea
-          sx={{ '&:hover': { color: mainTheme.palette.secondary.main } }}
-        >
-          <CardMedia
-            sx={{
-              marginLeft: '5%',
-              marginTop: '5%',
-              width: '90%',
-              height: '100%',
-              paddingTop: 5,
-              paddingBottom: 5,
-            }}
-            component="img"
-            image={bok}
-            alt="cardImg"
-          />
-          <Tooltip title={text} enterDelay={600}>
-            <CardContent>
-              <Typography
-                sx={{
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  display: '-webkit-box',
-                  WebkitLineClamp: '2',
-                  WebkitBoxOrient: 'vertical',
-                }}
-                gutterBottom
-                variant="h6"
-                component="div"
-              >
-                {text}
-              </Typography>
-            </CardContent>
-          </Tooltip>
-        </CardActionArea>
-      </Card>
-    </div>
+    <Card sx={{ maxWidth: 250 }}>
+      <CardActionArea
+        sx={{ '&:hover': { color: mainTheme.palette.secondary.main } }}
+      >
+        <CardMedia
+          sx={{
+            marginLeft: '5%',
+            marginTop: '5%',
+            width: '90%',
+            paddingTop: 5,
+            paddingBottom: 5,
+          }}
+          component="img"
+          image={bok}
+          alt="cardImg"
+        />
+        <Tooltip title={text} enterDelay={600}>
+          <CardContent>
+            <Typography
+              sx={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: '2',
+                WebkitBoxOrient: 'vertical',
+              }}
+              gutterBottom
+              variant="h6"
+              component="div"
+            >
+              {text}
+            </Typography>
+          </CardContent>
+        </Tooltip>
+      </CardActionArea>
+    </Card>
   );
 }
 
