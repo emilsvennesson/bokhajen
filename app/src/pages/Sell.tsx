@@ -48,7 +48,12 @@ export default function Sell() {
           display="flex"
           justifyContent="center"
         >
-          <Button sx={{ position: 'absolute', right: 0 }}>x</Button>
+          <Button
+            onClick={() => setChecked(false)}
+            sx={{ position: 'absolute', right: 0 }}
+          >
+            x
+          </Button>
 
           <BookInformation
             name="hej"
