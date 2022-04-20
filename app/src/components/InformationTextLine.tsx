@@ -2,7 +2,7 @@ import { Typography, Box } from '@mui/material';
 import React from 'react';
 
 interface IInformationTextLineProps {
-  children: String;
+  children: string;
   label?: string;
   fontSize?: number;
   labelBold?: boolean;
