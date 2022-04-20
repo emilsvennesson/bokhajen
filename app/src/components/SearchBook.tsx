@@ -40,11 +40,10 @@ export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
       sx={{ backgroundColor: 'white' }}
       borderRadius={3}
       display="flex"
-      justifyContent="center"
       alignItems="center"
     >
-      <Typography variant="h2" sx={{ position: 'absolute', left: '80px' }}>
-        Step 1
+      <Typography variant="h4" marginRight={5}>
+        Step 1:
       </Typography>
       <Autocomplete
         id="grouped-books"
@@ -56,7 +55,7 @@ export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
         sx={{ width: 300 }}
         renderInput={(params) => (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <TextField {...params} label="Book" />
+          <TextField {...params} label="Write ISBN-number" />
         )}
         onInputChange={(event, newInputValue) => {
           bookSearchHandler(newInputValue);
