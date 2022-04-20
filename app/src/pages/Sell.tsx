@@ -1,27 +1,31 @@
 import React from 'react';
-import { Box, Button, Fade, Typography } from '@mui/material';
-
+import { Box, Stack, Typography, Button, Grow, TextField } from '@mui/material';
 import BookInformation from '../components/BookInformation';
+
+const startedWindow = (
+  <Box height={445} width="30%" sx={{ backgroundColor: 'white' }} />
+);
 
 /**
  * Selling page, in this window the user is able to upload a book to the selling page
  * @returns Sell page
  */
 export default function Sell() {
+  const [started, setStarted] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
+    <Stack
+      padding="2%"
       sx={{ backgroundColor: '#C4C4C4' }}
+      direction="column"
+      spacing={2}
     >
-      {/* Title */}
       <Box
         sx={{ backgroundColor: 'white' }}
-        marginBottom="40px"
         borderRadius="8px"
         padding={5}
+        flexGrow={3}
       >
         <Typography variant="h3" margin="30px">
           Sell your book
@@ -31,40 +35,50 @@ export default function Sell() {
           need to go trough. First you need to fill out the ISBN number in order
           for us to know wich book you want to sell
         </Typography>
-        {/* Step 1, look upp your book */}
       </Box>
-      <Button onClick={() => setChecked(true)}>Hej</Button>
-
-      {/* Step 2, Check information */}
-      <Fade in={checked}>
-        <Box
-          sx={{
-            height: '80%',
-            width: '100%',
-            backgroundColor: 'white',
-            position: 'absolute',
-            borderRadius: 8,
-          }}
-          display="flex"
-          justifyContent="center"
+      {/* Title */}
+      <Stack direction="row" width="100%" spacing={2}>
+        <Stack
+          flexGrow={4}
+          sx={{ backgroundColor: 'white' }}
+          alignItems="center"
+          spacing={5}
+          paddingTop={5}
+          borderRadius={2}
         >
+          <Typography variant="h2">Get started</Typography>
+          <TextField label="ISBN-number" />
           <Button
-            onClick={() => setChecked(false)}
-            sx={{ position: 'absolute', right: 0 }}
+            size="large"
+            variant="contained"
+            onClick={() => setStarted(true)}
           >
-            x
+            {'Get started ->'}
           </Button>
-
-          <BookInformation
-            name="hej"
-            edition="hej2"
-            year="1882"
-            ISBN="11111112222"
-            course="hej"
-          />
-        </Box>
-      </Fade>
-      {/* Step 3, Describe quality */}
-    </Box>
+        </Stack>
+        <Grow in={started}>
+          <Box>
+            <BookInformation
+              name="Mattematisk statistik"
+              edition="4th"
+              year="1992"
+              ISBN="11111222223333"
+              course="Mattematisk statistik och descret mattematik"
+            />
+            <Button variant="contained" size="large">
+              Redigera
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => setChecked(true)}
+            >
+              Continue
+            </Button>
+          </Box>
+        </Grow>
+        <Grow in={checked}>{startedWindow}</Grow>
+      </Stack>
+    </Stack>
   );
 }
