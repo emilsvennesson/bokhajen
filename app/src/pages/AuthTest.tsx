@@ -71,6 +71,9 @@ function SignIn() {
 export default function AuthTest() {
   const auth = useAuth();
 
+  if (auth.loading) {
+    return <div>loading...</div>;
+  }
   if (auth.user) {
     return (
       <div>

@@ -81,9 +81,9 @@ export function FBAuthProvider({ children }: Props) {
 
   // kinda sus
   // TEMP SOLUTION
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const value = useMemo(
     () => ({ user, signin, signout, signup, loading }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [user],
   );
 

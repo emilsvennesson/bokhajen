@@ -12,6 +12,7 @@ import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/500.css';
 import '@fontsource/nunito/700.css';
 import AuthTest from './pages/AuthTest';
+import CreateAd from './pages/CreateAd';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/article" element={<Article />} />
             <Route path="authtest" element={<AuthTest />} />
+            <Route path="ad" element={<CreateAd />} />
           </Routes>
         </div>
       </ThemeProvider>
