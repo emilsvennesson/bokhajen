@@ -3,11 +3,11 @@ import { Box } from '@mui/material';
 import InformationTextLine from './InformationTextLine';
 
 interface BookInformationProps {
-  name: String;
-  edition: String;
-  year: String;
-  ISBN: String;
-  course: String;
+  name: string;
+  edition: string;
+  year: string;
+  ISBN: string;
+  course: string;
 }
 
 export default function BookInformation({
@@ -28,11 +28,21 @@ export default function BookInformation({
       {/* Cover */}
       <Box width={150} height={200} sx={{ backgroundColor: 'green' }} />
       <Box display="flex" flexDirection="column">
-        <InformationTextLine>{name}</InformationTextLine>
-        <InformationTextLine>{edition}</InformationTextLine>
-        <InformationTextLine>{year}</InformationTextLine>
-        <InformationTextLine>{ISBN}</InformationTextLine>
-        <InformationTextLine>{course}</InformationTextLine>
+        <InformationTextLine textBold fontSize={25}>
+          {name}
+        </InformationTextLine>
+        <InformationTextLine textBold label="Edition:">
+          {edition}
+        </InformationTextLine>
+        <InformationTextLine textBold label="Year:">
+          {year}
+        </InformationTextLine>
+        <InformationTextLine textBold label="ISBN-Number:">
+          {ISBN}
+        </InformationTextLine>
+        <InformationTextLine textBold label="Course:">
+          {course}
+        </InformationTextLine>
       </Box>
     </Box>
   );
