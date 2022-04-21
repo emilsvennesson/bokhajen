@@ -18,13 +18,7 @@ export default function BookInformation({
   course,
 }: BookInformationProps) {
   return (
-    <Box
-      display="flex"
-      borderRadius="8px"
-      sx={{ backgroundColor: 'white', padding: '40px' }}
-      marginRight="20px"
-      flexDirection="row"
-    >
+    <Box display="flex" padding="40px" flexDirection="row">
       {/* Cover */}
       <Box width={150} height={200} sx={{ backgroundColor: 'green' }} />
       <Box display="flex" flexDirection="column">
