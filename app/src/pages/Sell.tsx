@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Stack,
@@ -12,6 +12,8 @@ import {
   Step,
   StepLabel,
 } from '@mui/material';
+import { Book } from 'cremona/dist/Book';
+import CremonaClient from 'cremona';
 import BookInformation from '../components/BookInformation';
 
 const steps = ['Find your book', 'Check information', 'Specify condition'];
@@ -21,6 +23,17 @@ const steps = ['Find your book', 'Check information', 'Specify condition'];
  */
 export default function Sell() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [books, setBooks] = React.useState<Book[] | null>(null);
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const client = new CremonaClient();
+      const ding = await client.getBooks();
+      setBooks(ding);
+    };
+
+    getBooks();
+  });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -153,7 +166,9 @@ export default function Sell() {
           paddingTop={5}
           borderRadius={2}
         >
-          <Typography variant="h2">Get started</Typography>
+          <Typography textAlign="center" variant="h2">
+            Get started
+          </Typography>
           <TextField disabled={activeStep !== 0} label="ISBN-number" />
           <Button
             size="large"
@@ -173,6 +188,7 @@ export default function Sell() {
         {/** Set quality */}
         <Grow in={activeStep > 1}>{startedWindow}</Grow>
       </Stack>
+      <Typography>{books}</Typography>
     </Stack>
   );
 }
