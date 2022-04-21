@@ -21,6 +21,7 @@ export default function Sell() {
       direction="column"
       spacing={2}
     >
+      {/** Title */}
       <Box
         sx={{ backgroundColor: 'white' }}
         borderRadius="8px"
@@ -36,8 +37,9 @@ export default function Sell() {
           for us to know wich book you want to sell
         </Typography>
       </Box>
-      {/* Title */}
+      {/** Wizard */}
       <Stack direction="row" width="100%" spacing={2}>
+        {/** Search ISBN */}
         <Stack
           flexGrow={4}
           sx={{ backgroundColor: 'white' }}
@@ -56,6 +58,7 @@ export default function Sell() {
             {'Get started ->'}
           </Button>
         </Stack>
+        {/** Check information */}
         <Grow in={started}>
           <Box>
             <BookInformation
@@ -77,6 +80,8 @@ export default function Sell() {
             </Button>
           </Box>
         </Grow>
+
+        {/** Set quality */}
         <Grow in={checked}>{startedWindow}</Grow>
       </Stack>
     </Stack>
