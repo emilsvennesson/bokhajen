@@ -14,33 +14,21 @@ import {
 } from '@mui/material';
 import BookInformation from '../components/BookInformation';
 
-const startedWindow = (
-  <Stack bgcolor="white" direction="column" alignItems="center" width="400px">
-    <Typography variant="h5">Condition</Typography>
-    <FormControlLabel label="Torn" control={<Checkbox />} />
-    <FormControlLabel label="Good" control={<Checkbox />} />
-    <FormControlLabel label="Mint" control={<Checkbox />} />
-    <TextField label="describe the quality" />
-  </Stack>
-);
-
 const steps = ['Find your book', 'Check information', 'Specify condition'];
 /**
  * Selling page, in this window the user is able to upload a book to the selling page
  * @returns Sell page
  */
 export default function Sell() {
-  const [started, setStarted] = React.useState(false);
-  const [checked, setChecked] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-  /* 
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  }; */
+  };
 
   const checkInformationWindow = (
     <Box
@@ -49,10 +37,25 @@ export default function Sell() {
       display="flex"
       flexDirection="column"
       alignItems="center"
+      padding={2}
     >
-      <Typography variant="h5" fontWeight="bold">
-        Is this information correct
-      </Typography>
+      <Stack direction="row" alignItems="left" width="100%">
+        <Button
+          variant="contained"
+          disabled={activeStep !== 1}
+          onClick={() => handleBack()}
+        >
+          {'<-'}
+        </Button>
+        <Typography
+          textAlign="center"
+          variant="h5"
+          fontWeight="bold"
+          flexGrow={5}
+        >
+          Is this information correct
+        </Typography>
+      </Stack>
       <BookInformation
         name="Mattematisk statistik"
         edition="4th"
@@ -61,15 +64,14 @@ export default function Sell() {
         course="Mattematisk statistik och descret mattematik"
       />
       <Stack direction="row" spacing={2}>
-        <Button disabled={checked} variant="contained" size="large">
+        <Button disabled={activeStep !== 1} variant="contained" size="large">
           Redigera
         </Button>
         <Button
-          disabled={checked}
+          disabled={activeStep !== 1}
           variant="contained"
           size="large"
           onClick={() => {
-            setChecked(true);
             handleNext();
           }}
         >
@@ -77,6 +79,40 @@ export default function Sell() {
         </Button>
       </Stack>
     </Box>
+  );
+
+  const startedWindow = (
+    <Stack
+      bgcolor="white"
+      direction="column"
+      alignItems="center"
+      width="400px"
+      padding={2}
+      borderRadius={2}
+      spacing={2}
+    >
+      <Stack direction="row" width="100%" alignContent="left">
+        <Button
+          variant="contained"
+          disabled={activeStep !== 2}
+          onClick={() => handleBack()}
+        >
+          {'<-'}
+        </Button>
+        <Typography textAlign="center" variant="h5" flexGrow={2}>
+          Condition
+        </Typography>
+        <Box flexGrow={1} />
+      </Stack>
+
+      <FormControlLabel label="Torn" control={<Checkbox />} />
+      <FormControlLabel label="Good" control={<Checkbox />} />
+      <FormControlLabel label="Mint" control={<Checkbox />} />
+      <TextField label="describe the quality" />
+      <Button variant="contained" size="large" onClick={() => handleNext()}>
+        Finish
+      </Button>
+    </Stack>
   );
 
   return (
@@ -92,48 +128,50 @@ export default function Sell() {
           for us to know wich book you want to sell
         </Typography>
       </Box>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label) => {
-          const stepProps: { completed?: boolean } = {};
-          return (
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            <Step key={label} {...stepProps}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
+      <Box bgcolor="white" padding={2} borderRadius={2}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label) => {
+            const stepProps: { completed?: boolean } = {};
+            return (
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              <Step key={label} {...stepProps}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+      </Box>
       {/** Wizard */}
-      <Stack direction="row" width="100%" spacing={2}>
+      <Stack direction="row" width="100%" spacing={1}>
         {/** Search ISBN */}
         <Stack
           flexGrow={4}
           bgcolor="white"
           alignItems="center"
           spacing={5}
+          padding={2}
           paddingTop={5}
           borderRadius={2}
         >
           <Typography variant="h2">Get started</Typography>
-          <TextField disabled={started} label="ISBN-number" />
+          <TextField disabled={activeStep !== 0} label="ISBN-number" />
           <Button
             size="large"
             variant="contained"
             onClick={() => {
-              setStarted(true);
               handleNext();
             }}
-            disabled={started}
+            disabled={activeStep !== 0}
           >
             {'Get started ->'}
           </Button>
         </Stack>
 
         {/** Check information */}
-        <Grow in={started}>{checkInformationWindow}</Grow>
+        <Grow in={activeStep > 0}>{checkInformationWindow}</Grow>
 
         {/** Set quality */}
-        <Grow in={checked}>{startedWindow}</Grow>
+        <Grow in={activeStep > 1}>{startedWindow}</Grow>
       </Stack>
     </Stack>
   );
