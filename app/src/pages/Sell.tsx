@@ -1,9 +1,24 @@
 import React from 'react';
-import { Box, Stack, Typography, Button, Grow, TextField } from '@mui/material';
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  Grow,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+} from '@mui/material';
 import BookInformation from '../components/BookInformation';
 
 const startedWindow = (
-  <Box height={445} width="30%" sx={{ backgroundColor: 'white' }} />
+  <Stack bgcolor="white" direction="column" alignItems="center" width="400px">
+    <Typography variant="h5">Condition</Typography>
+    <FormControlLabel label="Torn" control={<Checkbox />} />
+    <FormControlLabel label="Good" control={<Checkbox />} />
+    <FormControlLabel label="Mint" control={<Checkbox />} />
+    <TextField label="describe the quality" />
+  </Stack>
 );
 
 /**
@@ -14,20 +29,44 @@ export default function Sell() {
   const [started, setStarted] = React.useState(false);
   const [checked, setChecked] = React.useState(false);
 
-  return (
-    <Stack
-      padding="2%"
-      sx={{ backgroundColor: '#C4C4C4' }}
-      direction="column"
-      spacing={2}
+  const checkInformationWindow = (
+    <Box
+      bgcolor="white"
+      borderRadius={2}
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
     >
+      <Typography variant="h5" fontWeight="bold">
+        Is this information correct
+      </Typography>
+      <BookInformation
+        name="Mattematisk statistik"
+        edition="4th"
+        year="1992"
+        ISBN="11111222223333"
+        course="Mattematisk statistik och descret mattematik"
+      />
+      <Stack direction="row" spacing={2}>
+        <Button disabled={checked} variant="contained" size="large">
+          Redigera
+        </Button>
+        <Button
+          disabled={checked}
+          variant="contained"
+          size="large"
+          onClick={() => setChecked(true)}
+        >
+          Continue
+        </Button>
+      </Stack>
+    </Box>
+  );
+
+  return (
+    <Stack padding="2%" bgcolor="#C4C4C4" direction="column" spacing={2}>
       {/** Title */}
-      <Box
-        sx={{ backgroundColor: 'white' }}
-        borderRadius="8px"
-        padding={5}
-        flexGrow={3}
-      >
+      <Box bgcolor="white" borderRadius="8px" padding={5} flexGrow={3}>
         <Typography variant="h3" margin="30px">
           Sell your book
         </Typography>
@@ -42,44 +81,25 @@ export default function Sell() {
         {/** Search ISBN */}
         <Stack
           flexGrow={4}
-          sx={{ backgroundColor: 'white' }}
+          bgcolor="white"
           alignItems="center"
           spacing={5}
           paddingTop={5}
           borderRadius={2}
         >
           <Typography variant="h2">Get started</Typography>
-          <TextField label="ISBN-number" />
+          <TextField disabled={started} label="ISBN-number" />
           <Button
             size="large"
             variant="contained"
             onClick={() => setStarted(true)}
+            disabled={started}
           >
             {'Get started ->'}
           </Button>
         </Stack>
         {/** Check information */}
-        <Grow in={started}>
-          <Box>
-            <BookInformation
-              name="Mattematisk statistik"
-              edition="4th"
-              year="1992"
-              ISBN="11111222223333"
-              course="Mattematisk statistik och descret mattematik"
-            />
-            <Button variant="contained" size="large">
-              Redigera
-            </Button>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => setChecked(true)}
-            >
-              Continue
-            </Button>
-          </Box>
-        </Grow>
+        <Grow in={started}>{checkInformationWindow}</Grow>
 
         {/** Set quality */}
         <Grow in={checked}>{startedWindow}</Grow>
