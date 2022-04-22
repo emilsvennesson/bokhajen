@@ -1,41 +1,45 @@
 import React from 'react';
+import { Book } from 'cremona/dist/Book';
 import { Box } from '@mui/material';
 import InformationTextLine from './InformationTextLine';
 
 interface BookInformationProps {
-  name: string;
-  edition: string;
-  year: string;
-  ISBN: string;
-  course: string;
+  book: Book;
 }
 
-export default function BookInformation({
-  name,
-  edition,
-  year,
-  ISBN,
-  course,
-}: BookInformationProps) {
+export default function BookInformation({ book }: BookInformationProps) {
+  function formatt(text: string | null): string {
+    if (text === null) {
+      return '';
+    }
+    return text;
+  }
+
   return (
-    <Box display="flex" padding="40px" flexDirection="row">
+    <Box
+      display="flex"
+      padding="40px"
+      flexDirection="row"
+      width="400px"
+      overflow="hidden"
+    >
       {/* Cover */}
-      <Box width={150} height={200} sx={{ backgroundColor: 'green' }} />
+      <Box minWidth={130} height={200} sx={{ backgroundColor: 'green' }} />
       <Box display="flex" flexDirection="column">
         <InformationTextLine textBold fontSize={25}>
-          {name}
+          {formatt(book.name)}
         </InformationTextLine>
-        <InformationTextLine textBold label="Edition:">
-          {edition}
+        <InformationTextLine textBold label="Describtion:">
+          {formatt(book.description)}
         </InformationTextLine>
         <InformationTextLine textBold label="Year:">
-          {year}
+          {book.year?.toString() ? book.year.toString() : ''}
         </InformationTextLine>
         <InformationTextLine textBold label="ISBN-Number:">
-          {ISBN}
+          {book.year?.toString() ? book.year.toString() : ''}
         </InformationTextLine>
         <InformationTextLine textBold label="Course:">
-          {course}
+          {book.authors.toString()}
         </InformationTextLine>
       </Box>
     </Box>
