@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Box,
   Stack,
@@ -12,28 +12,30 @@ import {
   Step,
   StepLabel,
 } from '@mui/material';
+
 import { Book } from 'cremona/dist/Book';
-import CremonaClient from 'cremona';
 import BookInformation from '../components/BookInformation';
+import SearchBook from '../components/SearchBook';
 
 const steps = ['Find your book', 'Check information', 'Specify condition'];
-/**
- * Selling page, in this window the user is able to upload a book to the selling page
- * @returns Sell page
- */
+const EmptyBook: Book = {
+  name: 'book',
+  uid: 0,
+  articleNumber: '',
+  description: null,
+  price: 0,
+  url: [''],
+  image: '',
+  courseCodes: [''],
+  authors: [''],
+  isbn: null,
+  weight: 0,
+  year: null,
+};
+
 export default function Sell() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [books, setBooks] = React.useState<Book[] | null>(null);
-
-  useEffect(() => {
-    const getBooks = async () => {
-      const client = new CremonaClient();
-      const ding = await client.getBooks();
-      setBooks(ding);
-    };
-
-    getBooks();
-  });
+  const [book, setBook] = React.useState<Book | null>(null);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -69,13 +71,7 @@ export default function Sell() {
           Is this information correct
         </Typography>
       </Stack>
-      <BookInformation
-        name="Mattematisk statistik"
-        edition="4th"
-        year="1992"
-        ISBN="11111222223333"
-        course="Mattematisk statistik och descret mattematik"
-      />
+      <BookInformation book={book || EmptyBook} />
       <Stack direction="row" spacing={2}>
         <Button disabled={activeStep !== 1} variant="contained" size="large">
           Redigera
@@ -169,7 +165,7 @@ export default function Sell() {
           <Typography textAlign="center" variant="h2">
             Get started
           </Typography>
-          <TextField disabled={activeStep !== 0} label="ISBN-number" />
+          <SearchBook bookSearchHandler={(inBook: Book) => setBook(inBook)} />
           <Button
             size="large"
             variant="contained"
@@ -188,7 +184,6 @@ export default function Sell() {
         {/** Set quality */}
         <Grow in={activeStep > 1}>{startedWindow}</Grow>
       </Stack>
-      <Typography>{books}</Typography>
     </Stack>
   );
 }
