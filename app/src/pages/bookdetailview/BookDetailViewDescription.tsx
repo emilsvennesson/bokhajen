@@ -18,39 +18,58 @@ export default function BookDetailViewDescription({ newBook }: Props) {
             marginTop: '15%',
           }}
         >
-          <Stack>
-            {/* BOOK IMAGE */}
-            <Box
-              component="img"
-              height={300}
-              width={200}
-              src={book.image}
-              sx={{ alignSelf: 'center' }}
-            />
-            <Typography
-              variant="h6"
-              gutterBottom
-              component="div"
-              sx={{ alignSelf: 'center', marginTop: '15px' }}
-            >
-              {/* YEAR */}
-              Utgiven: {book.year}
-              <br />
-              {/* ISBN */}
-              ISBN: {book.isbn}
-              <br />
-              {/* WEIGHT */}
-              Vikt: {book.weight} gram
-              <br />
-            </Typography>
-          </Stack>
+          <Box
+            sx={{
+              width: '250px',
+              alignSelf: 'end',
+            }}
+          >
+            <Stack>
+              {/* BOOK IMAGE */}
+              <Box
+                component="img"
+                height={300}
+                width={200}
+                src={book.image}
+                sx={{ alignSelf: 'start' }}
+              />
+              <Typography
+                variant="h6"
+                gutterBottom
+                component="p"
+                sx={{
+                  alignSelf: 'center',
+                  marginTop: '15px',
+                  wordWrap: 'vertical-lr',
+                  width: '250px',
+                }}
+              >
+                {/* AUTHORS */}
+                Författare: {book.authors.join(', ')}
+                <br />
+                {/* YEAR */}
+                Utgiven: {book.year}
+                <br />
+                {/* ISBN */}
+                ISBN: {book.isbn}
+                <br />
+                {/* WEIGHT */}
+                Vikt: {book.weight} gram
+                <br />
+              </Typography>
+            </Stack>
+          </Box>
         </Container>
         <Container sx={{ flex: 2, marginTop: '10%' }}>
           <Typography variant="h3" gutterBottom component="div">
             {book.name}
           </Typography>
-          <Typography variant="h6" gutterBottom component="div">
+          {/* Jag skulle vilja att descriptionen här har en newline per stycke */}
+          <Typography variant="h6" gutterBottom component="p" sx={{}}>
             {book.description}
+            <br />
+            <br />
+            Kurskoder: {book.courseCodes.join(', ')}
           </Typography>
         </Container>
       </Box>
