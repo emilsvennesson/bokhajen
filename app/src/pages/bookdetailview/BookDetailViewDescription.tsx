@@ -12,26 +12,40 @@ export default function BookDetailViewDescription({ newBook }: Props) {
       <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
         <Container
           sx={{
-            flex: 2,
+            flex: 3,
             display: 'flex',
-            justifyContent: 'center',
-            marginTop: '10%',
+            justifyContent: 'end',
+            marginTop: '15%',
           }}
         >
-          {/* BOOK IMAGE */}
           <Stack>
-            <Box component="img" height={300} src={book.image} sx={{}} />
+            {/* BOOK IMAGE */}
+            <Box
+              component="img"
+              height={300}
+              width={200}
+              src={book.image}
+              sx={{ alignSelf: 'center' }}
+            />
             <Typography
               variant="h6"
               gutterBottom
               component="div"
               sx={{ alignSelf: 'center', marginTop: '15px' }}
             >
-              {book.year}
+              {/* YEAR */}
+              Utgiven: {book.year}
+              <br />
+              {/* ISBN */}
+              ISBN: {book.isbn}
+              <br />
+              {/* WEIGHT */}
+              Vikt: {book.weight} gram
+              <br />
             </Typography>
           </Stack>
         </Container>
-        <Container sx={{ flex: 3, marginTop: '10%' }}>
+        <Container sx={{ flex: 2, marginTop: '10%' }}>
           <Typography variant="h3" gutterBottom component="div">
             {book.name}
           </Typography>
