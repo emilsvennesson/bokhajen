@@ -16,27 +16,19 @@ export default function BookInformation({ book }: BookInformationProps) {
   }
 
   return (
-    <Box
-      display="flex"
-      padding="40px"
-      flexDirection="row"
-      width="400px"
-      overflow="hidden"
-    >
+    <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">
       {/* Cover */}
-      <Box minWidth={130} height={200} sx={{ backgroundColor: 'green' }} />
+      <img src={book.image} alt={book.name} loading="lazy" height={200} />
+
       <Box display="flex" flexDirection="column">
-        <InformationTextLine textBold fontSize={25}>
+        <InformationTextLine textBold fontSize={20}>
           {formatt(book.name)}
-        </InformationTextLine>
-        <InformationTextLine textBold label="Describtion:">
-          {formatt(book.description)}
         </InformationTextLine>
         <InformationTextLine textBold label="Year:">
           {book.year?.toString() ? book.year.toString() : ''}
         </InformationTextLine>
         <InformationTextLine textBold label="ISBN-Number:">
-          {book.year?.toString() ? book.year.toString() : ''}
+          {book.isbn?.toString() ? book.isbn.toString() : ''}
         </InformationTextLine>
         <InformationTextLine textBold label="Course:">
           {book.authors.toString()}
