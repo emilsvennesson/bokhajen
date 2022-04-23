@@ -53,6 +53,7 @@ export default function Sell() {
       flexDirection="column"
       alignItems="center"
       padding={2}
+      flexGrow={2}
     >
       <Stack direction="row" alignItems="left" width="100%">
         <Button
@@ -99,6 +100,7 @@ export default function Sell() {
       padding={2}
       borderRadius={2}
       spacing={2}
+      flexGrow={1}
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button
@@ -154,7 +156,7 @@ export default function Sell() {
       <Stack direction="row" width="100%" spacing={1}>
         {/** Search ISBN */}
         <Stack
-          flexGrow={4}
+          flexGrow={1}
           bgcolor="white"
           alignItems="center"
           spacing={5}
@@ -165,7 +167,10 @@ export default function Sell() {
           <Typography textAlign="center" variant="h2">
             Get started
           </Typography>
-          <SearchBook bookSearchHandler={(inBook: Book) => setBook(inBook)} />
+          <SearchBook
+            disabled={activeStep > 0}
+            bookSearchHandler={(inBook: Book) => setBook(inBook)}
+          />
           <Button
             size="large"
             variant="contained"
@@ -179,10 +184,12 @@ export default function Sell() {
         </Stack>
 
         {/** Check information */}
-        <Grow in={activeStep > 0}>{checkInformationWindow}</Grow>
+        <Grow in={book != null && activeStep > 0}>
+          {checkInformationWindow}
+        </Grow>
 
         {/** Set quality */}
-        <Grow in={activeStep > 1}>{startedWindow}</Grow>
+        <Grow in={activeStep > 1 && book != null}>{startedWindow}</Grow>
       </Stack>
     </Stack>
   );
