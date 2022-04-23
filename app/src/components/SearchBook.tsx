@@ -5,6 +5,7 @@ import CremonaClient from 'cremona';
 
 interface SearchBookProps {
   bookSearchHandler: Function;
+  disabled: boolean | undefined;
 }
 
 /**
@@ -12,7 +13,10 @@ interface SearchBookProps {
  * @param bookSearchHandler (String) => {....} Handles when a book is searched
  * @returns SearchBook component
  */
-export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
+export default function SearchBook({
+  bookSearchHandler,
+  disabled,
+}: SearchBookProps) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<readonly Book[]>([]);
   const loading = open && options.length === 0;
@@ -40,15 +44,19 @@ export default function SearchBook({ bookSearchHandler }: SearchBookProps) {
 
   return (
     <Autocomplete
+      disableClearable
       id="grouped-books"
       open={open}
       onOpen={() => {
         setOpen(true);
       }}
+      disabled={disabled}
       onClose={() => {
         setOpen(false);
       }}
-      isOptionEqualToValue={(option, value) => option.name === value.name}
+      isOptionEqualToValue={(option, value) =>
+        option.name === value.name || option.isbn === value.isbn
+      }
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}

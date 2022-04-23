@@ -34,7 +34,7 @@ export default function InformationTextLine({
     if (text.length === 0) return <Typography />;
 
     if (labelBold) {
-      <Typography fontSize={fontSize} fontWeight="bold" marginRight={1}>
+      <Typography fontSize={fontSize} fontWeight="bold" marginRight={1} noWrap>
         {text}
       </Typography>;
     }
@@ -53,7 +53,12 @@ export default function InformationTextLine({
   function formatText(text: String): JSX.Element {
     if (textBold) {
       return (
-        <Typography fontSize={fontSize} fontWeight="bold">
+        <Typography
+          fontSize={fontSize}
+          fontWeight="bold"
+          width="350px"
+          paragraph
+        >
           {text}
         </Typography>
       );
