@@ -75,8 +75,8 @@ export function FBAuthProvider({ children }: Props) {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (usr) => {
       setUser(usr);
+      setLoading(false);
     });
-    setLoading(false);
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
