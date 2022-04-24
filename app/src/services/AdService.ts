@@ -1,11 +1,6 @@
 /* eslint-disable no-console */
-import {
-  addDoc,
-  collection,
-  FirestoreError,
-  getFirestore,
-} from 'firebase/firestore';
-import { app } from '../firebase/config';
+import { addDoc, collection, FirestoreError } from 'firebase/firestore';
+import db from '../firebase/db';
 
 export interface Ad {
   adDescription: string;
@@ -24,8 +19,6 @@ interface Response {
   success: boolean;
   error?: string;
 }
-
-const db = getFirestore(app);
 
 export default class AdService {
   static async addAd(ad: Ad): Promise<Response> {

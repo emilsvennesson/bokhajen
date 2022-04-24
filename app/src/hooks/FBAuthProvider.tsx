@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase/config';
+import UserService from '../services/UserService';
 
 initializeApp(firebaseConfig);
 
@@ -51,6 +52,7 @@ export function FBAuthProvider({ children }: Props) {
         email,
         password,
       );
+      UserService.addUser(usr);
       setUser(usr);
     } catch (e) {
       throw e as Error;
@@ -62,6 +64,7 @@ export function FBAuthProvider({ children }: Props) {
     setLoading(true);
     try {
       await signOut(auth);
+      setUser(null);
     } catch (e) {
       throw e as Error;
     }
@@ -79,13 +82,8 @@ export function FBAuthProvider({ children }: Props) {
     return () => unsubscribe();
   }, []);
 
-  // kinda sus
-  // TEMP SOLUTION
-  const value = useMemo(
-    () => ({ user, signin, signout, signup, loading }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [user],
-  );
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const value = { user, signin, signout, signup, loading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
