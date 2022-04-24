@@ -30,7 +30,7 @@ export default function BookInformation({ book }: BookInformationProps) {
         <InformationTextLine textBold label="ISBN-Number:">
           {book.isbn?.toString() ? book.isbn.toString() : ''}
         </InformationTextLine>
-        <InformationTextLine textBold label="Course:">
+        <InformationTextLine textBold label="Author:">
           {book.authors.toString()}
         </InformationTextLine>
       </Box>
