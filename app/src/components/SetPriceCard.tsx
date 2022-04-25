@@ -9,19 +9,43 @@ import {
   Card,
 } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
-import React from 'react';
+import React, { useRef } from 'react';
 
 interface SetPriceCardProps {
   book: Book | null;
   backButtonHandler: Function;
+  continueButtonHandler: Function;
   show?: boolean;
 }
 
+/**
+ * SetPriceCard, this card has an absolute position in the middle of the screen with a grey background, the user can fill in a price and see a reference price from other apis bellow
+ * @param book the book that the user will be referenced to get the price from other api's
+ * @param backButtonHandler the handler that will execute when the user presses the back button
+ * @param continueButtonHandler the handler that will execute when the user presses the continue button
+ * @param show if true the card will be shown, set condition if you only want to show this card when that condition is true
+ * @returns SetPriceCard component
+ */
 export default function SetPriceCard({
   book,
   backButtonHandler,
+  continueButtonHandler,
+
   show,
 }: SetPriceCardProps) {
+  const [price, setPrice] = React.useState(0);
+  const textFieldRef = useRef('priceField');
+
+  const handleContinue = () => {
+    continueButtonHandler(price);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target as HTMLInputElement;
+
+    setPrice(+value);
+  };
+
   return (
     <Fade in={show}>
       <Stack
@@ -36,6 +60,7 @@ export default function SetPriceCard({
         justifyContent="center"
         bgcolor="transparent"
       >
+        {/* Background box */}
         <Box
           position="absolute"
           width="100vw"
@@ -46,6 +71,7 @@ export default function SetPriceCard({
           zIndex={0.5}
           sx={{ opacity: 0.6 }}
         />
+        {/* Contents */}
         <Grow in={show}>
           <Stack
             width="600px"
@@ -58,18 +84,34 @@ export default function SetPriceCard({
             padding="10px"
             spacing="40px"
           >
+            {/* Back button */}
             <Box width="100%">
               <Button onClick={() => backButtonHandler()} variant="contained">
                 {'<-'}
               </Button>
             </Box>
-            <Typography variant="h3">Set a price</Typography>
-            <TextField label="price" />
 
-            <Button variant="contained" size="large">
+            {/* Title */}
+            <Typography variant="h3">Set a price</Typography>
+
+            {/* Price textfield */}
+            <TextField
+              inputRef={textFieldRef}
+              type="number"
+              label="price"
+              onChange={handleChange}
+            />
+
+            {/* Continue button */}
+            <Button
+              onClick={() => handleContinue()}
+              variant="contained"
+              size="large"
+            >
               Continue
             </Button>
 
+            {/* Price reference cards */}
             <Card>
               <Stack
                 direction="row"
