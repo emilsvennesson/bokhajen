@@ -5,6 +5,7 @@ import AuthTest from './pages/AuthTest';
 import CreateAd from './pages/CreateAd';
 import Home from './pages/Home';
 import Login from './pages/login/Login';
+import SignUp from './pages/login/SignUp';
 
 export default function RoutesConfig() {
   return (
@@ -14,6 +15,7 @@ export default function RoutesConfig() {
       <Route path="authtest" element={<AuthTest />} />
       <Route path="ad" element={<CreateAd />} />
       <Route path="login" element={<Login />} />
+      <Route path="signup" element={<SignUp />} />
     </Routes>
   );
 }
