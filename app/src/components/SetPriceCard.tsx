@@ -12,18 +12,18 @@ import { Book } from 'cremona/dist/Book';
 import React from 'react';
 
 interface SetPriceCardProps {
-  book: Book | book;
+  book: Book | null;
   backButtonHandler: Function;
-  disabled?: boolean;
+  show?: boolean;
 }
 
 export default function SetPriceCard({
   book,
   backButtonHandler,
-  disabled,
+  show,
 }: SetPriceCardProps) {
   return (
-    <Fade in={disabled}>
+    <Fade in={show}>
       <Stack
         position="absolute"
         width="100vw"
@@ -46,7 +46,7 @@ export default function SetPriceCard({
           zIndex={0.5}
           sx={{ opacity: 0.6 }}
         />
-        <Grow in={disabled}>
+        <Grow in={show}>
           <Stack
             width="600px"
             height="700px"
@@ -99,5 +99,5 @@ export default function SetPriceCard({
 }
 
 SetPriceCard.defaultProps = {
-  disabled: false,
+  show: false,
 };
