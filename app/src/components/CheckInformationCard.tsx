@@ -40,6 +40,7 @@ export default function CheckInformationCard({
       alignItems="center"
       padding={2}
       flexGrow={2}
+      height="100%"
     >
       <Stack direction="row" alignItems="left" width="100%">
         <Button
