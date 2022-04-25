@@ -60,7 +60,7 @@ export default function Sell() {
           onClick={() => {
             handleNext();
           }}
-          disabled={activeStep !== 0}
+          disabled={activeStep !== 0 || book === null}
         >
           {'Get started ->'}
         </Button>
@@ -137,6 +137,7 @@ export default function Sell() {
       <SetPriceCard
         book={book}
         backButtonHandler={() => handleBack()}
+        continueButtonHandler={(price: number) => console.log(price)}
         show={activeStep === 3}
       />
     </Box>
