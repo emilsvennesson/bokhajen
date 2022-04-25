@@ -5,12 +5,9 @@ import {
   Typography,
   Button,
   Grow,
-  TextField,
   Stepper,
   Step,
   StepLabel,
-  Fade,
-  Card,
 } from '@mui/material';
 
 import { Book } from 'cremona/dist/Book';
@@ -38,6 +35,38 @@ export default function Sell() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  const searchForBookWindow = (
+    <Box flexGrow={1}>
+      <Stack
+        bgcolor="white"
+        alignItems="center"
+        spacing={5}
+        padding={2}
+        paddingTop={5}
+        borderRadius={2}
+        height="94%"
+      >
+        <Typography textAlign="center" variant="h2">
+          Get started
+        </Typography>
+        <SearchBook
+          disabled={activeStep > 0}
+          bookSearchHandler={(inBook: Book) => setBook(inBook)}
+        />
+        <Button
+          size="large"
+          variant="contained"
+          onClick={() => {
+            handleNext();
+          }}
+          disabled={activeStep !== 0}
+        >
+          {'Get started ->'}
+        </Button>
+      </Stack>
+    </Box>
+  );
 
   const checkInformationWindow = (
     <Box flexGrow={2}>
@@ -93,34 +122,7 @@ export default function Sell() {
         {/** Wizard */}
         <Stack direction="row" width="100%" spacing={1}>
           {/** Search ISBN */}
-          <Stack
-            bgcolor="white"
-            alignItems="center"
-            spacing={5}
-            padding={2}
-            paddingTop={5}
-            borderRadius={2}
-            width="370px"
-          >
-            <Typography textAlign="center" variant="h2">
-              Get started
-            </Typography>
-            <SearchBook
-              disabled={activeStep > 0}
-              bookSearchHandler={(inBook: Book) => setBook(inBook)}
-            />
-            <Button
-              size="large"
-              variant="contained"
-              onClick={() => {
-                handleNext();
-              }}
-              disabled={activeStep !== 0 || book == null}
-            >
-              {'Get started ->'}
-            </Button>
-          </Stack>
-
+          {searchForBookWindow}
           {/** Check information */}
           <Grow in={book != null && activeStep > 0}>
             {checkInformationWindow}
@@ -132,7 +134,11 @@ export default function Sell() {
           </Grow>
         </Stack>
       </Stack>
-      <SetPriceCard book={book} backButtonHandler={() => handleBack()} />
+      <SetPriceCard
+        book={book}
+        backButtonHandler={() => handleBack()}
+        show={activeStep === 3}
+      />
     </Box>
   );
 }
