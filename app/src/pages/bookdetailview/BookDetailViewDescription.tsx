@@ -15,13 +15,14 @@ export default function BookDetailViewDescription({ newBook }: Props) {
             flex: 3,
             display: 'flex',
             justifyContent: 'end',
-            marginTop: '15%',
+            marginTop: '10%',
           }}
         >
           <Box
             sx={{
               width: '250px',
-              alignSelf: 'end',
+              alignSelf: 'start',
+              marginTop: '10%',
             }}
           >
             <Stack>
@@ -60,7 +61,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
             </Stack>
           </Box>
         </Container>
-        <Container sx={{ flex: 2, marginTop: '10%' }}>
+        <Container sx={{ flex: 3, marginTop: '10%' }}>
           <Typography variant="h3" gutterBottom component="div">
             {book.name}
           </Typography>
