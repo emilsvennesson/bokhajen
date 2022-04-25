@@ -4,8 +4,11 @@ import {
   Typography,
   Box,
   FormControlLabel,
-  Checkbox,
   TextField,
+  RadioGroup,
+  FormLabel,
+  FormControl,
+  Radio,
 } from '@mui/material';
 import React from 'react';
 
@@ -20,6 +23,11 @@ export default function ConditionCheckCard({
   nextButtonHandler,
   disabled,
 }: ConditionCheckCardProps) {
+  const [value, setValue] = React.useState('good');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue((event.target as HTMLInputElement).value);
+  };
   return (
     <Stack
       bgcolor="white"
@@ -28,6 +36,7 @@ export default function ConditionCheckCard({
       padding={2}
       borderRadius={2}
       spacing={2}
+      height="100%"
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button
@@ -43,9 +52,19 @@ export default function ConditionCheckCard({
         <Box flexGrow={1} />
       </Stack>
 
-      <FormControlLabel label="Torn" control={<Checkbox />} />
-      <FormControlLabel label="Good" control={<Checkbox />} />
-      <FormControlLabel label="Mint" control={<Checkbox />} />
+      <FormControl>
+        <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={value}
+          onChange={handleChange}
+        >
+          <FormControlLabel value="torn" control={<Radio />} label="Torn" />
+          <FormControlLabel value="good" control={<Radio />} label="Good" />
+          <FormControlLabel value="new" control={<Radio />} label="New" />
+        </RadioGroup>
+      </FormControl>
       <TextField label="describe the quality" />
       <Button
         variant="contained"
