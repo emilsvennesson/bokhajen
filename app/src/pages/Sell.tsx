@@ -6,8 +6,6 @@ import {
   Button,
   Grow,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Stepper,
   Step,
   StepLabel,
@@ -19,6 +17,8 @@ import { Book } from 'cremona/dist/Book';
 
 import SearchBook from '../components/SearchBook';
 import CheckInformationCard from '../components/CheckInformationCard';
+import ConditionCheckCard from '../components/ConditionCheckCard';
+import SetPriceCard from '../components/SetPriceCard';
 
 const steps = [
   'Find your book',
@@ -40,7 +40,7 @@ export default function Sell() {
   };
 
   const checkInformationWindow = (
-    <Box>
+    <Box flexGrow={2}>
       <CheckInformationCard
         book={book}
         backButtonHandler={() => {
@@ -54,43 +54,13 @@ export default function Sell() {
   );
 
   const conditionCheckWindow = (
-    <Stack
-      bgcolor="white"
-      direction="column"
-      alignItems="center"
-      width="400px"
-      padding={2}
-      borderRadius={2}
-      spacing={2}
-      flexGrow={1}
-    >
-      <Stack direction="row" width="100%" alignContent="left">
-        <Button
-          variant="contained"
-          disabled={activeStep !== 2}
-          onClick={() => handleBack()}
-        >
-          {'<-'}
-        </Button>
-        <Typography textAlign="center" variant="h5" flexGrow={2}>
-          Condition
-        </Typography>
-        <Box flexGrow={1} />
-      </Stack>
-
-      <FormControlLabel label="Torn" control={<Checkbox />} />
-      <FormControlLabel label="Good" control={<Checkbox />} />
-      <FormControlLabel label="Mint" control={<Checkbox />} />
-      <TextField label="describe the quality" />
-      <Button
-        variant="contained"
-        size="large"
-        onClick={() => handleNext()}
+    <Box flexGrow={1}>
+      <ConditionCheckCard
+        backButtonHandler={() => handleBack()}
+        nextButtonHandler={() => handleNext()}
         disabled={activeStep === 3}
-      >
-        Continue
-      </Button>
-    </Stack>
+      />
+    </Box>
   );
 
   return (
@@ -162,78 +132,7 @@ export default function Sell() {
           </Grow>
         </Stack>
       </Stack>
-      <Fade in={activeStep > 2 && book != null}>
-        <Stack
-          position="absolute"
-          width="100vw"
-          height="100vh"
-          top="0"
-          left="0"
-          zIndex={1}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          bgcolor="transparent"
-        >
-          <Box
-            position="absolute"
-            width="100vw"
-            height="100vh"
-            left={0}
-            top={0}
-            bgcolor="lightgray"
-            zIndex={0.5}
-            sx={{ opacity: 0.6 }}
-          />
-          <Grow in={activeStep > 2 && book != null}>
-            <Stack
-              width="600px"
-              height="700px"
-              bgcolor="white"
-              zIndex={1}
-              borderRadius={2}
-              alignItems="center"
-              direction="column"
-              padding="10px"
-              spacing="40px"
-            >
-              <Box width="100%">
-                <Button onClick={() => handleBack()} variant="contained">
-                  {'<-'}
-                </Button>
-              </Box>
-              <Typography variant="h3">Set a price</Typography>
-              <TextField label="price" />
-
-              <Button variant="contained" size="large">
-                Continue
-              </Button>
-
-              <Card>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing="20px"
-                  padding={2}
-                >
-                  <Box
-                    component="img"
-                    width="90px"
-                    src="https://shop.textalk.se/shop/22777/files/Logotyper/Logga%20vit%20botten.png?max-width=600&max-height=120&quality=85"
-                  />
-                  <Typography variant="h5" fontWeight="bold">
-                    Chalmers Store
-                  </Typography>
-                  <Box display="flex">
-                    <Typography variant="h5">{book?.price}</Typography>
-                    <Typography variant="h5">:-</Typography>
-                  </Box>
-                </Stack>
-              </Card>
-            </Stack>
-          </Grow>
-        </Stack>
-      </Fade>
+      <SetPriceCard book={book} backButtonHandler={() => handleBack()} />
     </Box>
   );
 }
