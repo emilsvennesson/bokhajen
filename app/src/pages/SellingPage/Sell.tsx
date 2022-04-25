@@ -12,10 +12,10 @@ import {
 
 import { Book } from 'cremona/dist/Book';
 
-import SearchBook from '../components/SearchBook';
-import CheckInformationCard from '../components/CheckInformationCard';
-import ConditionCheckCard from '../components/ConditionCheckCard';
-import SetPriceCard from '../components/SetPriceCard';
+import SearchBook from '../../components/SearchBook';
+import CheckInformationCard from './CheckInformationCard';
+import ConditionCheckCard from './ConditionCheckCard';
+import SetPriceCard from './SetPriceCard';
 
 const steps = [
   'Find your book',
