@@ -1,7 +1,7 @@
 import React from 'react';
 import { Book } from 'cremona/dist/Book';
 import { Box } from '@mui/material';
-import InformationTextLine from './InformationTextLine';
+import InformationTextLine from '../../components/InformationTextLine';
 
 interface BookInformationProps {
   book: Book;
