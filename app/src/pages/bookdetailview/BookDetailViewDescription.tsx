@@ -46,16 +46,58 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 }}
               >
                 {/* AUTHORS */}
-                Författare: {book.authors.join(', ')}
-                <br />
+                {book.authors.length !== 0 &&
+                  `Författare: ${book.authors.join(', ')}`}
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                component="p"
+                sx={{
+                  alignSelf: 'center',
+                  wordWrap: 'vertical-lr',
+                  width: '250px',
+                }}
+              >
                 {/* YEAR */}
-                Utgiven: {book.year}
-                <br />
+                {book.year && `Utgiven: ${book.year}`}
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                component="p"
+                sx={{
+                  alignSelf: 'center',
+                  wordWrap: 'vertical-lr',
+                  width: '250px',
+                }}
+              >
                 {/* ISBN */}
-                ISBN: {book.isbn}
-                <br />
+                {book.isbn && `ISBN: ${book.isbn}`}
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                component="p"
+                sx={{
+                  alignSelf: 'center',
+                  wordWrap: 'vertical-lr',
+                  width: '250px',
+                }}
+              >
                 {/* WEIGHT */}
-                Vikt: {book.weight} gram
+                {book.weight && `Weight: ${book.weight} gram`}
+              </Typography>
+              <Typography
+                variant="h6"
+                gutterBottom
+                component="p"
+                sx={{
+                  alignSelf: 'center',
+                  wordWrap: 'vertical-lr',
+                  width: '250px',
+                }}
+              >
                 <br />
               </Typography>
             </Stack>
@@ -70,7 +112,8 @@ export default function BookDetailViewDescription({ newBook }: Props) {
             {book.description}
             <br />
             <br />
-            Kurskoder: {book.courseCodes.join(', ')}
+            {book.courseCodes.length !== 0 &&
+              `Kurskoder: ${book.courseCodes.join(', ')}`}
           </Typography>
         </Container>
       </Box>
