@@ -5,7 +5,7 @@ import AuthTest from './pages/AuthTest';
 import CreateAd from './pages/CreateAd';
 import Home from './pages/Home';
 import Login from './pages/login/Login';
-import SignUp from './pages/login/SignUp';
+import SignUp from './pages/signup/SignUp';
 
 export default function RoutesConfig() {
   return (
