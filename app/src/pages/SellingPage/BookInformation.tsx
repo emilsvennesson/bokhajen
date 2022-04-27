@@ -5,35 +5,53 @@ import InformationTextLine from '../../components/InformationTextLine';
 
 interface BookInformationProps {
   book: Book;
+  name?: string;
+  year?: string;
+  isbn?: string;
+  authors?: string[];
 }
 
-export default function BookInformation({ book }: BookInformationProps) {
-  function formatt(text: string | null): string {
-    if (text === null) {
-      return '';
-    }
-    return text;
-  }
-
+export default function BookInformation({
+  book,
+  name,
+  year,
+  isbn,
+  authors,
+}: BookInformationProps) {
   return (
     <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">
       {/* Cover */}
-      <img src={book.image} alt={book.name} loading="lazy" height={200} />
+      <Box component="div" height={200} width={150}>
+        <Box
+          component="img"
+          src={book.image}
+          alt={book.name}
+          loading="lazy"
+          maxHeight={200}
+          maxWidth={150}
+        />
+      </Box>
 
       <Box display="flex" flexDirection="column">
         <InformationTextLine textBold fontSize={20}>
-          {formatt(book.name)}
+          {name ?? (book.name?.toString() ? book.name.toString() : '')}
         </InformationTextLine>
         <InformationTextLine textBold label="Year:">
-          {book.year?.toString() ? book.year.toString() : ''}
+          {year ?? (book.year?.toString() ? book.year.toString() : '')}
         </InformationTextLine>
         <InformationTextLine textBold label="ISBN-Number:">
-          {book.isbn?.toString() ? book.isbn.toString() : ''}
+          {isbn ?? (book.isbn?.toString() ? book.isbn.toString() : '')}
         </InformationTextLine>
         <InformationTextLine textBold label="Author:">
-          {book.authors.toString()}
+          {authors?.toString() ?? book.authors.toString()}
         </InformationTextLine>
       </Box>
     </Box>
   );
 }
+BookInformation.defaultProps = {
+  name: undefined,
+  year: undefined,
+  isbn: undefined,
+  authors: undefined,
+};
