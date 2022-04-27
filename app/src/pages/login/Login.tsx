@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Checkbox,
-  CircularProgress,
   Container,
   CssBaseline,
   FormControl,
@@ -21,6 +20,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { LockOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -54,40 +54,12 @@ export default function Login() {
   };
 
   if (auth.loading) {
-    return (
-      <Container
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
-      >
-        <CircularProgress />
-      </Container>
-    );
+    return <OverlayCircularProgress />;
   }
 
   if (auth.user) {
     navigate(from, { replace: true });
-    return (
-      <Container
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
-      >
-        <CircularProgress />
-      </Container>
-    );
+    return <OverlayCircularProgress />;
   }
   return (
     <Container component="main" maxWidth="xs">
