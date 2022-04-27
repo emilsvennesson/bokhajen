@@ -16,6 +16,7 @@ import SearchBook from '../../components/SearchBook';
 import CheckInformationCard from './CheckInformationCard';
 import ConditionCheckCard from './ConditionCheckCard';
 import SetPriceCard from './SetPriceCard';
+import BookInformationInput from './BookInformationInput';
 
 const steps = [
   'Find your book',
@@ -140,6 +141,7 @@ export default function Sell() {
         continueButtonHandler={(price: number) => console.log(price)}
         show={activeStep === 3}
       />
+      <BookInformationInput />
     </Box>
   );
 }
