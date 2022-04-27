@@ -10,6 +10,7 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   OutlinedInput,
   Snackbar,
   TextField,
@@ -199,6 +200,9 @@ export default function SignUp() {
           >
             Sign up
           </Button>
+          <Link href="/login" variant="body2">
+            Already have an account? Sign in
+          </Link>
         </Box>
       </Box>
     </Container>
