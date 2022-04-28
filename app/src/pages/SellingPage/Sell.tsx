@@ -26,8 +26,9 @@ const steps = [
 ];
 
 export default function Sell() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
   const [book, setBook] = React.useState<Book | null>(null);
+  const [edit, setEdit] = React.useState(false);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -74,11 +75,11 @@ export default function Sell() {
       <CheckInformationCard
         book={book}
         backButtonHandler={() => {
-          setBook(null);
           handleBack();
         }}
-        disabled={activeStep !== 1}
+        disabled={activeStep !== 1 || edit}
         continueButtonHandler={() => handleNext()}
+        editButtonHandler={() => setEdit(true)}
       />
     </Box>
   );
@@ -141,7 +142,11 @@ export default function Sell() {
         continueButtonHandler={(price: number) => console.log(price)}
         show={activeStep === 3}
       />
-      <BookInformationInput />
+      <BookInformationInput
+        book={book}
+        show={edit}
+        backButtonHandler={() => setEdit(false)}
+      />
     </Box>
   );
 }
