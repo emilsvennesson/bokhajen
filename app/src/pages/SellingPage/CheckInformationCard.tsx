@@ -4,28 +4,22 @@ import React from 'react';
 import BookInformation from './BookInformation';
 
 interface CheckInformationCardProps {
-  book: Book | null;
+  book: Book | undefined;
   backButtonHandler: Function;
   continueButtonHandler: Function;
   editButtonHandler: Function;
   disabled: boolean;
 }
 
-const EmptyBook: Book = {
-  name: 'book',
-  uid: 0,
-  articleNumber: '',
-  description: null,
-  price: 0,
-  url: [''],
-  image: '',
-  courseCodes: [''],
-  authors: [''],
-  isbn: null,
-  weight: 0,
-  year: null,
-};
-
+/**
+ * This is a card used in the SellBookPage that shows all relevant information of a book inside a card
+ * @param book : book | undefined \ The information that will be shown will be gotten from this book
+ * @param backButtonHandler : Function \ This will execute when the back button is pressed
+ * @param continueButtonHandler : Function \ This will execute when the continue button is pressed
+ * @param editButtonHandler : Function \ This will excecute when the dit button is pressed
+ * @param disabled : boolean \ When this istrue all the buttons will be disabled
+ * @returns CheckInformationCard component
+ */
 export default function CheckInformationCard({
   book,
   backButtonHandler,
@@ -63,7 +57,7 @@ export default function CheckInformationCard({
           Is this information correct
         </Typography>
       </Stack>
-      <BookInformation book={book || EmptyBook} />
+      <BookInformation book={book} />
       <Stack direction="row" spacing={2}>
         <Button
           disabled={disabled}
