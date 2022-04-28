@@ -25,17 +25,37 @@ const steps = [
   'Add price',
 ];
 
+/**
+ *
+ * @returns
+ */
 export default function Sell() {
-  const [activeStep, setActiveStep] = React.useState<number>(0);
-  const [book, setBook] = React.useState<Book | null>(null);
+  const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
 
+  /**
+   * This is called to back the stepper in the page
+   */
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+  /**
+   * This is called to next the stepper in the page
+   */
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  /**
+   * This will be called when the user is completely done with this page
+   * @param price the price that the user has set
+   */
+  const handleDone = (price: number) => {
+    const name = book?.name ?? '';
+
+    console.log(`${name} With price: ${price}`);
   };
 
   const searchForBookWindow = (
@@ -139,12 +159,16 @@ export default function Sell() {
       <SetPriceCard
         book={book}
         backButtonHandler={() => handleBack()}
-        continueButtonHandler={(price: number) => console.log(price)}
+        continueButtonHandler={(price: number) => handleDone(price)}
         show={activeStep === 3}
       />
       <BookInformationInput
         book={book}
         show={edit}
+        changeBookHandler={(inBook: Book) => {
+          setBook(inBook);
+          setEdit(false);
+        }}
         backButtonHandler={() => setEdit(false)}
       />
     </Box>
