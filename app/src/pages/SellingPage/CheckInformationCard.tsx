@@ -7,6 +7,7 @@ interface CheckInformationCardProps {
   book: Book | null;
   backButtonHandler: Function;
   continueButtonHandler: Function;
+  editButtonHandler: Function;
   disabled: boolean;
 }
 
@@ -30,6 +31,7 @@ export default function CheckInformationCard({
   backButtonHandler,
   disabled,
   continueButtonHandler,
+  editButtonHandler,
 }: CheckInformationCardProps) {
   return (
     <Box
@@ -63,7 +65,12 @@ export default function CheckInformationCard({
       </Stack>
       <BookInformation book={book || EmptyBook} />
       <Stack direction="row" spacing={2}>
-        <Button disabled={disabled} variant="contained" size="large">
+        <Button
+          disabled={disabled}
+          variant="contained"
+          size="large"
+          onClick={() => editButtonHandler()}
+        >
           Redigera
         </Button>
         <Button
