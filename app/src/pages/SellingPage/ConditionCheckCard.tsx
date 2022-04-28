@@ -18,6 +18,13 @@ interface ConditionCheckCardProps {
   disabled?: boolean;
 }
 
+/**
+ * This is an interface that gives the relevant input components for the user to use in order to define the quality off the book
+ * @param backButtonHandler : Function \ This will excecute when the back button is clicked
+ * @param nextButtonHandler : Function \ This will excecute when the next button is clicked
+ * @param disabled : boolean \ When this is true the buttons and textfields will be disabled
+ * @returns ConditionCheckCard component
+ */
 export default function ConditionCheckCard({
   backButtonHandler,
   nextButtonHandler,

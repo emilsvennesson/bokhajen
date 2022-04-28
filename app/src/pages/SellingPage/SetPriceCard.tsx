@@ -12,7 +12,7 @@ import { Book } from 'cremona/dist/Book';
 import React, { useRef } from 'react';
 
 interface SetPriceCardProps {
-  book: Book | null;
+  book: Book | undefined;
   backButtonHandler: Function;
   continueButtonHandler: Function;
   show?: boolean;
@@ -30,7 +30,6 @@ export default function SetPriceCard({
   book,
   backButtonHandler,
   continueButtonHandler,
-
   show,
 }: SetPriceCardProps) {
   const [price, setPrice] = React.useState(0);

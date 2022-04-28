@@ -3,24 +3,37 @@ import { Box, Button, Fade, Stack, TextField, Typography } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 
 interface BookInformationInputProps {
-  book: Book | null;
+  book: Book | undefined;
   show: boolean;
+  changeBookHandler: Function;
   backButtonHandler: Function;
 }
 
+/**
+ * This will fade up over the screen and represent an interface for editing some of the attributes for a book
+ * @param book : Book | undefied \ will be encapsulated with changed attributes
+ * @param show : boolean \ Fades in when this value is true
+ * @param changeBookHandler : Function \ Sets the new changed book when it is edited
+ * @param backButtonHandler : Function \ Called when the back button is pressed
+ * @returns BookInformationInput component
+ */
 export default function BookInformationInput({
   book,
   show,
+  changeBookHandler,
   backButtonHandler,
 }: BookInformationInputProps) {
-  const [name, setName] = React.useState<string | null>(null);
-  const [year, setYear] = React.useState<string | null>(null);
-  const [isbn, setIsbn] = React.useState<string | null>(null);
+  const [name, setName] = React.useState<string | undefined>(undefined);
+  const [year, setYear] = React.useState<number | undefined>(undefined);
+  const [isbn, setIsbn] = React.useState<number | undefined>(undefined);
 
+  /**
+   * This will encapsulate a new book if continue is pressed and some changes have been made
+   */
   const handleContinue = () => {
-    if (name?.trim() === '') setName(null);
-    if (year?.trim() === '') setYear(null);
-    if (isbn?.trim() === '') setIsbn(null);
+    if (name?.trim() === '') setName(undefined);
+    if (year === 0) setYear(undefined);
+    if (isbn === 0) setIsbn(undefined);
     const newBook: Book = {
       name: name ?? book?.name ?? '',
       uid: book?.uid ?? 0,
@@ -31,28 +44,43 @@ export default function BookInformationInput({
       image: book?.image ?? '',
       courseCodes: book?.courseCodes ?? [],
       authors: book?.authors ?? [],
-      isbn: book?.isbn ?? 0,
+      isbn: isbn ?? book?.isbn ?? 0,
       weight: book?.weight ?? 0,
-      year: book?.year ?? 0,
+      year: year ?? book?.year ?? 0,
     };
 
-    console.log(newBook);
+    changeBookHandler(newBook);
   };
 
+  /**
+   * Handles when the name is changed inside a text field, this is also used for error handling and preventing bad formatting from the user
+   * @param event this contains the value
+   */
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target as HTMLInputElement;
 
     setName(value);
   };
+  /**
+   * Handles when the year is changed inside a text field, this is also used for error handling and preventing bad formatting from the user
+   * @param event this contains the value
+   */
   const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target as HTMLInputElement;
 
-    setYear(value);
+    setYear(Number(+value));
   };
+
+  /**
+   * Handles when the Isbn is changed inside a text field, this is also used for error handling and preventing bad formatting from the user
+   * @param event this contains the value
+   */
   const handleIsbnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target as HTMLInputElement;
 
-    setIsbn(value);
+    if (value.length !== 13) return;
+
+    setIsbn(Number(value));
   };
 
   return (
@@ -122,7 +150,7 @@ export default function BookInformationInput({
               value={isbn}
               onChange={handleIsbnChange}
             />
-            <TextField id="outlined-basic" label="Authors" variant="outlined" />
+
             <Box width="100%" display="flex" justifyContent="center">
               <Button onClick={handleContinue} variant="contained">
                 Continue
