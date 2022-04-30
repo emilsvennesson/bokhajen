@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button, Fade, Stack, TextField, Typography } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 
@@ -23,10 +23,15 @@ export default function BookInformationInput({
   changeBookHandler,
   backButtonHandler,
 }: BookInformationInputProps) {
-  const [name, setName] = React.useState<string | undefined>(undefined);
-  const [year, setYear] = React.useState<number | undefined>(undefined);
-  const [isbn, setIsbn] = React.useState<number | undefined>(undefined);
+  const [name, setName] = React.useState<string | undefined>(book?.name ?? '');
+  const [year, setYear] = React.useState<number | undefined>(book?.year ?? 0);
+  const [isbn, setIsbn] = React.useState<number | undefined>(book?.isbn ?? 0);
 
+  useEffect(() => {
+    setName(book?.name ?? '');
+    setYear(book?.year ?? 0);
+    setIsbn(book?.isbn ?? 0);
+  }, [book]);
   /**
    * This will encapsulate a new book if continue is pressed and some changes have been made
    */
@@ -83,6 +88,12 @@ export default function BookInformationInput({
     setIsbn(Number(value));
   };
 
+  const handleReset = () => {
+    setName(book?.name ?? '');
+    setYear(book?.year ?? 0);
+    setIsbn(book?.isbn ?? 0);
+  };
+
   return (
     <Fade in={show}>
       <Box
@@ -113,6 +124,7 @@ export default function BookInformationInput({
           padding="30px"
           borderRadius={2}
           zIndex={1}
+          alignItems="center"
         >
           <Box width="100%">
             <Button onClick={() => backButtonHandler()} variant="contained">
@@ -125,6 +137,7 @@ export default function BookInformationInput({
             spacing={4}
             alignItems="center"
             justifyContent="center"
+            width={400}
           >
             <Typography variant="h3">Book Information</Typography>
             <Box component="img" src={book?.image ?? ''} width="200px" />
@@ -134,6 +147,7 @@ export default function BookInformationInput({
               variant="outlined"
               value={name}
               onChange={handleNameChange}
+              fullWidth
             />
             <TextField
               id="outlined-basic"
@@ -147,20 +161,28 @@ export default function BookInformationInput({
               id="outlined-basic"
               label="ISBN-Number"
               variant="outlined"
+              type="number"
+              defaultValue={book?.isbn}
               value={isbn}
               onChange={handleIsbnChange}
             />
 
-            <Box width="100%" display="flex" justifyContent="center">
+            <Stack
+              width="100%"
+              justifyContent="center"
+              direction="row"
+              spacing={1}
+            >
+              <Button onClick={handleReset} variant="contained">
+                Reset
+              </Button>
               <Button onClick={handleContinue} variant="contained">
                 Continue
               </Button>
-            </Box>
+            </Stack>
           </Stack>
         </Stack>
       </Box>
     </Fade>
   );
 }
-
-BookInformationInput.defaultProps = {};
