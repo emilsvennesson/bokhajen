@@ -15,33 +15,33 @@ interface SetPriceCardProps {
   book: Book | undefined;
   backButtonHandler: Function;
   continueButtonHandler: Function;
+  setPrice: Function;
   show?: boolean;
 }
 
 /**
  * SetPriceCard, this card has an absolute position in the middle of the screen with a grey background, the user can fill in a price and see a reference price from other apis bellow
- * @param book the book that the user will be referenced to get the price from other api's
- * @param backButtonHandler the handler that will execute when the user presses the back button
- * @param continueButtonHandler the handler that will execute when the user presses the continue button
- * @param show if true the card will be shown, set condition if you only want to show this card when that condition is true
+ * @param book : Book | undefined \ the book that the user will be referenced to get the price from other api's
+ * @param backButtonHandler : Function \ the handler that will execute when the user presses the back button
+ * @param continueButtonHandler : Function \ the handler that will execute when the user presses the continue button
+ * @param show : boolean? \ if true the card will be shown, set condition if you only want to show this card when that condition is true
  * @returns SetPriceCard component
  */
 export default function SetPriceCard({
   book,
   backButtonHandler,
   continueButtonHandler,
+  setPrice,
   show,
 }: SetPriceCardProps) {
-  const [price, setPrice] = React.useState(0);
   const textFieldRef = useRef('priceField');
 
   const handleContinue = () => {
-    continueButtonHandler(price);
+    continueButtonHandler();
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target as HTMLInputElement;
-
     setPrice(+value);
   };
 
