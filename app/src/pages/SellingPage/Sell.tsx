@@ -17,6 +17,7 @@ import CheckInformationCard from './CheckInformationCard';
 import ConditionCheckCard from './ConditionCheckCard';
 import SetPriceCard from './SetPriceCard';
 import BookInformationInput from './BookInformationInput';
+import Conditions from '../../config/Conditions';
 
 const steps = [
   'Find your book',
@@ -32,6 +33,9 @@ const steps = [
 export default function Sell() {
   const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
+  const [price, setPrice] = React.useState(0);
+  const [condition, setCondition] = React.useState(Conditions.good);
+
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
   /**
@@ -52,10 +56,10 @@ export default function Sell() {
    * This will be called when the user is completely done with this page
    * @param price the price that the user has set
    */
-  const handleDone = (price: number) => {
+  const handleDone = () => {
     const name = book?.name ?? '';
 
-    console.log(`${name} With price: ${price}`);
+    console.log(`${name} With price: ${price} and condition: ${condition}`);
   };
 
   const searchForBookWindow = (
@@ -82,7 +86,7 @@ export default function Sell() {
           onClick={() => {
             handleNext();
           }}
-          disabled={activeStep !== 0 || book === null}
+          disabled={activeStep !== 0 || book === undefined}
         >
           {'Get started ->'}
         </Button>
@@ -108,7 +112,10 @@ export default function Sell() {
     <Box flexGrow={1}>
       <ConditionCheckCard
         backButtonHandler={() => handleBack()}
-        nextButtonHandler={() => handleNext()}
+        nextButtonHandler={(incondition: string) => {
+          handleNext();
+          setCondition(incondition);
+        }}
         disabled={activeStep === 3}
       />
     </Box>
@@ -159,7 +166,10 @@ export default function Sell() {
       <SetPriceCard
         book={book}
         backButtonHandler={() => handleBack()}
-        continueButtonHandler={(price: number) => handleDone(price)}
+        setPrice={(inPrice: number) => setPrice(inPrice)}
+        continueButtonHandler={() => {
+          handleDone();
+        }}
         show={activeStep === 3}
       />
       <BookInformationInput
