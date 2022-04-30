@@ -11,6 +11,7 @@ import {
   Radio,
 } from '@mui/material';
 import React from 'react';
+import conditions from '../../config/Conditions';
 
 interface ConditionCheckCardProps {
   backButtonHandler: Function;
@@ -30,10 +31,14 @@ export default function ConditionCheckCard({
   nextButtonHandler,
   disabled,
 }: ConditionCheckCardProps) {
-  const [value, setValue] = React.useState('good');
+  const [condition, setCondition] = React.useState(conditions.good);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    setCondition((event.target as HTMLInputElement).value);
+  };
+
+  const handleContinue = () => {
+    nextButtonHandler(condition);
   };
   return (
     <Stack
@@ -64,19 +69,31 @@ export default function ConditionCheckCard({
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
-          value={value}
+          value={condition}
           onChange={handleChange}
         >
-          <FormControlLabel value="torn" control={<Radio />} label="Torn" />
-          <FormControlLabel value="good" control={<Radio />} label="Good" />
-          <FormControlLabel value="new" control={<Radio />} label="New" />
+          <FormControlLabel
+            value={conditions.torn}
+            control={<Radio />}
+            label="Torn"
+          />
+          <FormControlLabel
+            value={conditions.good}
+            control={<Radio />}
+            label="Good"
+          />
+          <FormControlLabel
+            value={conditions.new}
+            control={<Radio />}
+            label="New"
+          />
         </RadioGroup>
       </FormControl>
       <TextField label="describe the quality" />
       <Button
         variant="contained"
         size="large"
-        onClick={() => nextButtonHandler()}
+        onClick={handleContinue}
         disabled={disabled}
       >
         Continue
