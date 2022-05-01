@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { addDoc, collection, FirestoreError } from 'firebase/firestore';
 import db from '../firebase/db';
+import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 export interface Ad {
   adDescription: string;
@@ -15,13 +16,8 @@ export interface Ad {
   isbn: number;
 }
 
-interface Response {
-  success: boolean;
-  error?: string;
-}
-
 export default class AdService {
-  static async addAd(ad: Ad): Promise<Response> {
+  static async addAd(ad: Ad): Promise<ServiceSuccessResponse> {
     try {
       const docRef = await addDoc(collection(db, 'ads'), ad);
       console.log('Document written with ID: ', docRef.id);

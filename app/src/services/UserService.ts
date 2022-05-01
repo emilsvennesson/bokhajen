@@ -1,14 +1,10 @@
 import { User } from 'firebase/auth';
 import { doc, FirestoreError, setDoc } from 'firebase/firestore';
 import db from '../firebase/db';
-
-interface Response {
-  success: boolean;
-  error?: string;
-}
+import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 export default class UserService {
-  static async addUser(user: User): Promise<Response> {
+  static async addUser(user: User): Promise<ServiceSuccessResponse> {
     try {
       await setDoc(doc(db, 'users', user.uid), {
         email: user.email,
