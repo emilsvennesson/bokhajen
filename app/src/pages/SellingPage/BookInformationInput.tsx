@@ -164,6 +164,7 @@ export default function BookInformationInput({
               type="number"
               defaultValue={book?.isbn}
               value={isbn}
+              disabled
               onChange={handleIsbnChange}
             />
 
@@ -177,7 +178,7 @@ export default function BookInformationInput({
                 Reset
               </Button>
               <Button onClick={handleContinue} variant="contained">
-                Continue
+                Save
               </Button>
             </Stack>
           </Stack>
