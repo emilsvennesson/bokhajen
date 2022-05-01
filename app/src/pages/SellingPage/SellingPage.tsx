@@ -30,7 +30,7 @@ const steps = [
  *
  * @returns
  */
-export default function Sell() {
+export default function SellingPage() {
   const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
   const [price, setPrice] = React.useState(0);
@@ -127,7 +127,13 @@ export default function Sell() {
 
   return (
     <Box>
-      <Stack padding="2%" bgcolor="#C4C4C4" direction="column" spacing={2}>
+      <Stack
+        padding="2%"
+        paddingTop={1}
+        bgcolor="#C4C4C4"
+        direction="column"
+        spacing={2}
+      >
         {/** Title */}
         <Box bgcolor="white" borderRadius="8px" padding={5} flexGrow={3}>
           <Typography variant="h3" margin="30px">
