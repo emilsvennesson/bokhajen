@@ -22,7 +22,7 @@ interface ConditionCheckCardProps {
 /**
  * This is an interface that gives the relevant input components for the user to use in order to define the quality off the book
  * @param backButtonHandler : Function \ This will excecute when the back button is clicked
- * @param nextButtonHandler : Function \ This will excecute when the next button is clicked
+ * @param nextButtonHandler : Function \ This will excecute when the next button is clicked, will fetch condition and describtion in parameters
  * @param disabled : boolean \ When this is true the buttons and textfields will be disabled
  * @returns ConditionCheckCard component
  */
@@ -32,13 +32,22 @@ export default function ConditionCheckCard({
   disabled,
 }: ConditionCheckCardProps) {
   const [condition, setCondition] = React.useState(conditions.good);
+  const [describtion, setDescribtion] = React.useState('');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleConditionChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setCondition((event.target as HTMLInputElement).value);
   };
 
+  const handleDescribtionChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setDescribtion((event.target as HTMLInputElement).value);
+  };
+
   const handleContinue = () => {
-    nextButtonHandler(condition);
+    nextButtonHandler(condition, describtion);
   };
   return (
     <Stack
@@ -70,7 +79,7 @@ export default function ConditionCheckCard({
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={condition}
-          onChange={handleChange}
+          onChange={handleConditionChange}
         >
           <FormControlLabel
             value={conditions.torn}
@@ -89,7 +98,11 @@ export default function ConditionCheckCard({
           />
         </RadioGroup>
       </FormControl>
-      <TextField label="describe the quality" />
+      <TextField
+        value={describtion}
+        onChange={handleDescribtionChange}
+        label="describe the quality"
+      />
       <Button
         variant="contained"
         size="large"

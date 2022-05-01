@@ -35,6 +35,7 @@ export default function Sell() {
   const [edit, setEdit] = React.useState(false);
   const [price, setPrice] = React.useState(0);
   const [condition, setCondition] = React.useState(Conditions.good);
+  const [describtion, setdescribtion] = React.useState('');
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
@@ -59,7 +60,9 @@ export default function Sell() {
   const handleDone = () => {
     const name = book?.name ?? '';
 
-    console.log(`${name} With price: ${price} and condition: ${condition}`);
+    console.log(
+      `${name} With price: ${price} and condition: ${condition} with describtion ${describtion}`,
+    );
   };
 
   const searchForBookWindow = (
@@ -112,9 +115,10 @@ export default function Sell() {
     <Box flexGrow={1}>
       <ConditionCheckCard
         backButtonHandler={() => handleBack()}
-        nextButtonHandler={(incondition: string) => {
+        nextButtonHandler={(incondition: string, inDescribtion: string) => {
           handleNext();
           setCondition(incondition);
+          setdescribtion(inDescribtion);
         }}
         disabled={activeStep === 3}
       />
