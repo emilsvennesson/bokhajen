@@ -60,6 +60,7 @@ export default function SellingPage() {
   const handleDone = () => {
     const name = book?.name ?? '';
 
+    // eslint-disable-next-line no-console
     console.log(
       `${name} With price: ${price} and condition: ${condition} with describtion ${describtion}`,
     );
