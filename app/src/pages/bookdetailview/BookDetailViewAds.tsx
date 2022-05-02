@@ -1,26 +1,73 @@
 import {
   Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
   Button,
+  Container,
+  Avatar,
 } from '@mui/material';
 import { useState } from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function BookDetailViewAds() {
-  const [ads] = useState(['ad1', 'ad2', 'ad3', 'ad4', 'ad5']);
+  const [ads] = useState([
+    'seller1',
+    'seller2',
+    'seller3',
+    'seller4',
+    'seller5',
+    'seller6',
+    'seller7',
+    'seller8',
+  ]);
 
   const createAdItem = (ad: any) => (
     <Box key={ad}>
-      <ListItem sx={{ padding: 0.5, width: 350 }}>
-        <Box sx={{ border: 1, width: '100%' }}>
-          <ListItemButton>
-            <ListItemText primary={ad} />
-          </ListItemButton>
-        </Box>
-      </ListItem>
+      <Accordion sx={{ marginTop: 1 }}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Avatar
+            sx={{ marginLeft: 1, marginRight: 1 }}
+            alt="Remy Sharp"
+            src="../assets/images/bok.png"
+          />
+          <Typography sx={{ width: '20%', flexShrink: 0, margin: 'auto' }}>
+            {ad}
+          </Typography>
+          <Typography
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              margin: 'auto',
+            }}
+          >
+            Condition
+          </Typography>
+          <Typography
+            sx={{
+              marginRight: 1,
+              display: 'flex',
+              justifyContent: 'end',
+              flexGrow: 1,
+              margin: 'auto',
+            }}
+          >
+            Pris kr
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
       <Divider />
     </Box>
   );
@@ -28,17 +75,13 @@ function BookDetailViewAds() {
   return (
     <Box
       sx={{
-        width: '100%',
-        maxWidth: 360,
-        bgcolor: 'white',
-        border: 1,
         marginTop: 5,
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
       }}
     >
-      <nav>
-        <List>{ads.map((ad: any) => createAdItem(ad))}</List>
+      {ads.map((ad: any) => createAdItem(ad))}
+      <Container sx={{ display: 'flex', justifyContent: 'center' }}>
         <Button
           variant="contained"
           sx={{
@@ -49,7 +92,7 @@ function BookDetailViewAds() {
         >
           Sälj denna bok
         </Button>
-      </nav>
+      </Container>
     </Box>
   );
 }
