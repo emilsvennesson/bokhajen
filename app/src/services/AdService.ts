@@ -4,16 +4,11 @@ import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 export interface Ad {
-  adDescription: string;
-  adPrice: number;
-  authors: string[];
-  bookDescription: string;
-  bookName: string;
-  courseCodes: string[];
-  tags: string[];
-  publishDate: Date;
-  wear: number;
-  isbn: number;
+  bookId: string;
+  userId: string;
+  price: number;
+  condition: string;
+  conditionDescription: string;
 }
 
 export default class AdService {
