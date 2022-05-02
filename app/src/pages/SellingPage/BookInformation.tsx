@@ -53,7 +53,7 @@ export default function BookInformation({
           {isbn ?? (book?.isbn?.toString() ? book.isbn.toString() : '')}
         </InformationTextLine>
         <InformationTextLine textBold label="Author:">
-          {authors?.toString() ?? book?.authors.toString() ?? ''}
+          {authors?.toString() ?? book?.authors?.toString() ?? ''}
         </InformationTextLine>
       </Box>
     </Box>

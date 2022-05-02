@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Box, Button, Fade, Stack, TextField, Typography } from '@mui/material';
-import { Book } from 'cremona/dist/Book';
+import { Book } from 'cremona';
 
 interface BookInformationInputProps {
   book: Book | undefined;
@@ -42,7 +42,7 @@ export default function BookInformationInput({
     const newBook: Book = {
       name: name ?? book?.name ?? '',
       uid: book?.uid ?? 0,
-      articleNumber: book?.articleNumber ?? '',
+      articleNumber: book?.articleNumber ?? 0,
       description: book?.description ?? '',
       price: book?.price ?? 0,
       url: book?.url ?? [],

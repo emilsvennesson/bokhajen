@@ -1,7 +1,7 @@
 import React from 'react';
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
-import { Book } from 'cremona/dist/Book';
-import CremonaClient from 'cremona';
+
+import { Book, CremonaClient } from 'cremona';
 
 interface SearchBookProps {
   bookSearchHandler: Function;
