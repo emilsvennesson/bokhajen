@@ -1,12 +1,15 @@
 import {
-  Box,
-  Divider,
-  Accordion,
   AccordionSummary,
   AccordionDetails,
   Typography,
   Button,
-  Container,
+  SelectChangeEvent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Accordion,
+  Box,
   Avatar,
 } from '@mui/material';
 import { useState } from 'react';
@@ -23,6 +26,12 @@ function BookDetailViewAds() {
     'seller7',
     'seller8',
   ]);
+
+  const [sort, setSort] = useState('');
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSort(event.target.value as string);
+  };
 
   const createAdItem = (ad: any) => (
     <Box key={ad}>
@@ -62,39 +71,68 @@ function BookDetailViewAds() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <Button
+            variant="contained"
+            sx={{ bottom: 10, right: 10, position: 'absolute' }}
+          >
+            Kontakta säljaren
+          </Button>
           <Typography>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             malesuada lacus ex, sit amet blandit leo lobortis eget.
           </Typography>
         </AccordionDetails>
       </Accordion>
-      <Divider />
     </Box>
   );
 
   return (
     <Box
       sx={{
-        marginTop: 5,
+        marginTop: '10%',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      {ads.map((ad: any) => createAdItem(ad))}
-      <Container sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button
-          variant="contained"
+      <Box sx={{ display: 'flex' }}>
+        <Box
           sx={{
-            position: 'fixed',
-            bottom: '0',
-            marginBottom: 1,
+            display: 'flex',
+            flex: 3,
+            margin: 'auto',
+            justifyContent: 'center',
           }}
         >
-          Sälj denna bok
-        </Button>
-      </Container>
+          <Typography variant="h3">Annonser</Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            flex: 1,
+            justifyContent: 'end',
+          }}
+        >
+          <FormControl sx={{ m: 1, minWidth: 95 }}>
+            <InputLabel id="sorting-label">Sortera</InputLabel>
+            <Select
+              labelId="sorting-label"
+              id="sorting"
+              value={sort}
+              label="Sortera"
+              onChange={handleChange}
+              autoWidth
+            >
+              <MenuItem value={10}>Lägst pris först</MenuItem>
+              <MenuItem value={20}>Högst pris först</MenuItem>
+              <MenuItem value={30}>Bäst skick först</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+
+      {ads.map((ad: any) => createAdItem(ad))}
     </Box>
   );
 }
-
 export default BookDetailViewAds;
