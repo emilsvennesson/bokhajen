@@ -17,7 +17,7 @@ export default function BookCard({ book }: CardProps) {
   if (!book) {
     return (
       <Card sx={{ maxWidth: WIDTH, maxHeight: HEIGHT, minHeight: HEIGHT }}>
-        <Skeleton variant="rectangular" width={200} height={350} />
+        <Skeleton variant="rectangular" width={WIDTH} height={HEIGHT} />
       </Card>
     );
   }
