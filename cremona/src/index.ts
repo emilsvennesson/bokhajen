@@ -1,3 +1,4 @@
 import { CremonaClient } from './Client.js';
+import { Book } from './Book.js';
 
-export default CremonaClient;
+export { CremonaClient, Book };

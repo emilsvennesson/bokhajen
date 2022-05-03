@@ -25,6 +25,10 @@
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "rules": {
+    "no-console": [
+      "warn",
+      { "allow": ["clear", "info", "error", "dir", "trace", "log"] }
+    ],
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "no-use-before-define": "off",
@@ -35,6 +39,7 @@
     "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "react/require-default-props": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
