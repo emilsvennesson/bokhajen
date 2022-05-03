@@ -26,7 +26,7 @@ export default function CategoriesGrid({ title, books }: GridProps) {
               </Grid>
             ))}
           {books.map((book: Book) => (
-            <Grid item md={2} zeroMinWidth key={book.uid}>
+            <Grid item xs={6} md={2} zeroMinWidth key={book.uid}>
               <BookCard book={book} />
             </Grid>
           ))}
