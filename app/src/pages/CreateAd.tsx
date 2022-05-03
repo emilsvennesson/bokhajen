@@ -1,20 +1,31 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import { useAuth } from '../hooks/FBAuthProvider';
 import AdService, { Ad } from '../services/AdService';
 
 export default function CreateAd() {
-  const [ad] = useState<Ad>({
-    uid: '11111',
-    bookId: '12332',
-    price: 300,
-    condition: 'new',
-    conditionDescribtion: ' just as new',
-  });
+  const { user } = useAuth();
 
   const submitAd = () => {
-    AdService.publishAd(ad).then((res) => {
+    if (!user) return;
+
+    const inAd: Ad = {
+      uid: user.uid,
+      bookId: '1234123123',
+      price: 300,
+      condition: 'new',
+      conditionDescribtion: 'hejsvej',
+    };
+
+    AdService.publishAd(inAd).then((res) => {
       // eslint-disable-next-line no-console
       console.log('ad added', res);
+    });
+  };
+
+  const getAds = () => {
+    AdService.getAds().then((res) => {
+      console.log(res.data);
     });
   };
 
@@ -22,6 +33,9 @@ export default function CreateAd() {
     <div>
       <Button variant="outlined" onClick={submitAd}>
         Commit die
+      </Button>
+      <Button variant="outlined" onClick={getAds}>
+        get die
       </Button>
     </div>
   );
