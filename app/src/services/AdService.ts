@@ -8,6 +8,8 @@ import {
   query,
   addDoc,
   where,
+  doc,
+  deleteDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
@@ -100,5 +102,13 @@ export default class AdService {
    */
   static async getAdsFromBook(book: Book): Promise<ServiceSuccessResponse> {
     return this.getAds(book);
+  }
+
+  static async removeAd(adId: string): Promise<ServiceSuccessResponse> {
+    const success = await deleteDoc(doc(db, 'ads', adId))
+      .then(() => ({ success: true }))
+      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+
+    return success;
   }
 }
