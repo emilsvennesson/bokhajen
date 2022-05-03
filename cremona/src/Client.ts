@@ -117,11 +117,4 @@ export class CremonaClient {
     const result = await rclient.request(payload);
     return resultToBooksArray(result);
   }
-
-  /**
-   * Closes the WebSocket connection.
-   */
-  close() {
-    rclient.close();
-  }
 }
