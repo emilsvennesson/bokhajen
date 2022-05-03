@@ -1,4 +1,12 @@
-import { Box, List, Modal, TextField, Divider } from '@mui/material';
+import {
+  Box,
+  List,
+  Modal,
+  TextField,
+  Divider,
+  Typography,
+} from '@mui/material';
+import SentimentVeryDissatisfiedSharpIcon from '@mui/icons-material/SentimentVeryDissatisfiedSharp';
 import { Book } from 'cremona';
 import React, { useEffect, useState } from 'react';
 import SearchService from '../../services/SearchService';
@@ -13,11 +21,15 @@ export default function SearchModal({ query, onChange }: Props) {
   const [results, setResults] = useState<Book[]>([]);
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
+  const [loadingBooks, setLoadingBooks] = useState(true);
 
   useEffect(() => {
     const search = async () => {
+      setLoadingBooks(true);
       const books = await SearchService.search(query);
+
       setResults(books);
+      setLoadingBooks(false);
     };
     search();
   }, [query]);
@@ -60,18 +72,29 @@ export default function SearchModal({ query, onChange }: Props) {
             maxHeight: '100%',
             height: '80%',
             mt: 1,
-            '&::-webkit-scrollbar': {
-              width: 7,
-            },
-            '&::-webkit-scrollbar-track': {
-              boxShadow: `inset 0 0 6px rgba(0, 0, 0, 0.3)`,
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: 'darkgrey',
-              outline: `1px solid slategrey`,
-            },
           }}
         >
+          {loadingBooks &&
+            [...Array(3)].map((e, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <SearchResultItem key={i} />
+            ))}
+          {query.length >= 3 && results.length === 0 && !loadingBooks && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}
+            >
+              <Typography variant="h6">Hittade inga böcker</Typography>
+              <SentimentVeryDissatisfiedSharpIcon
+                color="secondary"
+                sx={{ fontSize: 80 }}
+              />
+            </Box>
+          )}
           {results.map((book) => (
             <SearchResultItem key={book.uid} book={book} />
           ))}
