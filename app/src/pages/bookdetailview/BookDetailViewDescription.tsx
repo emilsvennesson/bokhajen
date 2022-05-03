@@ -49,7 +49,8 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 }}
               >
                 {/* AUTHORS */}
-                {book.authors.length !== 0 &&
+                {book.authors !== undefined &&
+                  book.authors.length !== 0 &&
                   `Författare: ${book.authors.join(', ')}`}
               </Typography>
               <Typography
@@ -112,7 +113,8 @@ export default function BookDetailViewDescription({ newBook }: Props) {
             {book.description}
             <br />
             <br />
-            {book.courseCodes.length !== 0 &&
+            {book.courseCodes !== undefined &&
+              book.courseCodes.length !== 0 &&
               `Kurskoder: ${book.courseCodes.join(', ')}`}
           </Typography>
         </Container>
