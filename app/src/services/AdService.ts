@@ -10,6 +10,7 @@ import {
   where,
   doc,
   deleteDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
@@ -81,6 +82,27 @@ export default class AdService {
   }
 
   /**
+   * This edits a document in the connected Firebase Firestore
+   * @param ad the ad that should be edited
+   * @param data the data that should be changed, Ex input {condition: newCondition} or {price: newPrice}
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  private static async editAd(
+    ad: Ad,
+    data: {
+      [x: string]: any;
+    },
+  ): Promise<ServiceSuccessResponse> {
+    const docRef = doc(db, 'ads', ad.uid);
+
+    await updateDoc(docRef, data)
+      .then(() => ({ success: true }))
+      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+
+    return { success: true };
+  }
+
+  /**
    * This will retrun all the ads that have been published
    * @returns Promise<ServiceSuccessResponse>
    */
@@ -117,5 +139,44 @@ export default class AdService {
       .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
 
     return success;
+  }
+
+  /**
+   * Edits the price of an ad
+   * @param ad the ad that will be altered
+   * @param newPrice the new price that will be set on the ad
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  static async editAdPrice(
+    ad: Ad,
+    newPrice: number,
+  ): Promise<ServiceSuccessResponse> {
+    return this.editAd(ad, { price: newPrice });
+  }
+
+  /**
+   * Edits a condition of an ad
+   * @param ad the ad that will be altered
+   * @param newCondition the new condition that will be set on the ad
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  static async editAdCondition(
+    ad: Ad,
+    newCondition: string,
+  ): Promise<ServiceSuccessResponse> {
+    return this.editAd(ad, { condition: newCondition });
+  }
+
+  /**
+   * Edits the condition describtion of an ad
+   * @param ad the ad that will be altered
+   * @param newConditionDescribtion the new condition describtion that will be set on the ad
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  static async editAdConditionDescribtion(
+    ad: Ad,
+    newConditionDescribtion: string,
+  ): Promise<ServiceSuccessResponse> {
+    return this.editAd(ad, { conditionDescribtion: newConditionDescribtion });
   }
 }
