@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Book } from 'cremona';
+import { Link } from 'react-router-dom';
 import { mainTheme } from '../../theme';
 
 interface CardProps {
@@ -13,6 +14,8 @@ export default function BookCard({ book }: CardProps) {
   return (
     <Card sx={{ maxWidth: '200px' }}>
       <CardActionArea
+        component={Link}
+        to={`books/${book.uid}`}
         sx={{ '&:hover': { color: mainTheme.palette.secondary.main } }}
       >
         <CardMedia
