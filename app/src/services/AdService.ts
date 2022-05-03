@@ -35,9 +35,9 @@ export default class AdService {
     }
   }
 
-  static async getAds(
-    book: Book | undefined = undefined,
-    user: User | undefined = undefined,
+  private static async getAds(
+    book?: Book | null,
+    user?: User | null,
   ): Promise<ServiceSuccessResponse> {
     const queryConstraints = [];
     if (book) queryConstraints.push(where('bookId', '==', book.uid));
@@ -61,5 +61,17 @@ export default class AdService {
     });
 
     return { success: true, data: ads };
+  }
+
+  static async getAllAds(): Promise<ServiceSuccessResponse> {
+    return this.getAds();
+  }
+
+  static async getAdsFromUser(user: User): Promise<ServiceSuccessResponse> {
+    return this.getAds(null, user);
+  }
+
+  static async getAdsFromBook(book: Book): Promise<ServiceSuccessResponse> {
+    return this.getAds(book);
   }
 }
