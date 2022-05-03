@@ -29,8 +29,6 @@ export default function CreateAd() {
     AdService.getAdsFromUser(user).then((res) => {
       console.log(res.data);
     });
-
-    AdService.removeAd('LOUooKzcyftgOsTXeiEn');
   };
 
   return (
