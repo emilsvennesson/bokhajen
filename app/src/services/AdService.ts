@@ -78,7 +78,7 @@ export default class AdService {
       ads.push(ad);
     });
 
-    return { success: true, data: ads };
+    return { success: true, ads };
   }
 
   /**
@@ -88,12 +88,12 @@ export default class AdService {
    * @returns Promise<ServiceSuccessResponse>
    */
   private static async editAd(
-    ad: Ad,
+    adId: string,
     data: {
       [x: string]: any;
     },
   ): Promise<ServiceSuccessResponse> {
-    const docRef = doc(db, 'ads', ad.uid);
+    const docRef = doc(db, 'ads', adId);
 
     await updateDoc(docRef, data)
       .then(() => ({ success: true }))
@@ -130,11 +130,11 @@ export default class AdService {
 
   /**
    * Removes an add from the connected Firebase
-   * @param ad the ad that will be deleted
+   * @param adId the ID of the ad that will be deleted
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async removeAd(ad: Ad): Promise<ServiceSuccessResponse> {
-    const success = await deleteDoc(doc(db, 'ads', ad.uid))
+  static async removeAd(adId: string): Promise<ServiceSuccessResponse> {
+    const success = await deleteDoc(doc(db, 'ads', adId))
       .then(() => ({ success: true }))
       .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
 
@@ -143,40 +143,40 @@ export default class AdService {
 
   /**
    * Edits the price of an ad
-   * @param ad the ad that will be altered
+   * @param adId the id of the ad that will be altered
    * @param newPrice the new price that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdPrice(
-    ad: Ad,
+    adId: string,
     newPrice: number,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(ad, { price: newPrice });
+    return this.editAd(adId, { price: newPrice });
   }
 
   /**
    * Edits a condition of an ad
-   * @param ad the ad that will be altered
+   * @param adId the id of the ad that will be altered
    * @param newCondition the new condition that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdCondition(
-    ad: Ad,
+    adId: string,
     newCondition: string,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(ad, { condition: newCondition });
+    return this.editAd(adId, { condition: newCondition });
   }
 
   /**
    * Edits the condition describtion of an ad
-   * @param ad the ad that will be altered
+   * @param adId the id of the ad that will be altered
    * @param newConditionDescribtion the new condition describtion that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdConditionDescribtion(
-    ad: Ad,
+    adId: string,
     newConditionDescribtion: string,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(ad, { conditionDescribtion: newConditionDescribtion });
+    return this.editAd(adId, { conditionDescribtion: newConditionDescribtion });
   }
 }
