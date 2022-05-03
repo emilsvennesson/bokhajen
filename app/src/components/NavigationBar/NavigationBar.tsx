@@ -10,7 +10,7 @@ import {
   alpha,
   InputBase,
 } from '@mui/material';
-import { NavAvatar } from './NavAvatar';
+import NavAvatar from './NavAvatar';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
