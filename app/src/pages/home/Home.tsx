@@ -4,10 +4,11 @@ import { Fragment, useEffect, useState } from 'react';
 import bok from '../../assets/images/bok.png';
 import CategoriesGrid from './CategoriesGrid';
 
+const CATEGORIES = ['Populär studentlitteratur', 'Matematik', 'Susvetenskap'];
+const GRID_SIZE = 6;
 const client = new CremonaClient();
 
 export default function Home() {
-  const categories = ['Populär studentlitteratur', 'Matematik', 'Susvetenskap'];
   const [books, setBooks] = useState<Book[]>([]);
   let sliceIndex = 0;
 
@@ -28,7 +29,6 @@ export default function Home() {
         justifyContent="center"
         alignItems="center"
       >
-        {/* Header */}
         <Box
           component="header"
           width="100%"
@@ -38,22 +38,21 @@ export default function Home() {
           alignItems="center"
           bgcolor="#DFDDDD"
         >
-          {/* LOGO */}
           <Box component="img" height={250} src={bok} />
         </Box>
       </Box>
       <Box component="main">
-        {categories.map((name: string) => {
+        {CATEGORIES.map((name: string) => {
           const carousel = (
             <Fragment key={sliceIndex}>
               <CategoriesGrid
                 title={name}
-                books={books.slice(sliceIndex, sliceIndex + 6)}
+                books={books.slice(sliceIndex, sliceIndex + GRID_SIZE)}
               />
               <Divider />
             </Fragment>
           );
-          sliceIndex += 6;
+          sliceIndex += GRID_SIZE;
           return carousel;
         })}
       </Box>
