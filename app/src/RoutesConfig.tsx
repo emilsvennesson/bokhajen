@@ -17,7 +17,6 @@ export default function RoutesConfig() {
       <Route path="ad" element={<CreateAd />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="invalidpage" element={<InvalidPage />} />
       <Route path="*" element={<InvalidPage />} />
     </Routes>
   );
