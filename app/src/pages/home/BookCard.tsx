@@ -7,8 +7,8 @@ import { Book } from 'cremona';
 import { Link } from 'react-router-dom';
 import { mainTheme } from '../../theme';
 
-const HEIGHT = 340;
-const WIDTH = 200;
+const HEIGHT = 300;
+const WIDTH = 230;
 interface CardProps {
   book?: Book;
 }
@@ -30,7 +30,7 @@ export default function BookCard({ book }: CardProps) {
       >
         <CardMedia
           component="img"
-          height="250"
+          height="200"
           image={book.image}
           alt="book image"
         />
