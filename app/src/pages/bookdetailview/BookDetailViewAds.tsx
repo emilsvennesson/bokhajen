@@ -2,7 +2,6 @@ import {
   AccordionSummary,
   AccordionDetails,
   Typography,
-  Button,
   SelectChangeEvent,
   FormControl,
   InputLabel,
@@ -11,6 +10,9 @@ import {
   Accordion,
   Box,
   Avatar,
+  Button,
+  Stack,
+  Divider,
 } from '@mui/material';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -71,16 +73,29 @@ function BookDetailViewAds() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Button
-            variant="contained"
-            sx={{ bottom: 10, right: 10, position: 'absolute' }}
-          >
-            Kontakta säljaren
-          </Button>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <Stack direction="column">
+            <Box sx={{ display: 'flex', flex: 5, border: 0 }}>
+              <Typography>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+                eget.
+              </Typography>
+            </Box>
+            <Divider sx={{ margin: 1 }} />
+            <Box
+              sx={{
+                display: 'flex',
+                flex: 3,
+                border: 0,
+                justifyContent: 'center',
+                margin: 'auto',
+                marginBottom: 0,
+                marginTop: 1,
+              }}
+            >
+              <Button variant="contained">Kontakta säljaren</Button>
+            </Box>
+          </Stack>
         </AccordionDetails>
       </Accordion>
     </Box>
@@ -100,7 +115,7 @@ function BookDetailViewAds() {
             display: 'flex',
             flex: 3,
             margin: 'auto',
-            justifyContent: 'center',
+            justifyContent: 'start',
           }}
         >
           <Typography variant="h3">Annonser</Typography>
