@@ -12,7 +12,7 @@ import { Book } from 'cremona/dist/Book';
 import React, { useRef } from 'react';
 
 interface SetPriceCardProps {
-  book: Book | undefined;
+  book?: Book;
   backButtonHandler: Function;
   continueButtonHandler: Function;
   setPrice: Function;

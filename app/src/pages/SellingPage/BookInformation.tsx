@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import InformationTextLine from '../../components/InformationTextLine';
 
 interface BookInformationProps {
-  book: Book | undefined;
+  book?: Book;
   name?: string;
   year?: string;
   isbn?: string;
@@ -23,10 +23,10 @@ interface BookInformationProps {
  */
 export default function BookInformation({
   book,
-  name = undefined,
-  year = undefined,
-  isbn = undefined,
-  authors = undefined,
+  name,
+  year,
+  isbn,
+  authors,
 }: BookInformationProps) {
   return (
     <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">

@@ -5,7 +5,7 @@ import { Book, CremonaClient } from 'cremona';
 
 interface SearchBookProps {
   bookSearchHandler: Function;
-  disabled: boolean | undefined;
+  disabled?: boolean;
 }
 
 /**
@@ -30,10 +30,10 @@ export default function SearchBook({
 
     (async () => {
       const client = new CremonaClient();
-      const ding = await client.getBooks();
+      const cremonaBooks = await client.getBooks();
 
       if (active) {
-        setOptions([...ding]);
+        setOptions([...cremonaBooks]);
       }
     })();
 
