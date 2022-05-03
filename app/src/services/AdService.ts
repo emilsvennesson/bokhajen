@@ -13,16 +13,10 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
-import ServiceSuccessResponse from './ServiceSuccessResponse';
-
-export interface Ad {
-  uid: string;
-  userId: string;
-  bookId: string;
-  price: number;
-  condition: string;
-  conditionDescription: string;
-}
+import ServiceSuccessResponse, {
+  FetchAdvertSuccessResponse,
+} from './ServiceSuccessResponse';
+import Advert from './Advert';
 
 /**
  * Handles all fetching and publishing of ads
@@ -32,7 +26,7 @@ export interface Ad {
  * @author [Johan Blickhammar](https://github.com/JohanBlickhammar)
  */
 export default class AdService {
-  static async publishAd(ad: Ad): Promise<ServiceSuccessResponse> {
+  static async publishAd(ad: Advert): Promise<ServiceSuccessResponse> {
     try {
       const docRef = await addDoc(collection(db, 'ads'), ad);
       console.log('Document written with ID: ', docRef.id);
@@ -55,18 +49,18 @@ export default class AdService {
   private static async getAds(
     book?: Book | null,
     user?: User | null,
-  ): Promise<ServiceSuccessResponse> {
+  ): Promise<FetchAdvertSuccessResponse> {
     const queryConstraints = [];
     if (book) queryConstraints.push(where('bookId', '==', book.uid));
     if (user) queryConstraints.push(where('uid', '==', user.uid));
 
     const q = query(collection(db, 'ads'), ...queryConstraints);
 
-    const ads: Ad[] = [];
+    const ads: Advert[] = [];
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((docs) => {
-      const ad: Ad = {
+      const ad: Advert = {
         uid: docs.id,
         userId: docs.data().uid,
         bookId: docs.data().bookId,
@@ -130,11 +124,11 @@ export default class AdService {
 
   /**
    * Removes an add from the connected Firebase
-   * @param adId the ID of the ad that will be deleted
+   * @param adUid the ID of the ad that will be deleted
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async removeAd(adId: string): Promise<ServiceSuccessResponse> {
-    const success = await deleteDoc(doc(db, 'ads', adId))
+  static async removeAd(adUid: string): Promise<ServiceSuccessResponse> {
+    const success = await deleteDoc(doc(db, 'ads', adUid))
       .then(() => ({ success: true }))
       .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
 
@@ -143,40 +137,42 @@ export default class AdService {
 
   /**
    * Edits the price of an ad
-   * @param adId the id of the ad that will be altered
+   * @param adUid the id of the ad that will be altered
    * @param newPrice the new price that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdPrice(
-    adId: string,
+    adUid: string,
     newPrice: number,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(adId, { price: newPrice });
+    return this.editAd(adUid, { price: newPrice });
   }
 
   /**
    * Edits a condition of an ad
-   * @param adId the id of the ad that will be altered
+   * @param adUid the id of the ad that will be altered
    * @param newCondition the new condition that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdCondition(
-    adId: string,
+    adUid: string,
     newCondition: string,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(adId, { condition: newCondition });
+    return this.editAd(adUid, { condition: newCondition });
   }
 
   /**
    * Edits the condition describtion of an ad
-   * @param adId the id of the ad that will be altered
+   * @param adUid the id of the ad that will be altered
    * @param newConditionDescription the new condition describtion that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
   static async editAdConditionDescription(
-    adId: string,
+    adUid: string,
     newConditionDescription: string,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(adId, { conditionDescribtion: newConditionDescription });
+    return this.editAd(adUid, {
+      conditionDescribtion: newConditionDescription,
+    });
   }
 }
