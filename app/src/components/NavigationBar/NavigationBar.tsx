@@ -11,6 +11,7 @@ import {
   InputBase,
 } from '@mui/material';
 import NavAvatar from './NavAvatar';
+import { useAuth } from '../../hooks/FBAuthProvider';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,6 +47,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function NavigationBar() {
+  const auth = useAuth();
+  const sellNavigation = () => {
+    if (auth.user) return '/sellpage';
+    return '/login';
+  };
   return (
     <Box component="nav" sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -76,7 +82,7 @@ function NavigationBar() {
               {/* SELL BUTTON */}
               <Button
                 component={Link}
-                to="/article"
+                to={sellNavigation()}
                 color="secondary"
                 variant="contained"
                 size="large"
