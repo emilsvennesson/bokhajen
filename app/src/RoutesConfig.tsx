@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Article from './pages/Article';
 import AuthTest from './pages/AuthTest';
 import CreateAd from './pages/CreateAd';
@@ -18,7 +18,7 @@ export default function RoutesConfig() {
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="invalidpage" element={<InvalidPage />} />
-      <Route path="*" element={<Navigate to="/invalidpage" />} />
+      <Route path="*" element={<InvalidPage />} />
     </Routes>
   );
 }
