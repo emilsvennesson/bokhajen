@@ -1,4 +1,5 @@
-import { Box, CardActionArea, Typography } from '@mui/material';
+/* eslint-disable react/require-default-props */
+import { Box, CardActionArea, Skeleton, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -6,13 +7,22 @@ import { Book } from 'cremona';
 import { Link } from 'react-router-dom';
 import { mainTheme } from '../../theme';
 
+const HEIGHT = 340;
+const WIDTH = 200;
 interface CardProps {
-  book: Book;
+  book?: Book;
 }
 
 export default function BookCard({ book }: CardProps) {
+  if (!book) {
+    return (
+      <Card sx={{ maxWidth: WIDTH, maxHeight: HEIGHT, minHeight: HEIGHT }}>
+        <Skeleton variant="rectangular" width={200} height={350} />
+      </Card>
+    );
+  }
   return (
-    <Card sx={{ maxWidth: '200px' }}>
+    <Card sx={{ maxWidth: WIDTH, maxHeight: HEIGHT, minHeight: HEIGHT }}>
       <CardActionArea
         component={Link}
         to={`books/${book.uid}`}
