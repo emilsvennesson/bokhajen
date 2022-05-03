@@ -49,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function NavigationBar() {
   const auth = useAuth();
   const sellNavigation = () => {
-    if (auth.user) return '/sellpage';
+    if (auth.user) return '/sell';
     return '/login';
   };
   return (
