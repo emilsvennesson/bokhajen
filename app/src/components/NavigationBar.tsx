@@ -14,6 +14,7 @@ import {
   Avatar,
   Menu,
 } from '@mui/material';
+import { useAuth } from '../hooks/FBAuthProvider';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,6 +49,60 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+function AccountStatus() {
+  const auth = useAuth();
+
+  if (auth.user)
+    return (
+      <Box sx={{ flexGrow: 0 }}>
+        <Tooltip title="Open account settings">
+          <IconButton sx={{ p: 0 }}>
+            <Avatar alt="Remy Sharp" src="../assets/images/bok.png" />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={false}
+        />
+      </Box>
+    );
+
+  return (
+    <Box sx={{ flexGrow: 0 }}>
+      {/* REGISTRATIONS BUTTON */}
+      <Button
+        component={Link}
+        to="/article"
+        color="secondary"
+        variant="outlined"
+        size="large"
+      >
+        Registrera
+      </Button>
+      {/* LOGIN BUTTON */}
+      <Button
+        component={Link}
+        to="/article"
+        color="secondary"
+        variant="text"
+        size="large"
+      >
+        Logga in
+      </Button>
+    </Box>
+  );
+}
+
 function NavigationBar() {
   return (
     <Box component="nav" sx={{ flexGrow: 1 }}>
@@ -58,12 +113,14 @@ function NavigationBar() {
                     Now we have to import Link from react-router-dom and
                     MUI Button uses the Link component
                 */}
+            {/* LOGO/ESCAPE HATCH BUTTON */}
             <Button sx={{ display: 'block' }} component={Link} to="">
               <Typography variant="h6" color="common.white">
                 bok
               </Typography>
             </Button>
 
+            {/* BUY BUTTON */}
             <Box sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}>
               <Button
                 component={Link}
@@ -74,6 +131,7 @@ function NavigationBar() {
               >
                 Köp
               </Button>
+              {/* SELL BUTTON */}
               <Button
                 component={Link}
                 to="/article"
@@ -87,6 +145,7 @@ function NavigationBar() {
             <Box
               sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
             >
+              {/* SEARCH FIELD */}
               <Search>
                 <StyledInputBase
                   placeholder="Boktitel/ISBN/Kurskod"
@@ -94,28 +153,7 @@ function NavigationBar() {
                 />
               </Search>
             </Box>
-
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open account settings">
-                <IconButton sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="../assets/images/bok.png" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={false}
-              />
-            </Box>
+            <AccountStatus />
           </Toolbar>
         </Container>
       </AppBar>
