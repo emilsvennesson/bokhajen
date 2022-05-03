@@ -24,7 +24,8 @@ export default function CreateAd() {
   };
 
   const getAds = () => {
-    AdService.getAds().then((res) => {
+    if (!user) return;
+    AdService.getAdsFromUser(user).then((res) => {
       console.log(res.data);
     });
   };

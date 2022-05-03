@@ -20,6 +20,13 @@ export interface Ad {
   conditionDescribtion: string;
 }
 
+/**
+ * Handles all fetching and publishing of ads
+ *
+ * @version 1.0.0
+ * @author [Daniel Rygaard](https://github.com/Danryg)
+ * @author [Johan Blickhammar](https://github.com/JohanBlickhammar)
+ */
 export default class AdService {
   static async publishAd(ad: Ad): Promise<ServiceSuccessResponse> {
     try {
@@ -35,6 +42,12 @@ export default class AdService {
     }
   }
 
+  /**
+   * This methods get all the ads from the connected firebase
+   * @param book : Book (optional) will find ads with this book
+   * @param user : User (optional) will find ads with this user
+   * @returns Promise<ServiceSuccessResponse>
+   */
   private static async getAds(
     book?: Book | null,
     user?: User | null,
@@ -63,14 +76,28 @@ export default class AdService {
     return { success: true, data: ads };
   }
 
+  /**
+   * This will retrun all the ads that have been published
+   * @returns Promise<ServiceSuccessResponse>
+   */
   static async getAllAds(): Promise<ServiceSuccessResponse> {
     return this.getAds();
   }
 
+  /**
+   * Returns all the ads that have been published by a specific user
+   * @param user will find all ads that have been published by this user
+   * @returns
+   */
   static async getAdsFromUser(user: User): Promise<ServiceSuccessResponse> {
     return this.getAds(null, user);
   }
 
+  /**
+   * Returns all the ads that are of a specific book
+   * @param book will find all ads that have this book
+   * @returns Promise<ServiceSuccessResponse>
+   */
   static async getAdsFromBook(book: Book): Promise<ServiceSuccessResponse> {
     return this.getAds(book);
   }
