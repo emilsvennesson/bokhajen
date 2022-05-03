@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 import BookDetailViewAds from './BookDetailViewAds';
 import BookDetailViewDescription from './BookDetailViewDescription';
@@ -10,15 +10,25 @@ interface Props {
 export default function BookDetailView({ newBook }: Props) {
   const book: Book = newBook;
   return (
-    <div>
-      <Container sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
-        <Container sx={{ flexGrow: 1, width: '50%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        width: '98vw',
+      }}
+    >
+      <Grid container>
+        <Grid item xs={12} md={7}>
           <BookDetailViewDescription newBook={book} />
-        </Container>
-        <Container sx={{ flexGrow: 1, width: '50%' }}>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{ boxShadow: '-8px 0 5px rgba(0,0,0,0.1)' }}
+        >
           <BookDetailViewAds />
-        </Container>
-      </Container>
-    </div>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }
