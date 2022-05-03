@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 
 interface Props {
@@ -8,21 +8,24 @@ interface Props {
 export default function BookDetailViewDescription({ newBook }: Props) {
   const book: Book = newBook;
   return (
-    <div>
-      <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
+    <Grid
+      container
+      sx={{
+        marginTop: '50px',
+      }}
+    >
+      <Grid item xs={12} md={6}>
         <Container
           sx={{
             flex: 3,
             display: 'flex',
             justifyContent: 'end',
-            marginTop: '10%',
           }}
         >
           <Box
             sx={{
               width: '250px',
               alignSelf: 'start',
-              marginTop: '10%',
             }}
           >
             <Stack>
@@ -35,7 +38,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 sx={{ alignSelf: 'start' }}
               />
               <Typography
-                variant="h6"
+                variant="subtitle1"
                 gutterBottom
                 component="p"
                 sx={{
@@ -50,7 +53,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                   `Författare: ${book.authors.join(', ')}`}
               </Typography>
               <Typography
-                variant="h6"
+                variant="subtitle1"
                 gutterBottom
                 component="p"
                 sx={{
@@ -63,7 +66,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 {book.year && `Utgiven: ${book.year}`}
               </Typography>
               <Typography
-                variant="h6"
+                variant="subtitle1"
                 gutterBottom
                 component="p"
                 sx={{
@@ -76,7 +79,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 {book.isbn && `ISBN: ${book.isbn}`}
               </Typography>
               <Typography
-                variant="h6"
+                variant="subtitle1"
                 gutterBottom
                 component="p"
                 sx={{
@@ -88,27 +91,24 @@ export default function BookDetailViewDescription({ newBook }: Props) {
                 {/* WEIGHT */}
                 {book.weight && `Weight: ${book.weight} gram`}
               </Typography>
-              <Typography
-                variant="h6"
-                gutterBottom
-                component="p"
-                sx={{
-                  alignSelf: 'center',
-                  wordWrap: 'vertical-lr',
-                  width: '250px',
-                }}
+              <Button
+                variant="contained"
+                sx={{ width: '200px', marginTop: '15px' }}
               >
-                <br />
-              </Typography>
+                Sälj denna boken
+              </Button>
             </Stack>
           </Box>
         </Container>
-        <Container sx={{ flex: 3, marginTop: '10%' }}>
-          <Typography variant="h3" gutterBottom component="div">
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <Container sx={{ flex: 3 }}>
+          <Typography variant="h4" gutterBottom component="div">
             {book.name}
           </Typography>
           {/* Jag skulle vilja att descriptionen här har en newline per stycke */}
-          <Typography variant="h6" gutterBottom component="p" sx={{}}>
+          <Typography variant="body1" gutterBottom component="p" sx={{}}>
             {book.description}
             <br />
             <br />
@@ -116,7 +116,7 @@ export default function BookDetailViewDescription({ newBook }: Props) {
               `Kurskoder: ${book.courseCodes.join(', ')}`}
           </Typography>
         </Container>
-      </Box>
-    </div>
+      </Grid>
+    </Grid>
   );
 }

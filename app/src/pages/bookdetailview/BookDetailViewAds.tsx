@@ -13,9 +13,14 @@ import {
   Button,
   Stack,
   Divider,
+  Container,
 } from '@mui/material';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
+import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
+import { mainTheme } from '../../theme';
 
 function BookDetailViewAds() {
   const [ads] = useState([
@@ -36,30 +41,48 @@ function BookDetailViewAds() {
   };
 
   const createAdItem = (ad: any) => (
-    <Box key={ad}>
-      <Accordion sx={{ marginTop: 1 }}>
+    <Container key={ad}>
+      <Accordion
+        sx={{
+          marginTop: 1,
+          '&:hover': {
+            bgcolor: mainTheme.palette.secondary.light,
+          },
+        }}
+      >
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon sx={{ marginLeft: 1 }} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <Avatar
-            sx={{ marginLeft: 1, marginRight: 1 }}
+            sx={{ margin: 'auto' }}
             alt="Remy Sharp"
             src="../assets/images/bok.png"
           />
-          <Typography sx={{ width: '20%', flexShrink: 0, margin: 'auto' }}>
-            {ad}
-          </Typography>
-          <Typography
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              margin: 'auto',
-            }}
-          >
-            Condition
-          </Typography>
+
+          <Stack sx={{ marginLeft: 2 }}>
+            <Typography
+              variant="h6"
+              sx={{ width: '20%', flexShrink: 0, marginBottom: 1 }}
+            >
+              {ad}
+            </Typography>
+
+            <Stack direction="row" spacing={1} sx={{ margin: 'auto' }}>
+              <Typography
+                variant="body1"
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  margin: 'auto',
+                }}
+              >
+                Condition
+              </Typography>
+            </Stack>
+          </Stack>
+
           <Typography
             sx={{
               marginRight: 1,
@@ -74,12 +97,21 @@ function BookDetailViewAds() {
         </AccordionSummary>
         <AccordionDetails>
           <Stack direction="column">
-            <Box sx={{ display: 'flex', flex: 5, border: 0 }}>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
+            <Box sx={{ display: 'flex', flex: 5 }}>
+              <Stack direction="column">
+                <Stack direction="row">
+                  <MenuBookTwoToneIcon sx={{ marginRight: 1 }} />
+                  <Typography>Condition</Typography>
+                </Stack>
+                <Stack direction="row" sx={{ marginTop: 1 }}>
+                  <ChatBubbleTwoToneIcon sx={{ marginRight: 1 }} />
+                  <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </Typography>
+                </Stack>
+              </Stack>
             </Box>
             <Divider sx={{ margin: 1 }} />
             <Box
@@ -93,32 +125,41 @@ function BookDetailViewAds() {
                 marginTop: 1,
               }}
             >
-              <Button variant="contained">Kontakta säljaren</Button>
+              <Button
+                variant="contained"
+                startIcon={<ContactPageRoundedIcon />}
+              >
+                Kontakta säljaren
+              </Button>
             </Box>
           </Stack>
         </AccordionDetails>
       </Accordion>
-    </Box>
+    </Container>
   );
 
   return (
-    <Box
+    <Container
       sx={{
-        marginTop: '10%',
+        marginTop: '50px',
         display: 'flex',
         flexDirection: 'column',
+        minWidth: '300px',
+        flexShrink: 0,
+        paddingBottom: '10px',
       }}
     >
-      <Box sx={{ display: 'flex' }}>
+      <Container sx={{ display: 'flex' }}>
         <Box
           sx={{
             display: 'flex',
             flex: 3,
             margin: 'auto',
+            marginTop: 0,
             justifyContent: 'start',
           }}
         >
-          <Typography variant="h3">Annonser</Typography>
+          <Typography variant="h4">Annonser</Typography>
         </Box>
 
         <Box
@@ -128,7 +169,7 @@ function BookDetailViewAds() {
             justifyContent: 'end',
           }}
         >
-          <FormControl sx={{ m: 1, minWidth: 95 }}>
+          <FormControl sx={{ m: 1, mr: 0, minWidth: 95 }}>
             <InputLabel id="sorting-label">Sortera</InputLabel>
             <Select
               labelId="sorting-label"
@@ -144,10 +185,10 @@ function BookDetailViewAds() {
             </Select>
           </FormControl>
         </Box>
-      </Box>
+      </Container>
 
       {ads.map((ad: any) => createAdItem(ad))}
-    </Box>
+    </Container>
   );
 }
 export default BookDetailViewAds;
