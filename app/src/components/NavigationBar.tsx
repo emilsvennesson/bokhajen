@@ -82,7 +82,7 @@ function AccountStatus() {
       {/* REGISTRATIONS BUTTON */}
       <Button
         component={Link}
-        to="/article"
+        to="/signup"
         color="secondary"
         variant="outlined"
         size="large"
@@ -92,7 +92,7 @@ function AccountStatus() {
       {/* LOGIN BUTTON */}
       <Button
         component={Link}
-        to="/article"
+        to="/login"
         color="secondary"
         variant="text"
         size="large"
