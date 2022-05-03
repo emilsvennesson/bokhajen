@@ -23,10 +23,10 @@ interface BookInformationProps {
  */
 export default function BookInformation({
   book,
-  name,
-  year,
-  isbn,
-  authors,
+  name = undefined,
+  year = undefined,
+  isbn = undefined,
+  authors = undefined,
 }: BookInformationProps) {
   return (
     <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">
@@ -59,9 +59,3 @@ export default function BookInformation({
     </Box>
   );
 }
-BookInformation.defaultProps = {
-  name: undefined,
-  year: undefined,
-  isbn: undefined,
-  authors: undefined,
-};

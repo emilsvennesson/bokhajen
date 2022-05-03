@@ -29,7 +29,7 @@ interface ConditionCheckCardProps {
 export default function ConditionCheckCard({
   backButtonHandler,
   nextButtonHandler,
-  disabled,
+  disabled = false,
 }: ConditionCheckCardProps) {
   const [condition, setCondition] = React.useState(conditions.good);
   const [describtion, setDescribtion] = React.useState('');
@@ -114,7 +114,3 @@ export default function ConditionCheckCard({
     </Stack>
   );
 }
-
-ConditionCheckCard.defaultProps = {
-  disabled: false,
-};

@@ -54,7 +54,7 @@ export default function CheckInformationCard({
           fontWeight="bold"
           flexGrow={5}
         >
-          Is this information correct
+          Är informationen korrekt?
         </Typography>
       </Stack>
       <BookInformation book={book} />

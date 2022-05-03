@@ -21,9 +21,9 @@ interface IInformationTextLineProps {
 export default function InformationTextLine({
   children,
   label = '',
-  fontSize,
-  labelBold,
-  textBold,
+  fontSize = 17,
+  labelBold = false,
+  textBold = false,
 }: IInformationTextLineProps) {
   /**
    * This formatts the label so that it will be displayed correctly
@@ -80,10 +80,3 @@ export default function InformationTextLine({
     </Box>
   );
 }
-
-InformationTextLine.defaultProps = {
-  label: '',
-  fontSize: 17,
-  labelBold: false,
-  textBold: false,
-};

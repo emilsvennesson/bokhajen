@@ -32,7 +32,7 @@ export default function SetPriceCard({
   backButtonHandler,
   continueButtonHandler,
   setPrice,
-  show,
+  show = false,
 }: SetPriceCardProps) {
   const textFieldRef = useRef('priceField');
 
@@ -138,7 +138,3 @@ export default function SetPriceCard({
     </Fade>
   );
 }
-
-SetPriceCard.defaultProps = {
-  show: false,
-};
