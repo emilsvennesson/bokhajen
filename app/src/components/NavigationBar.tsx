@@ -51,13 +51,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function AccountStatus() {
   const auth = useAuth();
-
   if (auth.user)
     return (
       <Box sx={{ flexGrow: 0 }}>
         <Tooltip title="Open account settings">
           <IconButton sx={{ p: 0 }}>
-            <Avatar alt="Remy Sharp" src="../assets/images/bok.png" />
+            <Avatar alt="Z" src="../assets/images/bok.png" />
           </IconButton>
         </Tooltip>
         <Menu
