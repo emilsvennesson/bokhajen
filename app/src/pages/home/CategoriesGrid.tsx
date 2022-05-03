@@ -1,4 +1,4 @@
-import { Container, Grid, Stack, Typography } from '@mui/material';
+import { Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Book } from 'cremona';
 import BookCard from './BookCard';
 
@@ -32,6 +32,7 @@ export default function CategoriesGrid({ title, books }: GridProps) {
           ))}
         </Grid>
       </Stack>
+      <Divider sx={{ marginLeft: 4 }} />
     </Container>
   );
 }

@@ -1,11 +1,11 @@
-import { Box, Divider } from '@mui/material';
+import { Box } from '@mui/material';
 import { Book, CremonaClient } from 'cremona';
 import { Fragment, useEffect, useState } from 'react';
 import bok from '../../assets/images/bok.png';
 import CategoriesGrid from './CategoriesGrid';
 
 const CATEGORIES = ['Populär studentlitteratur', 'Matematik', 'Susvetenskap'];
-const GRID_SIZE = 6;
+const GRID_SIZE = 12;
 const client = new CremonaClient();
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const getBooks = async () => {
-      const cBooks = await client.getBooks(18);
+      const cBooks = await client.getBooks(30);
       setBooks(cBooks);
     };
     getBooks();
@@ -49,7 +49,6 @@ export default function Home() {
                 title={name}
                 books={books.slice(sliceIndex, sliceIndex + GRID_SIZE)}
               />
-              <Divider />
             </Fragment>
           );
           sliceIndex += GRID_SIZE;
