@@ -16,6 +16,7 @@ import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 export interface Ad {
   uid: string;
+  userId: string;
   bookId: string;
   price: number;
   condition: string;
@@ -65,7 +66,8 @@ export default class AdService {
 
     querySnapshot.forEach((docs) => {
       const ad: Ad = {
-        uid: docs.data().uid,
+        uid: docs.id,
+        userId: docs.data().uid,
         bookId: docs.data().bookId,
         price: docs.data().price,
         condition: docs.data().condition,

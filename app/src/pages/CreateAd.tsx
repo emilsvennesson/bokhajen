@@ -10,7 +10,8 @@ export default function CreateAd() {
     if (!user) return;
 
     const inAd: Ad = {
-      uid: user.uid,
+      uid: 'default',
+      userId: user.uid,
       bookId: '1234123123',
       price: 300,
       condition: 'new',
@@ -28,6 +29,8 @@ export default function CreateAd() {
     AdService.getAdsFromUser(user).then((res) => {
       console.log(res.data);
     });
+
+    AdService.removeAd('LOUooKzcyftgOsTXeiEn');
   };
 
   return (
