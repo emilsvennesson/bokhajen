@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
@@ -11,6 +12,7 @@ import {
   InputBase,
 } from '@mui/material';
 import { NavAvatar } from './NavAvatar';
+import SearchModal from './SearchModal';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,60 +48,79 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function NavigationBar() {
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
-    <Box component="nav" sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            {/* Pre-MUI we used NavLink to navigate, e.g <NavLink to='/'> link </NavLink>
+    <>
+      {searchQuery && (
+        <SearchModal
+          query={searchQuery}
+          onChange={(q) => {
+            setSearchQuery(q);
+          }}
+        />
+      )}
+      <Box component="nav" sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              {/* Pre-MUI we used NavLink to navigate, e.g <NavLink to='/'> link </NavLink>
                     Now we have to import Link from react-router-dom and
                     MUI Button uses the Link component
                 */}
-            {/* LOGO/ESCAPE HATCH BUTTON */}
-            <Button sx={{ display: 'block' }} component={Link} to="">
-              <Typography variant="h6" color="common.white">
-                bok
-              </Typography>
-            </Button>
+              {/* LOGO/ESCAPE HATCH BUTTON */}
+              <Button sx={{ display: 'block' }} component={Link} to="">
+                <Typography variant="h6" color="common.white">
+                  bok
+                </Typography>
+              </Button>
 
-            {/* BUY BUTTON */}
-            <Box sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}>
-              <Button
-                component={Link}
-                to="/article"
-                color="secondary"
-                variant="contained"
-                size="large"
+              {/* BUY BUTTON */}
+              <Box
+                sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}
               >
-                Köp
-              </Button>
-              {/* SELL BUTTON */}
-              <Button
-                component={Link}
-                to="/article"
-                color="secondary"
-                variant="contained"
-                size="large"
+                <Button
+                  component={Link}
+                  to="/article"
+                  color="secondary"
+                  variant="contained"
+                  size="large"
+                >
+                  Köp
+                </Button>
+                {/* SELL BUTTON */}
+                <Button
+                  component={Link}
+                  to="/article"
+                  color="secondary"
+                  variant="contained"
+                  size="large"
+                >
+                  Sälj
+                </Button>
+              </Box>
+              <Box
+                sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
               >
-                Sälj
-              </Button>
-            </Box>
-            <Box
-              sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
-            >
-              {/* SEARCH FIELD */}
-              <Search>
-                <StyledInputBase
-                  placeholder="Boktitel/ISBN/Kurskod"
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
-            </Box>
-            <NavAvatar />
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </Box>
+                {/* SEARCH FIELD */}
+                <Search>
+                  <StyledInputBase
+                    placeholder="Boktitel/ISBN/Kurskod"
+                    inputProps={{ 'aria-label': 'search' }}
+                    value={searchQuery}
+                    onChange={(e) => {
+                      console.log('searchQuery: ', e.target.value);
+                      setSearchQuery(e.target.value);
+                    }}
+                  />
+                </Search>
+              </Box>
+              <NavAvatar />
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </Box>
+    </>
   );
 }
 export default NavigationBar;
