@@ -106,6 +106,11 @@ export default class AdService {
     return this.getAds(book);
   }
 
+  /**
+   * Removes an add from the connected Firebase
+   * @param ad the ad that will be deleted
+   * @returns Promise<ServiceSuccessResponse>
+   */
   static async removeAd(ad: Ad): Promise<ServiceSuccessResponse> {
     const success = await deleteDoc(doc(db, 'ads', ad.uid))
       .then(() => ({ success: true }))
