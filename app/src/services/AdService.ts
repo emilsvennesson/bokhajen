@@ -21,7 +21,7 @@ export interface Ad {
   bookId: string;
   price: number;
   condition: string;
-  conditionDescribtion: string;
+  conditionDescription: string;
 }
 
 /**
@@ -72,7 +72,7 @@ export default class AdService {
         bookId: docs.data().bookId,
         price: docs.data().price,
         condition: docs.data().condition,
-        conditionDescribtion: docs.data().conditionDescribtion,
+        conditionDescription: docs.data().conditionDescription,
       };
 
       ads.push(ad);
@@ -170,13 +170,13 @@ export default class AdService {
   /**
    * Edits the condition describtion of an ad
    * @param adId the id of the ad that will be altered
-   * @param newConditionDescribtion the new condition describtion that will be set on the ad
+   * @param newConditionDescription the new condition describtion that will be set on the ad
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async editAdConditionDescribtion(
+  static async editAdConditionDescription(
     adId: string,
-    newConditionDescribtion: string,
+    newConditionDescription: string,
   ): Promise<ServiceSuccessResponse> {
-    return this.editAd(adId, { conditionDescribtion: newConditionDescribtion });
+    return this.editAd(adId, { conditionDescribtion: newConditionDescription });
   }
 }
