@@ -21,7 +21,7 @@ export default function CategoriesGrid({ title, books }: GridProps) {
           {books.length === 0 &&
             [...Array(6)].map((e, i) => (
               // eslint-disable-next-line react/no-array-index-key
-              <Grid item md={2} zeroMinWidth key={i}>
+              <Grid item xs={6} md={2} zeroMinWidth key={i}>
                 <BookCard />
               </Grid>
             ))}
