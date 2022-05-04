@@ -18,6 +18,9 @@ import ConditionCheckCard from './ConditionCheckCard';
 import SetPriceCard from './SetPriceCard';
 import BookInformationInput from './BookInformationInput';
 import Conditions from '../../config/Conditions';
+import AdService from '../../services/AdService';
+import Advert from '../../services/Advert';
+import { useAuth } from '../../hooks/FBAuthProvider';
 
 const steps = [
   'Find your book',
@@ -33,11 +36,13 @@ const steps = [
 export default function SellingPage() {
   const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
-  const [price, setPrice] = React.useState(0);
-  const [condition, setCondition] = React.useState(Conditions.good);
+  const [bookPrice, setPrice] = React.useState(0);
+  const [bookCondition, setCondition] = React.useState(Conditions.good);
   const [describtion, setdescribtion] = React.useState('');
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
+
+  const { user } = useAuth();
 
   /**
    * This is called to back the stepper in the page
@@ -58,11 +63,20 @@ export default function SellingPage() {
    * @param price the price that the user has set
    */
   const handleDone = () => {
-    const name = book?.name ?? '';
+    if (!user || !book) return;
 
+    const ad: Advert = {
+      userId: user.uid,
+      bookId: book.uid.toString(),
+      price: bookPrice,
+      condition: bookCondition,
+      conditionDescription: describtion,
+    };
+
+    AdService.publishAd(ad);
     // eslint-disable-next-line no-console
     console.log(
-      `${name} With price: ${price} and condition: ${condition} with describtion ${describtion}`,
+      `${book} With price: ${bookPrice} and condition: ${bookCondition} with describtion ${describtion}`,
     );
   };
 
