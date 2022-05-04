@@ -11,8 +11,9 @@ import {
   alpha,
   InputBase,
 } from '@mui/material';
-import { NavAvatar } from './NavAvatar';
 import SearchModal from './SearchModal';
+import NavAvatar from './NavAvatar';
+import { useAuth } from '../../hooks/FBAuthProvider';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,6 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function NavigationBar() {
   const [searchQuery, setSearchQuery] = useState('');
 
+  const auth = useAuth();
+  const sellNavigation = () => {
+    if (auth.user) return '/sell';
+    return '/login';
+  };
   return (
     <>
       {searchQuery && (
@@ -91,17 +97,14 @@ function NavigationBar() {
                 {/* SELL BUTTON */}
                 <Button
                   component={Link}
-                  to="/article"
+                  to={sellNavigation()}
                   color="secondary"
                   variant="contained"
                   size="large"
                 >
                   Sälj
                 </Button>
-              </Box>
-              <Box
-                sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}
-              >
+
                 {/* SEARCH FIELD */}
                 <Search>
                   <StyledInputBase
