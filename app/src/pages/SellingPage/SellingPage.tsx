@@ -21,7 +21,7 @@ import SetPriceCard from './SetPriceCard';
 import BookInformationInput from './BookInformationInput';
 import Conditions from '../../config/Conditions';
 import AdService from '../../services/AdService';
-import Advert from '../../services/Advert';
+import { NewAdvert } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 
 const steps = [
@@ -89,7 +89,7 @@ export default function SellingPage() {
       return;
     }
 
-    const ad: Advert = {
+    const ad: NewAdvert = {
       userId: user.uid,
       bookId: book.uid.toString(),
       price: bookPrice,
