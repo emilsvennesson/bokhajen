@@ -8,26 +8,33 @@ import {
   Box,
   Container,
 } from '@mui/material';
-import { useState } from 'react';
+import { Book } from 'cremona';
+import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
+import AdService from '../../services/AdService';
+import Advert from '../../services/Advert';
 
-function BookDetailViewAds() {
-  const [ads] = useState([
-    'seller1',
-    'seller2',
-    'seller3',
-    'seller4',
-    'seller5',
-    'seller6',
-    'seller7',
-    'seller8',
-  ]);
+interface Props {
+  bookUid: Book; // change this to uid
+}
+
+function BookDetailViewAds({ bookUid }: Props) {
+  const [ads, setAds] = useState<Advert[] | undefined>([]);
 
   const [sort, setSort] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
     setSort(event.target.value as string);
   };
+
+  useEffect(() => {
+    const getAds = async () => {
+      const newAds = await AdService.getAdsFromBook(bookUid);
+      setAds(newAds.ads);
+      console.log(newAds);
+    };
+    getAds();
+  }, [bookUid]);
 
   return (
     <Container
@@ -78,9 +85,7 @@ function BookDetailViewAds() {
         </Box>
       </Container>
 
-      {ads.map((ad) => (
-        <AdAccordion ad={ad} />
-      ))}
+      {ads && ads.map((ad) => <AdAccordion ad={ad} />)}
     </Container>
   );
 }

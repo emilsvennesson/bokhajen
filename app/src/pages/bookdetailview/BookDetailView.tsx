@@ -55,7 +55,7 @@ export default function BookDetailView() {
           md={5}
           sx={{ boxShadow: '-8px 0 5px rgba(0,0,0,0.1)' }}
         >
-          <BookDetailViewAds />
+          <BookDetailViewAds bookUid={book} />
         </Grid>
       </Grid>
     </Box>

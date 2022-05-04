@@ -16,16 +16,17 @@ import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../theme';
+import Advert from '../services/Advert';
 
 interface Props {
-  ad: string;
+  ad: Advert;
 }
 
 export default function AdAccordion({ ad }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Container key={ad}>
+    <Container key={ad.uid}>
       <Accordion
         sx={{
           marginTop: 1,
