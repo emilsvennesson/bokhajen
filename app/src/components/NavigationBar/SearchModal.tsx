@@ -5,6 +5,8 @@ import {
   TextField,
   Divider,
   Typography,
+  Button,
+  ListItem,
 } from '@mui/material';
 import SentimentVeryDissatisfiedSharpIcon from '@mui/icons-material/SentimentVeryDissatisfiedSharp';
 import { Book } from 'cremona';
@@ -14,30 +16,46 @@ import SearchResultItem from './SearchResultItem';
 
 interface Props {
   query: string;
-  onChange: (query: string) => void;
+  onChange?: (query: string) => void;
+  onClose?:
+    | ((event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void)
+    | undefined;
+  open?: boolean;
 }
 
-export default function SearchModal({ query, onChange }: Props) {
+const bookLimit = 5;
+
+export default function SearchModal({ query, onChange, onClose, open }: Props) {
   const [results, setResults] = useState<Book[]>([]);
-  const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+  // const [open, setOpen] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
+  const [queryOffset, setQueryOffset] = useState(0);
 
   useEffect(() => {
     const search = async () => {
       setLoadingBooks(true);
-      const books = await SearchService.search(query);
-
+      const books = await SearchService.search(query, bookLimit);
+      setQueryOffset(0);
       setResults(books);
       setLoadingBooks(false);
     };
     search();
   }, [query]);
+
+  const handleLoadMore = () => {
+    setLoadingBooks(true);
+    SearchService.search(query, bookLimit, queryOffset).then((books) => {
+      setQueryOffset(queryOffset + 1);
+      setResults([...results, ...books]);
+      setLoadingBooks(false);
+    });
+  };
+
   return (
     <Modal
-      open={open}
+      open={open || false}
       // TODO: fix closing manually good
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{ display: 'flex', justifyContent: 'center' }}
@@ -61,7 +79,11 @@ export default function SearchModal({ query, onChange }: Props) {
         <TextField
           autoFocus
           value={query}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            if (onChange) {
+              onChange(e.target.value);
+            }
+          }}
           sx={{ height: '80px' }}
           fullWidth
         />
@@ -98,6 +120,21 @@ export default function SearchModal({ query, onChange }: Props) {
           {results.map((book) => (
             <SearchResultItem key={book.uid} book={book} />
           ))}
+          {!loadingBooks && results.length >= bookLimit && (
+            <ListItem
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '50px',
+              }}
+            >
+              <Button variant="text" onClick={handleLoadMore}>
+                Ladda in fler resultat
+              </Button>
+            </ListItem>
+          )}
         </List>
       </Box>
     </Modal>

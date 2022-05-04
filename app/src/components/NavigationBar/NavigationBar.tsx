@@ -50,22 +50,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function NavigationBar() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const auth = useAuth();
   const sellNavigation = () => {
     if (auth.user) return '/sell';
     return '/login';
   };
+
+  const handleChangedSearchQuery = (query: string) => {
+    if (query) {
+      setSearchModalOpen(true);
+    } else {
+      setSearchModalOpen(false);
+    }
+    setSearchQuery(query);
+  };
+
   return (
     <>
-      {searchQuery && (
-        <SearchModal
-          query={searchQuery}
-          onChange={(q) => {
-            setSearchQuery(q);
-          }}
-        />
-      )}
+      <SearchModal
+        query={searchQuery}
+        onChange={handleChangedSearchQuery}
+        open={searchModalOpen}
+        onClose={() => {
+          setSearchModalOpen(false);
+        }}
+      />
+
       <Box component="nav" sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Container maxWidth="xl">
@@ -110,10 +122,12 @@ function NavigationBar() {
                   <StyledInputBase
                     placeholder="Boktitel/ISBN/Kurskod"
                     inputProps={{ 'aria-label': 'search' }}
-                    value={searchQuery}
-                    onChange={(e) => {
-                      console.log('searchQuery: ', e.target.value);
-                      setSearchQuery(e.target.value);
+                    value={searchModalOpen ? '' : searchQuery}
+                    onChange={(e) => handleChangedSearchQuery(e.target.value)}
+                    onClick={() => {
+                      if (searchQuery && !searchModalOpen) {
+                        setSearchModalOpen(true);
+                      }
                     }}
                   />
                 </Search>
