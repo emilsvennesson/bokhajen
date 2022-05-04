@@ -171,7 +171,7 @@ export default function SellingPage() {
   );
 
   return (
-    <Box bgcolor="#C4C4C4" height="800px">
+    <Box>
       <Snackbar open={error.open} autoHideDuration={6000} onClose={closeError}>
         <Alert severity="error" onClose={closeError}>
           {' '}
