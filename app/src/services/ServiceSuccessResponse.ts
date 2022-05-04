@@ -1,4 +1,4 @@
-import Advert from './Advert';
+import { Advert } from './Advert';
 
 export default interface ServiceSuccessResponse {
   success: boolean;
