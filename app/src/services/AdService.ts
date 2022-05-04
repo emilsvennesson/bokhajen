@@ -13,10 +13,8 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
-import ServiceSuccessResponse, {
-  FetchAdvertSuccessResponse,
-} from './ServiceSuccessResponse';
-import Advert from './Advert';
+import ServiceSuccessResponse from './ServiceSuccessResponse';
+import { Advert, NewAdvert } from './Advert';
 
 /**
  * Handles all fetching and publishing of ads
@@ -26,7 +24,7 @@ import Advert from './Advert';
  * @author [Johan Blickhammar](https://github.com/JohanBlickhammar)
  */
 export default class AdService {
-  static async publishAd(ad: Advert): Promise<ServiceSuccessResponse> {
+  static async publishAd(ad: NewAdvert): Promise<ServiceSuccessResponse> {
     try {
       const docRef = await addDoc(collection(db, 'ads'), ad);
       console.log('Document written with ID: ', docRef.id);
@@ -46,10 +44,7 @@ export default class AdService {
    * @param user : User (optional) will find ads with this user
    * @returns Promise<ServiceSuccessResponse>
    */
-  private static async getAds(
-    book?: Book,
-    user?: User,
-  ): Promise<FetchAdvertSuccessResponse> {
+  private static async getAds(book?: Book, user?: User): Promise<Advert[]> {
     const queryConstraints = [];
     if (book) queryConstraints.push(where('bookId', '==', book.uid));
     if (user) queryConstraints.push(where('uid', '==', user.uid));
@@ -72,7 +67,7 @@ export default class AdService {
       ads.push(ad);
     });
 
-    return { success: true, ads };
+    return ads;
   }
 
   /**
@@ -100,7 +95,7 @@ export default class AdService {
    * This will retrun all the ads that have been published
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async getAllAds(): Promise<ServiceSuccessResponse> {
+  static async getAllAds(): Promise<Advert[]> {
     return this.getAds();
   }
 
@@ -109,7 +104,7 @@ export default class AdService {
    * @param user will find all ads that have been published by this user
    * @returns
    */
-  static async getAdsFromUser(user: User): Promise<ServiceSuccessResponse> {
+  static async getAdsFromUser(user: User): Promise<Advert[]> {
     return this.getAds(undefined, user);
   }
 
@@ -118,7 +113,7 @@ export default class AdService {
    * @param book will find all ads that have this book
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async getAdsFromBook(book: Book): Promise<ServiceSuccessResponse> {
+  static async getAdsFromBook(book: Book): Promise<Advert[]> {
     return this.getAds(book);
   }
 
