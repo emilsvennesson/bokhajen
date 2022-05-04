@@ -8,10 +8,12 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 
 import { Book } from 'cremona/dist/Book';
-
+import { useNavigate } from 'react-router-dom';
 import SearchBook from '../../components/SearchBook';
 import CheckInformationCard from './CheckInformationCard';
 import ConditionCheckCard from './ConditionCheckCard';
@@ -36,13 +38,16 @@ const steps = [
 export default function SellingPage() {
   const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
-  const [bookPrice, setPrice] = React.useState(0);
+  const [bookPrice, setPrice] = React.useState<number | undefined>(undefined);
   const [bookCondition, setCondition] = React.useState(Conditions.good);
   const [describtion, setdescribtion] = React.useState('');
+  const [error, showError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   /**
    * This is called to back the stepper in the page
@@ -58,12 +63,24 @@ export default function SellingPage() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const displayError = (message?: string) => {
+    setErrorMessage(message);
+    showError(true);
+  };
+  const closeError = () => {
+    showError(false);
+  };
+
   /**
    * This will be called when the user is completely done with this page
    * @param price the price that the user has set
    */
   const handleDone = () => {
     if (!user || !book) return;
+    if (!bookPrice) {
+      displayError('Price is not set');
+      return;
+    }
 
     const ad: Advert = {
       userId: user.uid,
@@ -73,11 +90,17 @@ export default function SellingPage() {
       conditionDescription: describtion,
     };
 
-    AdService.publishAd(ad);
-    // eslint-disable-next-line no-console
-    console.log(
-      `${book} With price: ${bookPrice} and condition: ${bookCondition} with describtion ${describtion}`,
-    );
+    if (user) {
+      navigate('/', { replace: true });
+    }
+
+    AdService.publishAd(ad)
+      .then(() => {
+        navigate('/', { replace: true });
+      })
+      .catch((res) => {
+        displayError(`Error:${res.data.error}`);
+      });
   };
 
   const searchForBookWindow = (
@@ -142,6 +165,12 @@ export default function SellingPage() {
 
   return (
     <Box>
+      <Snackbar open={error} autoHideDuration={6000} onClose={closeError}>
+        <Alert severity="error" onClose={closeError}>
+          {' '}
+          {errorMessage ?? 'Book did not get published'}
+        </Alert>
+      </Snackbar>
       <Stack
         padding="2%"
         paddingTop={1}
