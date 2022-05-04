@@ -31,6 +31,11 @@ const steps = [
   'Add price',
 ];
 
+interface Error {
+  open: boolean;
+  message?: string;
+}
+
 /**
  *
  * @returns
@@ -41,8 +46,10 @@ export default function SellingPage() {
   const [bookPrice, setPrice] = React.useState<number | undefined>(undefined);
   const [bookCondition, setCondition] = React.useState(Conditions.good);
   const [describtion, setdescribtion] = React.useState('');
-  const [error, showError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
+  const [error, setError] = React.useState<Error>({
+    open: false,
+    message: '',
+  });
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
@@ -63,12 +70,12 @@ export default function SellingPage() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const displayError = (message?: string) => {
-    setErrorMessage(message);
-    showError(true);
-  };
   const closeError = () => {
-    showError(false);
+    setError({ open: false, message: undefined });
+  };
+
+  const displayError = (eMessage?: string) => {
+    setError({ open: true, message: eMessage });
   };
 
   /**
@@ -165,10 +172,10 @@ export default function SellingPage() {
 
   return (
     <Box>
-      <Snackbar open={error} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={error.open} autoHideDuration={6000} onClose={closeError}>
         <Alert severity="error" onClose={closeError}>
           {' '}
-          {errorMessage ?? 'Book did not get published'}
+          {error.message ?? 'Book did not get published'}
         </Alert>
       </Snackbar>
       <Stack
