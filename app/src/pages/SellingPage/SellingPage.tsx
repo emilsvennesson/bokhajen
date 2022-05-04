@@ -172,7 +172,12 @@ export default function SellingPage() {
 
   return (
     <Box bgcolor="#C4C4C4" height="800px">
-      <Snackbar open={error.open} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={error.open}
+        autoHideDuration={6000}
+        onClose={closeError}
+      >
         <Alert severity="error" onClose={closeError}>
           {' '}
           {error.message ?? 'Book did not get published'}
