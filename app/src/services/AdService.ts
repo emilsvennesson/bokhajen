@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import { Book } from 'cremona';
-import { User } from 'firebase/auth';
 import {
   collection,
   FirestoreError,
@@ -40,14 +38,17 @@ export default class AdService {
 
   /**
    * This methods get all the ads from the connected firebase
-   * @param book : Book (optional) will find ads with this book
-   * @param user : User (optional) will find ads with this user
+   * @param bookUid : string (optional) will find ads with this book uid
+   * @param userUid : string (optional) will find ads with this user uid
    * @returns Promise<ServiceSuccessResponse>
    */
-  private static async getAds(book?: Book, user?: User): Promise<Advert[]> {
+  private static async getAds(
+    bookUid?: string,
+    userUid?: string,
+  ): Promise<Advert[]> {
     const queryConstraints = [];
-    if (book) queryConstraints.push(where('bookId', '==', book.uid));
-    if (user) queryConstraints.push(where('uid', '==', user.uid));
+    if (bookUid) queryConstraints.push(where('bookId', '==', bookUid));
+    if (userUid) queryConstraints.push(where('uid', '==', userUid));
 
     const q = query(collection(db, 'ads'), ...queryConstraints);
 
@@ -101,20 +102,20 @@ export default class AdService {
 
   /**
    * Returns all the ads that have been published by a specific user
-   * @param user will find all ads that have been published by this user
+   * @param user will find all ads that have been published by this user uid
    * @returns
    */
-  static async getAdsFromUser(user: User): Promise<Advert[]> {
-    return this.getAds(undefined, user);
+  static async getAdsFromUser(userUid: string): Promise<Advert[]> {
+    return this.getAds(undefined, userUid);
   }
 
   /**
    * Returns all the ads that are of a specific book
-   * @param book will find all ads that have this book
+   * @param bookUid will find all ads that have this book uid
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async getAdsFromBook(book: Book): Promise<Advert[]> {
-    return this.getAds(book);
+  static async getAdsFromBook(bookUid: string): Promise<Advert[]> {
+    return this.getAds(bookUid);
   }
 
   /**
