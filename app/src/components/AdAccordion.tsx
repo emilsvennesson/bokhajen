@@ -16,7 +16,7 @@ import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../theme';
-import Advert from '../services/Advert';
+import { Advert } from '../services/Advert';
 
 interface Props {
   ad: Advert;
@@ -52,7 +52,7 @@ export default function AdAccordion({ ad }: Props) {
               variant="h6"
               sx={{ width: '20%', flexShrink: 0, marginBottom: 1 }}
             >
-              {ad}
+              {ad.condition}
             </Typography>
 
             <Stack direction="row" spacing={1} sx={{ margin: 'auto' }}>
@@ -65,7 +65,7 @@ export default function AdAccordion({ ad }: Props) {
                     margin: 'auto',
                   }}
                 >
-                  Condition
+                  {ad.condition}
                 </Typography>
               )}
             </Stack>
@@ -80,7 +80,7 @@ export default function AdAccordion({ ad }: Props) {
               margin: 'auto',
             }}
           >
-            Pris kr
+            {ad.price} kr
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
@@ -89,15 +89,11 @@ export default function AdAccordion({ ad }: Props) {
               <Stack direction="column">
                 <Stack direction="row">
                   <MenuBookTwoToneIcon sx={{ marginRight: 1 }} />
-                  <Typography>Condition</Typography>
+                  <Typography>{ad.condition}</Typography>
                 </Stack>
                 <Stack direction="row" sx={{ marginTop: 1 }}>
                   <ChatBubbleTwoToneIcon sx={{ marginRight: 1 }} />
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse malesuada lacus ex, sit amet blandit leo
-                    lobortis eget.
-                  </Typography>
+                  <Typography>{ad.conditionDescription}</Typography>
                 </Stack>
               </Stack>
             </Box>

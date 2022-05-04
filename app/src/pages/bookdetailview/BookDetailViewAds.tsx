@@ -8,14 +8,13 @@ import {
   Box,
   Container,
 } from '@mui/material';
-import { Book } from 'cremona';
 import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
 import AdService from '../../services/AdService';
-import Advert from '../../services/Advert';
+import { Advert } from '../../services/Advert';
 
 interface Props {
-  bookUid: Book; // change this to uid
+  bookUid: number;
 }
 
 function BookDetailViewAds({ bookUid }: Props) {
@@ -29,8 +28,8 @@ function BookDetailViewAds({ bookUid }: Props) {
 
   useEffect(() => {
     const getAds = async () => {
-      const newAds = await AdService.getAdsFromBook(bookUid);
-      setAds(newAds.ads);
+      const newAds = await AdService.getAdsFromBook(bookUid.toString());
+      setAds(newAds);
       console.log(newAds);
     };
     getAds();
