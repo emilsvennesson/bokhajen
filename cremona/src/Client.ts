@@ -1,11 +1,7 @@
-import {
-  RequestManager,
-  Client as rClient,
-  WebSocketTransport,
-} from '@open-rpc/client-js';
+import { RequestManager, Client, HTTPTransport } from '@open-rpc/client-js';
 import { Book } from './Book.js';
 
-const baseWebSocket = 'wss://admin.abicart.se/backend/jsonrpc/v1';
+const baseWebSocket = 'https://admin.abicart.se/backend/jsonrpc/v1';
 const baseSocketParams = {
   auth: '',
   language: 'sv',
@@ -25,13 +21,14 @@ const baseSearchParams = {
   showPricesIncludingVat: true,
   attributes: true,
   ean: true,
+  articlegroup: true,
 };
 const bookCategories = [3331049, 3331050, 3331051];
-const transport = new WebSocketTransport(
+const transport = new HTTPTransport(
   `${baseWebSocket}?${new URLSearchParams(baseSocketParams).toString()}`,
 );
 const requestManager = new RequestManager([transport]);
-const rclient = new rClient(requestManager);
+const rclient = new Client(requestManager);
 
 const getSearchArticles = async (query: string) => {
   const result = await rclient.request({
@@ -51,19 +48,23 @@ export class CremonaClient {
   /**
    * Returns a promise of a list of Book objects matching the specified search query.
    * @param {string} query - The search query to filter out books based on.
+   * @param {number} [limit] - Limits the amount of returned books to the specified number.
+   * @param {number} [offset] - The start offset to get the books from.
    * @returns {Promise<Book[]>} Promise object representing the Book objects list.
    */
-  async search(query: string): Promise<Book[]> {
+  async search(
+    query: string,
+    limit: number = 48,
+    offset: number = 0,
+  ): Promise<Book[]> {
     const searchArticles = await getSearchArticles(query);
     if (!searchArticles) return [];
-
     const payload = {
       method: 'Article.list',
       params: [
         baseSearchParams,
         {
           filters: {
-            '/showInArticlegroups': bookCategories,
             '/uid': { in: searchArticles },
           },
         },
@@ -71,7 +72,11 @@ export class CremonaClient {
     };
 
     const result = await rclient.request(payload);
-    return resultToBooksArray(result);
+    return resultToBooksArray(
+      result.filter((bookData: { articlegroup: number }) =>
+        bookCategories.includes(bookData.articlegroup),
+      ),
+    ).slice(offset, limit + offset);
   }
 
   /**
@@ -111,12 +116,5 @@ export class CremonaClient {
 
     const result = await rclient.request(payload);
     return resultToBooksArray(result);
-  }
-
-  /**
-   * Closes the WebSocket connection.
-   */
-  close() {
-    rclient.close();
   }
 }
