@@ -29,13 +29,13 @@ export default function SearchModal({ query, onChange, onClose, open }: Props) {
   const [results, setResults] = useState<Book[]>([]);
   // const [open, setOpen] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
-  const [queryOffset, setQueryOffset] = useState(0);
+  const [queryOffset, setQueryOffset] = useState(1);
 
   useEffect(() => {
     const search = async () => {
       setLoadingBooks(true);
       const books = await SearchService.search(query, bookLimit);
-      setQueryOffset(0);
+      setQueryOffset(1);
       setResults(books);
       setLoadingBooks(false);
     };
@@ -44,11 +44,13 @@ export default function SearchModal({ query, onChange, onClose, open }: Props) {
 
   const handleLoadMore = () => {
     setLoadingBooks(true);
-    SearchService.search(query, bookLimit, queryOffset).then((books) => {
-      setQueryOffset(queryOffset + 1);
-      setResults([...results, ...books]);
-      setLoadingBooks(false);
-    });
+    SearchService.search(query, bookLimit, queryOffset * bookLimit).then(
+      (books) => {
+        setQueryOffset(queryOffset + 1);
+        setResults([...results, ...books]);
+        setLoadingBooks(false);
+      },
+    );
   };
 
   return (
@@ -96,11 +98,6 @@ export default function SearchModal({ query, onChange, onClose, open }: Props) {
             mt: 1,
           }}
         >
-          {loadingBooks &&
-            [...Array(3)].map((e, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <SearchResultItem key={i} />
-            ))}
           {query.length >= 3 && results.length === 0 && !loadingBooks && (
             <Box
               sx={{
@@ -120,6 +117,11 @@ export default function SearchModal({ query, onChange, onClose, open }: Props) {
           {results.map((book) => (
             <SearchResultItem key={book.uid} book={book} />
           ))}
+          {loadingBooks &&
+            [...Array(3)].map((e, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <SearchResultItem key={i} />
+            ))}
           {!loadingBooks && results.length >= bookLimit && (
             <ListItem
               sx={{

@@ -108,7 +108,7 @@ export default function SearchResultItem({ book }: Props) {
             <Tooltip title="Chalmer Store">
               <Typography
                 variant="body1"
-                style={{ textDecoration: 'line-through' }}
+                style={{ fontWeight: 'bold', textDecoration: 'line-through' }}
               >
                 {book.price} kr
               </Typography>
