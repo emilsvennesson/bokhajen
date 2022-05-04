@@ -47,8 +47,8 @@ export default class AdService {
    * @returns Promise<ServiceSuccessResponse>
    */
   private static async getAds(
-    book?: Book | null,
-    user?: User | null,
+    book?: Book,
+    user?: User,
   ): Promise<FetchAdvertSuccessResponse> {
     const queryConstraints = [];
     if (book) queryConstraints.push(where('bookId', '==', book.uid));
@@ -110,7 +110,7 @@ export default class AdService {
    * @returns
    */
   static async getAdsFromUser(user: User): Promise<ServiceSuccessResponse> {
-    return this.getAds(null, user);
+    return this.getAds(undefined, user);
   }
 
   /**
