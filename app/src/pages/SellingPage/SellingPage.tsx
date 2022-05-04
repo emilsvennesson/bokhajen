@@ -11,7 +11,6 @@ import {
 
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
-
 import BookInformationInput from './BookInformationInput';
 import Conditions from '../../config/Conditions';
 import AdService from '../../services/AdService';
@@ -42,7 +41,7 @@ interface Error {
 export default function SellingPage() {
   const [book, setBook] = React.useState<Book | undefined>(undefined);
   const [edit, setEdit] = React.useState(false);
-  const [bookPrice, setPrice] = React.useState(0);
+  const [bookPrice, setPrice] = React.useState<number | undefined>(undefined);
   const [bookCondition, setCondition] = React.useState(Conditions.good);
   const [describtion, setdescribtion] = React.useState('');
   const [error, setError] = React.useState<Error>({
@@ -95,6 +94,10 @@ export default function SellingPage() {
    */
   const handleDone = () => {
     if (!user || !book) return;
+    if (!bookPrice) {
+      displayError('Price is not set');
+      return;
+    }
 
     const ad: NewAdvert = {
       userId: user.uid,
@@ -103,6 +106,10 @@ export default function SellingPage() {
       condition: bookCondition,
       conditionDescription: describtion,
     };
+
+    if (user) {
+      navigate('/', { replace: true });
+    }
 
     AdService.publishAd(ad)
       .then(() => {
