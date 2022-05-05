@@ -78,6 +78,11 @@ export default function AccountDetails() {
               <Grid item xs={8} md={5}>
                 <TextField required label="Bekräfta lösenord" fullWidth />
               </Grid>
+              <Grid item xs={8} md={5}>
+                <Button variant="contained" size="large">
+                  Spara uppgifter
+                </Button>
+              </Grid>
             </Grid>
             <Stack>
               <Avatar
