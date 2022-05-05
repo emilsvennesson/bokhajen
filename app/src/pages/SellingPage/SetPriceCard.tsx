@@ -8,6 +8,7 @@ import {
   TextField,
   Card,
 } from '@mui/material';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import { Book } from 'cremona/dist/Book';
 import React, { useRef } from 'react';
 
@@ -86,7 +87,7 @@ export default function SetPriceCard({
             {/* Back button */}
             <Box width="100%">
               <Button onClick={() => backButtonHandler()} variant="contained">
-                {'<-'}
+                <KeyboardBackspaceOutlinedIcon />
               </Button>
             </Box>
 
