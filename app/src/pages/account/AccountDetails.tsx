@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Grid,
   Stack,
   TextField,
@@ -32,56 +33,91 @@ export default function AccountDetails() {
           <Button size="large">Mina annonser</Button>
         </Stack>
       </Box>
-      <Box
-        sx={{
-          /* backgroundColor: 'red', */
-          marginLeft: '20px',
-        }}
-      >
-        <Box
-          sx={{
-            /* backgroundColor: 'red', */
-            marginBottom: '25px',
-          }}
-        >
-          <Typography variant="h4">Välkommen {auth.user?.email}!</Typography>
-        </Box>
-        <Box sx={{ display: 'flex', width: '700px' }}>
-          <Grid
-            container
-            rowSpacing={2}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-            sx={
-              {
-                /* border: 1, borderColor: 'red'  */
+      <Stack spacing={6} sx={{ marginLeft: '20px' }}>
+        <Box>
+          <Box>
+            <Typography
+              variant="h4"
+              sx={{ fontWeight: 'bold', marginBottom: '20px' }}
+            >
+              Välkommen {auth.user?.email}!
+            </Typography>
+            <Box sx={{ marginBottom: '20px', width: '450px' }}>
+              <Divider textAlign="left">
+                <Typography variant="h5" sx={{}}>
+                  Mina uppgifter
+                </Typography>
+              </Divider>
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', width: '700px' }}>
+            <Grid
+              container
+              rowSpacing={2}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              sx={
+                {
+                  /* border: 1, borderColor: 'red'  */
+                }
               }
-            }
-            /* sx={{ border: 1 }} */
-          >
-            <Grid item xs={8} md={5}>
-              <TextField required label="Förnamn" fullWidth />
+              /* sx={{ border: 1 }} */
+            >
+              <Grid item xs={8} md={5}>
+                <TextField required label="Förnamn" fullWidth />
+              </Grid>
+              <Grid item xs={8} md={5}>
+                <TextField required label="Efternamn" fullWidth />
+              </Grid>
+              <Grid item xs={8} md={10}>
+                <TextField required label="E-mail" fullWidth />
+              </Grid>
+              <Grid item xs={8} md={5}>
+                <TextField required label="Lösenord" fullWidth />
+              </Grid>
+              <Grid item xs={8} md={5}>
+                <TextField required label="Bekräfta lösenord" fullWidth />
+              </Grid>
             </Grid>
-            <Grid item xs={8} md={5}>
-              <TextField required label="Efternamn" fullWidth />
-            </Grid>
-            <Grid item xs={8} md={10}>
-              <TextField required label="E-mail" fullWidth />
-            </Grid>
-            <Grid item xs={8} md={5}>
-              <TextField required label="Lösenord" fullWidth />
-            </Grid>
-            <Grid item xs={8} md={5}>
-              <TextField required label="Bekräfta lösenord" fullWidth />
-            </Grid>
-          </Grid>
-          <Stack>
-            <Avatar
-              sx={{ height: '150px', width: '150px', marginBottom: '10px' }}
-            />
-            <Button size="large">Välj bild</Button>
-          </Stack>
+            <Stack>
+              <Avatar
+                sx={{ height: '150px', width: '150px', marginBottom: '10px' }}
+              />
+              <Button size="large">Välj bild</Button>
+            </Stack>
+          </Box>
         </Box>
-      </Box>
+
+        {/* PASSWORD FORM */}
+        <Box>
+          <Box>
+            <Box sx={{ marginBottom: '20px', width: '450px' }}>
+              <Divider textAlign="left">
+                <Typography variant="h6" sx={{}}>
+                  Ändra lösenord
+                </Typography>
+              </Divider>
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', width: '450px' }}>
+            <Grid
+              container
+              rowSpacing={2}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            >
+              <Grid item xs={12} md={6}>
+                <TextField required label="Nuvarande lösenord" fullWidth />
+              </Grid>
+              <Grid item xs={12} md={6} />
+              <Grid item xs={8} md={6}>
+                <TextField required label="Nytt lösenord" fullWidth />
+              </Grid>
+              <Grid item xs={8} md={6}>
+                <TextField required label="Bekräfta nytt lösenord" fullWidth />
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Stack>
     </Container>
   );
 }
