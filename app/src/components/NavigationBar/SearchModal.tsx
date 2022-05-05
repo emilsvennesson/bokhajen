@@ -39,14 +39,20 @@ export default function SearchModal({
   const [queryOffset, setQueryOffset] = useState(1);
 
   useEffect(() => {
-    const search = async () => {
-      setLoadingBooks(true);
-      const books = await SearchService.search(query, BOOK_LIMIT);
-      setQueryOffset(1);
-      setResults(books);
-      setLoadingBooks(false);
+    let isSubscribed = true;
+
+    setLoadingBooks(true);
+    setResults([]);
+    SearchService.search(query, BOOK_LIMIT).then((books) => {
+      if (isSubscribed) {
+        setQueryOffset(1);
+        setResults(books);
+        setLoadingBooks(false);
+      }
+    });
+    return () => {
+      isSubscribed = false;
     };
-    search();
   }, [query]);
 
   const handleLoadMore = () => {
