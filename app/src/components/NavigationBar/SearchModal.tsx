@@ -24,7 +24,7 @@ interface Props {
   onBookClick?: (book: Book) => void;
 }
 
-const bookLimit = 5;
+const BOOK_LIMIT = 5;
 
 export default function SearchModal({
   query,
@@ -41,7 +41,7 @@ export default function SearchModal({
   useEffect(() => {
     const search = async () => {
       setLoadingBooks(true);
-      const books = await SearchService.search(query, bookLimit);
+      const books = await SearchService.search(query, BOOK_LIMIT);
       setQueryOffset(1);
       setResults(books);
       setLoadingBooks(false);
@@ -51,7 +51,7 @@ export default function SearchModal({
 
   const handleLoadMore = () => {
     setLoadingBooks(true);
-    SearchService.search(query, bookLimit, queryOffset * bookLimit).then(
+    SearchService.search(query, BOOK_LIMIT, queryOffset * BOOK_LIMIT).then(
       (books) => {
         setQueryOffset(queryOffset + 1);
         setResults([...results, ...books]);
@@ -63,7 +63,6 @@ export default function SearchModal({
   return (
     <Modal
       open={open || false}
-      // TODO: fix closing manually good
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -129,11 +128,10 @@ export default function SearchModal({
             />
           ))}
           {loadingBooks &&
-            [...Array(3)].map((e, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <SearchResultItem key={i} />
+            [...Array(3)].map(() => (
+              <SearchResultItem key={Math.random() * 10000} />
             ))}
-          {!loadingBooks && results.length >= bookLimit && (
+          {!loadingBooks && results.length >= BOOK_LIMIT && (
             <ListItem
               sx={{
                 display: 'flex',

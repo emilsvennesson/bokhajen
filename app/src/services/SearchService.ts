@@ -1,8 +1,7 @@
 import { Book, CremonaClient } from 'cremona';
 
 const client = new CremonaClient();
-console.log('SearchService.ts');
-const minLength = 3;
+const MIN_LENGTH = 3;
 
 export default class SearchService {
   static async search(
@@ -10,14 +9,14 @@ export default class SearchService {
     limit?: number,
     offset?: number,
   ): Promise<Book[]> {
-    if (query.length < minLength) {
+    if (query.length < MIN_LENGTH) {
       return [];
     }
     let books: Book[] = [];
     try {
       books = await client.search(query, limit, offset);
     } catch (e) {
-      console.log(e);
+      // TODO: Handle error
     }
     return books;
   }
