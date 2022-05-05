@@ -8,12 +8,14 @@ interface SearchForBookWindowCardProps {
   setBook: Function;
   handleNext: Function;
   active: boolean;
+  canNext: boolean;
 }
 
 export default function SearchForBookWindowCard({
   setBook,
   handleNext,
   active,
+  canNext,
 }: SearchForBookWindowCardProps) {
   return (
     <Box flexGrow={1}>
@@ -40,7 +42,7 @@ export default function SearchForBookWindowCard({
             onClick={() => {
               handleNext();
             }}
-            disabled={!active}
+            disabled={!active && canNext}
             endIcon={<EastOutlinedIcon />}
           >
             Get started
