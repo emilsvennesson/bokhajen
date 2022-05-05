@@ -24,6 +24,7 @@ export default function ConditionCheckWindow({
       <Box flexGrow={3}>
         <Paper elevation={5}>
           <ConditionCheckCard
+            active={active}
             backButtonHandler={() => handleBack()}
             nextButtonHandler={(incondition: string, inDescribtion: string) => {
               handleNext();
