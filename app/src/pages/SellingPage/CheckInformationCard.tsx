@@ -1,5 +1,6 @@
 import { Box, Stack, Button, Typography } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import React from 'react';
 import BookInformation from './BookInformation';
 
@@ -36,7 +37,7 @@ export default function CheckInformationCard({
       alignItems="center"
       padding={2}
       flexGrow={2}
-      height="100%"
+      height="360px"
     >
       <Stack direction="row" alignItems="left" width="100%">
         <Button
@@ -46,7 +47,7 @@ export default function CheckInformationCard({
             backButtonHandler();
           }}
         >
-          {'<-'}
+          <KeyboardBackspaceOutlinedIcon />
         </Button>
         <Typography
           textAlign="center"

@@ -11,6 +11,7 @@ import {
   Radio,
 } from '@mui/material';
 import React from 'react';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import conditions from '../../config/Conditions';
 
 interface ConditionCheckCardProps {
@@ -57,7 +58,7 @@ export default function ConditionCheckCard({
       padding={2}
       borderRadius={2}
       spacing={2}
-      height="100%"
+      height="360px"
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button
@@ -65,7 +66,7 @@ export default function ConditionCheckCard({
           disabled={disabled}
           onClick={() => backButtonHandler()}
         >
-          {'<-'}
+          <KeyboardBackspaceOutlinedIcon />
         </Button>
         <Typography textAlign="center" variant="h5" flexGrow={2}>
           Condition
