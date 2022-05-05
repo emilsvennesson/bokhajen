@@ -16,6 +16,7 @@ import conditions from '../../config/Conditions';
 interface ConditionCheckCardProps {
   backButtonHandler: Function;
   nextButtonHandler: Function;
+  active: boolean;
   disabled?: boolean;
 }
 
@@ -30,6 +31,7 @@ export default function ConditionCheckCard({
   backButtonHandler,
   nextButtonHandler,
   disabled = false,
+  active,
 }: ConditionCheckCardProps) {
   const [condition, setCondition] = React.useState(conditions.good);
   const [describtion, setDescribtion] = React.useState('');
@@ -71,7 +73,7 @@ export default function ConditionCheckCard({
         <Box flexGrow={1} />
       </Stack>
 
-      <FormControl fullWidth>
+      <FormControl fullWidth disabled={!active}>
         <Select
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
@@ -84,6 +86,7 @@ export default function ConditionCheckCard({
         </Select>
       </FormControl>
       <TextField
+        disabled={!active}
         fullWidth
         multiline
         rows={4}
