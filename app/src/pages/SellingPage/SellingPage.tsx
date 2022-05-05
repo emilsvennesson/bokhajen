@@ -19,7 +19,7 @@ import { NewAdvert } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 import SearchForBookWindowCard from './Wizard/SearchForBookWindowCard';
-import CheckInformationWIndow from './Wizard/CheckInformationWIndow';
+import CheckInformationWindow from './Wizard/CheckInformationWIndow';
 import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
 import SetPriceWindow from './Wizard/SetPriceWindow';
 
@@ -156,14 +156,16 @@ export default function SellingPage() {
           <SearchForBookWindowCard
             setBook={setBook}
             handleNext={handleNext}
-            active={book === undefined || activeStep === 0}
+            active={activeStep === 0}
+            canNext={book === undefined}
           />
           {/** Check information */}
-          <CheckInformationWIndow
+          <CheckInformationWindow
             book={book}
             handleBack={handleBack}
             handleNext={handleNext}
             setEdit={setEdit}
+            active={activeStep === 1}
             show={!edit && activeStep > 0}
           />
 
