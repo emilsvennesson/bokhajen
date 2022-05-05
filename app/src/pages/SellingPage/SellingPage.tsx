@@ -8,7 +8,6 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
 import BookInformationInput from './BookInformationInput';
@@ -94,7 +93,7 @@ export default function SellingPage() {
    */
   const handleDone = () => {
     if (!user || !book) return;
-    if (!bookPrice) {
+    if (bookPrice === undefined) {
       displayError('Price is not set');
       return;
     }
@@ -106,10 +105,6 @@ export default function SellingPage() {
       condition: bookCondition,
       conditionDescription: describtion,
     };
-
-    if (user) {
-      navigate('/', { replace: true });
-    }
 
     AdService.publishAd(ad)
       .then(() => {
