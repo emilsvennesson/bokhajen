@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Stack,
@@ -10,8 +10,9 @@ import {
   StepLabel,
   Snackbar,
   Alert,
+  Paper,
 } from '@mui/material';
-
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
 import SearchBook from '../../components/SearchBook';
@@ -23,6 +24,7 @@ import Conditions from '../../config/Conditions';
 import AdService from '../../services/AdService';
 import { NewAdvert } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 const steps = [
   'Find your book',
@@ -53,8 +55,20 @@ export default function SellingPage() {
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        navigate('/login', { replace: true });
+      }
+    }
+  });
+
+  if (loading) {
+    return <OverlayCircularProgress />;
+  }
 
   /**
    * This is called to back the stepper in the page
@@ -84,7 +98,7 @@ export default function SellingPage() {
    */
   const handleDone = () => {
     if (!user || !book) return;
-    if (!bookPrice) {
+    if (bookPrice === undefined) {
       displayError('Price is not set');
       return;
     }
@@ -97,10 +111,6 @@ export default function SellingPage() {
       conditionDescription: describtion,
     };
 
-    if (user) {
-      navigate('/', { replace: true });
-    }
-
     AdService.publishAd(ad)
       .then(() => {
         navigate('/', { replace: true });
@@ -109,69 +119,75 @@ export default function SellingPage() {
         displayError(`Error:${res.data.error}`);
       });
   };
-
   const searchForBookWindow = (
     <Box flexGrow={1}>
-      <Stack
-        bgcolor="white"
-        alignItems="center"
-        spacing={5}
-        padding={2}
-        paddingTop={5}
-        borderRadius={2}
-        height="94%"
-      >
-        <Typography textAlign="center" variant="h2">
-          Get started
-        </Typography>
-        <SearchBook
-          disabled={activeStep > 0}
-          bookSearchHandler={(inBook: Book) => setBook(inBook)}
-        />
-        <Button
-          size="large"
-          variant="contained"
-          onClick={() => {
-            handleNext();
-          }}
-          disabled={activeStep !== 0 || book === undefined}
+      <Paper elevation={5}>
+        <Stack
+          bgcolor="white"
+          alignItems="center"
+          spacing={5}
+          padding={2}
+          paddingTop={5}
+          borderRadius={2}
+          height="335px"
         >
-          {'Get started ->'}
-        </Button>
-      </Stack>
+          <Typography textAlign="center" variant="h2">
+            Get started
+          </Typography>
+          <SearchBook
+            disabled={activeStep > 0}
+            bookSearchHandler={(inBook: Book) => setBook(inBook)}
+          />
+          <Button
+            size="large"
+            variant="contained"
+            onClick={() => {
+              handleNext();
+            }}
+            disabled={activeStep !== 0 || book === undefined}
+            endIcon={<EastOutlinedIcon />}
+          >
+            Get started
+          </Button>
+        </Stack>
+      </Paper>
     </Box>
   );
 
   const checkInformationWindow = (
-    <Box flexGrow={2}>
-      <CheckInformationCard
-        book={book}
-        backButtonHandler={() => {
-          handleBack();
-        }}
-        disabled={activeStep !== 1 || edit}
-        continueButtonHandler={() => handleNext()}
-        editButtonHandler={() => setEdit(true)}
-      />
+    <Box flexGrow={2} height="300px">
+      <Paper elevation={5}>
+        <CheckInformationCard
+          book={book}
+          backButtonHandler={() => {
+            handleBack();
+          }}
+          disabled={activeStep !== 1 || edit}
+          continueButtonHandler={() => handleNext()}
+          editButtonHandler={() => setEdit(true)}
+        />
+      </Paper>
     </Box>
   );
 
   const conditionCheckWindow = (
-    <Box flexGrow={1}>
-      <ConditionCheckCard
-        backButtonHandler={() => handleBack()}
-        nextButtonHandler={(incondition: string, inDescribtion: string) => {
-          handleNext();
-          setCondition(incondition);
-          setdescribtion(inDescribtion);
-        }}
-        disabled={activeStep === 3}
-      />
+    <Box flexGrow={1} height="500px">
+      <Paper elevation={5}>
+        <ConditionCheckCard
+          backButtonHandler={() => handleBack()}
+          nextButtonHandler={(incondition: string, inDescribtion: string) => {
+            handleNext();
+            setCondition(incondition);
+            setdescribtion(inDescribtion);
+          }}
+          disabled={activeStep === 3}
+        />
+      </Paper>
     </Box>
   );
 
   return (
-    <Box bgcolor="#C4C4C4" height="800px">
+    <Box height="500px">
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
@@ -183,24 +199,7 @@ export default function SellingPage() {
           {error.message ?? 'Book did not get published'}
         </Alert>
       </Snackbar>
-      <Stack
-        padding="2%"
-        paddingTop={1}
-        bgcolor="#C4C4C4"
-        direction="column"
-        spacing={2}
-      >
-        {/** Title */}
-        <Box bgcolor="white" borderRadius="8px" padding={5} flexGrow={3}>
-          <Typography variant="h3" margin="30px">
-            Sell your book
-          </Typography>
-          <Typography variant="h6" margin="20px">
-            If you want to publish an add for your book there are three steps
-            you need to go trough. First you need to fill out the ISBN number in
-            order for us to know wich book you want to sell
-          </Typography>
-        </Box>
+      <Stack padding="2%" paddingTop={1} direction="column" spacing={2}>
         <Box bgcolor="white" padding={2} borderRadius={2}>
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
