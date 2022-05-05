@@ -3,12 +3,11 @@ import {
   Button,
   Typography,
   Box,
-  FormControlLabel,
   TextField,
-  RadioGroup,
-  FormLabel,
   FormControl,
-  Radio,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
@@ -35,9 +34,7 @@ export default function ConditionCheckCard({
   const [condition, setCondition] = React.useState(conditions.good);
   const [describtion, setDescribtion] = React.useState('');
 
-  const handleConditionChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleConditionChange = (event: SelectChangeEvent) => {
     setCondition((event.target as HTMLInputElement).value);
   };
 
@@ -74,32 +71,23 @@ export default function ConditionCheckCard({
         <Box flexGrow={1} />
       </Stack>
 
-      <FormControl>
-        <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
-        <RadioGroup
+      <FormControl fullWidth>
+        <Select
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={condition}
           onChange={handleConditionChange}
         >
-          <FormControlLabel
-            value={conditions.torn}
-            control={<Radio />}
-            label="Torn"
-          />
-          <FormControlLabel
-            value={conditions.good}
-            control={<Radio />}
-            label="Good"
-          />
-          <FormControlLabel
-            value={conditions.new}
-            control={<Radio />}
-            label="New"
-          />
-        </RadioGroup>
+          <MenuItem value={conditions.torn}>Torn</MenuItem>
+          <MenuItem value={conditions.good}>Good</MenuItem>
+          <MenuItem value={conditions.new}>New</MenuItem>
+        </Select>
       </FormControl>
       <TextField
+        fullWidth
+        multiline
+        rows={4}
+        maxRows={4}
         value={describtion}
         onChange={handleDescribtionChange}
         label="describe the quality"
