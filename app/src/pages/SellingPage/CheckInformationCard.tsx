@@ -49,12 +49,7 @@ export default function CheckInformationCard({
         >
           <KeyboardBackspaceOutlinedIcon />
         </Button>
-        <Typography
-          textAlign="center"
-          variant="h5"
-          fontWeight="bold"
-          flexGrow={5}
-        >
+        <Typography textAlign="center" variant="h5" flexGrow={5}>
           Är informationen korrekt?
         </Typography>
       </Stack>
