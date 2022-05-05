@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Typography,
@@ -49,6 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function NavigationBar() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
@@ -75,6 +76,9 @@ function NavigationBar() {
         open={searchModalOpen}
         onClose={() => {
           setSearchModalOpen(false);
+        }}
+        onBookClick={(book) => {
+          navigate(`/book/${book.uid}`, { replace: true });
         }}
       />
 

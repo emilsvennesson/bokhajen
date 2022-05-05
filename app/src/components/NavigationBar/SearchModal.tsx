@@ -21,11 +21,18 @@ interface Props {
     | ((event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void)
     | undefined;
   open?: boolean;
+  onBookClick?: (book: Book) => void;
 }
 
 const bookLimit = 5;
 
-export default function SearchModal({ query, onChange, onClose, open }: Props) {
+export default function SearchModal({
+  query,
+  onChange,
+  onClose,
+  open,
+  onBookClick,
+}: Props) {
   const [results, setResults] = useState<Book[]>([]);
   // const [open, setOpen] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
@@ -115,7 +122,11 @@ export default function SearchModal({ query, onChange, onClose, open }: Props) {
             </Box>
           )}
           {results.map((book) => (
-            <SearchResultItem key={book.uid} book={book} />
+            <SearchResultItem
+              key={book.uid}
+              book={book}
+              onBookClick={onBookClick}
+            />
           ))}
           {loadingBooks &&
             [...Array(3)].map((e, i) => (

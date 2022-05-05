@@ -10,13 +10,13 @@ import {
 } from '@mui/material';
 import { Book } from 'cremona';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 interface Props {
   book?: Book;
+  onBookClick?: (book: Book) => void;
 }
 
-export default function SearchResultItem({ book }: Props) {
+export default function SearchResultItem({ book, onBookClick }: Props) {
   if (!book) {
     return (
       <ListItemButton
@@ -58,8 +58,7 @@ export default function SearchResultItem({ book }: Props) {
         borderRadius: 2,
         justifyContent: 'space-between',
       }}
-      component={Link}
-      to={`/books/${book.uid}`}
+      onClick={() => onBookClick && onBookClick(book)}
     >
       <Box
         sx={{
