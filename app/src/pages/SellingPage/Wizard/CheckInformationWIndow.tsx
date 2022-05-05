@@ -3,21 +3,23 @@ import { Book } from 'cremona';
 import React from 'react';
 import CheckInformationCard from '../CheckInformationCard';
 
-interface CheckInformationWIndowProps {
+interface CheckInformationWindowProps {
   book: Book | undefined;
   handleBack: Function;
   handleNext: Function;
   setEdit: Function;
+  active: boolean;
   show: boolean;
 }
 
-export default function CheckInformationWIndow({
+export default function CheckInformationWindow({
   book,
   handleBack,
   handleNext,
   setEdit,
+  active,
   show,
-}: CheckInformationWIndowProps) {
+}: CheckInformationWindowProps) {
   return (
     <Grow in={show}>
       <Box flexGrow={1.5} height="300px">
@@ -27,7 +29,7 @@ export default function CheckInformationWIndow({
             backButtonHandler={() => {
               handleBack();
             }}
-            disabled={!show}
+            disabled={!active}
             continueButtonHandler={() => handleNext()}
             editButtonHandler={() => setEdit(true)}
           />
