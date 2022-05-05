@@ -11,14 +11,16 @@ import {
   Snackbar,
   Alert,
   Paper,
+  Card,
+  TextField,
 } from '@mui/material';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
 import SearchBook from '../../components/SearchBook';
 import CheckInformationCard from './CheckInformationCard';
 import ConditionCheckCard from './ConditionCheckCard';
-import SetPriceCard from './SetPriceCard';
 import BookInformationInput from './BookInformationInput';
 import Conditions from '../../config/Conditions';
 import AdService from '../../services/AdService';
@@ -155,7 +157,7 @@ export default function SellingPage() {
   );
 
   const checkInformationWindow = (
-    <Box flexGrow={2} height="300px">
+    <Box flexGrow={1.5} height="300px">
       <Paper elevation={5}>
         <CheckInformationCard
           book={book}
@@ -171,7 +173,7 @@ export default function SellingPage() {
   );
 
   const conditionCheckWindow = (
-    <Box flexGrow={1} height="500px">
+    <Box flexGrow={3}>
       <Paper elevation={5}>
         <ConditionCheckCard
           backButtonHandler={() => handleBack()}
@@ -182,6 +184,78 @@ export default function SellingPage() {
           }}
           disabled={activeStep === 3}
         />
+      </Paper>
+    </Box>
+  );
+
+  const setPriceWindow = (
+    <Box width="600px">
+      <Paper elevation={5}>
+        <Box padding={1}>
+          {/* Back button */}
+          <Box flexShrink={20} height="100%">
+            <Button onClick={() => handleBack()} variant="contained">
+              <KeyboardBackspaceOutlinedIcon />
+            </Button>
+          </Box>
+          <Stack
+            height="200px"
+            bgcolor="white"
+            zIndex={1}
+            borderRadius={2}
+            alignItems="center"
+            justifyContent="center"
+            direction="row"
+            paddingBottom="30px"
+            spacing={3}
+          >
+            <Stack spacing={2} alignItems="center" flexShrink={20}>
+              {/* Price reference cards */}
+              <Box flexShrink={20}>
+                <Card>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing="20px"
+                    padding={2}
+                  >
+                    <Box
+                      component="img"
+                      width="90px"
+                      src="https://shop.textalk.se/shop/22777/files/Logotyper/Logga%20vit%20botten.png?max-width=600&max-height=120&quality=85"
+                    />
+                    <Typography variant="h5" fontWeight="bold">
+                      Chalmers Store
+                    </Typography>
+                    <Box display="flex">
+                      <Typography variant="h5">{book?.price}</Typography>
+                      <Typography variant="h5">:-</Typography>
+                    </Box>
+                  </Stack>
+                </Card>
+              </Box>
+              {/* Price textfield */}
+              <Box flexGrow={1}>
+                <TextField
+                  type="number"
+                  label="price"
+                  onChange={(value) => setPrice(+value.target.value)}
+                />
+              </Box>
+
+              {/* Continue button */}
+              <Box flexGrow={1} flexShrink={20}>
+                <Button
+                  onClick={() => handleDone()}
+                  variant="contained"
+                  size="large"
+                >
+                  Continue
+                </Button>
+              </Box>
+            </Stack>
+          </Stack>
+        </Box>
       </Paper>
     </Box>
   );
@@ -199,8 +273,14 @@ export default function SellingPage() {
           {error.message ?? 'Book did not get published'}
         </Alert>
       </Snackbar>
-      <Stack padding="2%" paddingTop={1} direction="column" spacing={2}>
-        <Box bgcolor="white" padding={2} borderRadius={2}>
+      <Stack
+        padding="2%"
+        paddingTop={1}
+        direction="column"
+        spacing={4}
+        alignItems="center"
+      >
+        <Box bgcolor="white" padding={2} borderRadius={2} width="90vw">
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
               const stepProps: { completed?: boolean } = {};
@@ -227,16 +307,8 @@ export default function SellingPage() {
             {conditionCheckWindow}
           </Grow>
         </Stack>
+        <Grow in={book != null && activeStep > 2}>{setPriceWindow}</Grow>
       </Stack>
-      <SetPriceCard
-        book={book}
-        backButtonHandler={() => handleBack()}
-        setPrice={(inPrice: number) => setPrice(inPrice)}
-        continueButtonHandler={() => {
-          handleDone();
-        }}
-        show={activeStep === 3}
-      />
       <BookInformationInput
         book={book}
         show={edit}
