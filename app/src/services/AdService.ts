@@ -1,6 +1,4 @@
 /* eslint-disable no-console */
-import { Book } from 'cremona';
-import { User } from 'firebase/auth';
 import {
   collection,
   FirestoreError,
@@ -13,10 +11,8 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
-import ServiceSuccessResponse, {
-  FetchAdvertSuccessResponse,
-} from './ServiceSuccessResponse';
-import Advert from './Advert';
+import ServiceSuccessResponse from './ServiceSuccessResponse';
+import { Advert, NewAdvert } from './Advert';
 
 /**
  * Handles all fetching and publishing of ads
@@ -26,7 +22,7 @@ import Advert from './Advert';
  * @author [Johan Blickhammar](https://github.com/JohanBlickhammar)
  */
 export default class AdService {
-  static async publishAd(ad: Advert): Promise<ServiceSuccessResponse> {
+  static async publishAd(ad: NewAdvert): Promise<ServiceSuccessResponse> {
     try {
       const docRef = await addDoc(collection(db, 'ads'), ad);
       console.log('Document written with ID: ', docRef.id);
@@ -42,17 +38,17 @@ export default class AdService {
 
   /**
    * This methods get all the ads from the connected firebase
-   * @param book : Book (optional) will find ads with this book
-   * @param user : User (optional) will find ads with this user
+   * @param bookUid : string (optional) will find ads with this book uid
+   * @param userUid : string (optional) will find ads with this user uid
    * @returns Promise<ServiceSuccessResponse>
    */
   private static async getAds(
-    book?: Book | null,
-    user?: User | null,
-  ): Promise<FetchAdvertSuccessResponse> {
+    bookUid?: string,
+    userUid?: string,
+  ): Promise<Advert[]> {
     const queryConstraints = [];
-    if (book) queryConstraints.push(where('bookId', '==', book.uid));
-    if (user) queryConstraints.push(where('uid', '==', user.uid));
+    if (bookUid) queryConstraints.push(where('bookId', '==', bookUid));
+    if (userUid) queryConstraints.push(where('uid', '==', userUid));
 
     const q = query(collection(db, 'ads'), ...queryConstraints);
 
@@ -72,7 +68,7 @@ export default class AdService {
       ads.push(ad);
     });
 
-    return { success: true, ads };
+    return ads;
   }
 
   /**
@@ -100,26 +96,26 @@ export default class AdService {
    * This will retrun all the ads that have been published
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async getAllAds(): Promise<ServiceSuccessResponse> {
+  static async getAllAds(): Promise<Advert[]> {
     return this.getAds();
   }
 
   /**
    * Returns all the ads that have been published by a specific user
-   * @param user will find all ads that have been published by this user
+   * @param user will find all ads that have been published by this user uid
    * @returns
    */
-  static async getAdsFromUser(user: User): Promise<ServiceSuccessResponse> {
-    return this.getAds(null, user);
+  static async getAdsFromUser(userUid: string): Promise<Advert[]> {
+    return this.getAds(undefined, userUid);
   }
 
   /**
    * Returns all the ads that are of a specific book
-   * @param book will find all ads that have this book
+   * @param bookUid will find all ads that have this book uid
    * @returns Promise<ServiceSuccessResponse>
    */
-  static async getAdsFromBook(book: Book): Promise<ServiceSuccessResponse> {
-    return this.getAds(book);
+  static async getAdsFromBook(bookUid: string): Promise<Advert[]> {
+    return this.getAds(bookUid);
   }
 
   /**
