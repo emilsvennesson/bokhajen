@@ -157,7 +157,7 @@ export default function SellingPage() {
             setBook={setBook}
             handleNext={handleNext}
             active={activeStep === 0}
-            canNext={book === undefined}
+            canNext={book !== undefined}
           />
           {/** Check information */}
           <CheckInformationWindow
