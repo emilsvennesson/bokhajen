@@ -24,7 +24,7 @@ export default function AccountDetails() {
     >
       <Box
         sx={{
-          marginTop: '60px',
+          marginTop: '80px',
           width: '200px',
         }}
       >
@@ -33,6 +33,7 @@ export default function AccountDetails() {
           <Button size="large">Mina annonser</Button>
         </Stack>
       </Box>
+      <Divider orientation="vertical" flexItem sx={{ marginTop: '80px' }} />
       <Stack spacing={6} sx={{ marginLeft: '20px' }}>
         <Box>
           <Box>
