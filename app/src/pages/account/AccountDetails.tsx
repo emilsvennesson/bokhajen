@@ -29,7 +29,9 @@ export default function AccountDetails() {
         }}
       >
         <Stack>
-          <Button size="large">Mina uppgifter</Button>
+          <Button size="large" sx={{ fontWeight: 'bold', fontSize: '16px' }}>
+            Mina uppgifter
+          </Button>
           <Button size="large">Mina annonser</Button>
         </Stack>
       </Box>
@@ -114,11 +116,16 @@ export default function AccountDetails() {
                 <TextField required label="Nuvarande lösenord" fullWidth />
               </Grid>
               <Grid item xs={12} md={6} />
-              <Grid item xs={8} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField required label="Nytt lösenord" fullWidth />
               </Grid>
-              <Grid item xs={8} md={6}>
+              <Grid item xs={12} md={6}>
                 <TextField required label="Bekräfta nytt lösenord" fullWidth />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button variant="contained" size="large">
+                  Ändra lösenord
+                </Button>
               </Grid>
             </Grid>
           </Box>
