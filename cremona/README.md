@@ -16,7 +16,6 @@ Below is an example of a search query. Based on testing (as there is no public d
 import { CremonaClient, Book } from 'cremona';
 const client = new CremonaClient();
 const books = await client.search('TMV210');
-client.close();
 console.log(books);
 ```
 
