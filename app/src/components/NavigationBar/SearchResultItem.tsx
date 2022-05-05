@@ -9,7 +9,8 @@ import {
   Skeleton,
 } from '@mui/material';
 import { Book } from 'cremona';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import AdService from '../../services/AdService';
 
 interface Props {
   book?: Book;
@@ -17,6 +18,21 @@ interface Props {
 }
 
 export default function SearchResultItem({ book, onBookClick }: Props) {
+  const [lowestAdPrice, setLowestAdPrice] = useState<number | null>(null);
+
+  useEffect(() => {
+    const getLowestAdPrice = async () => {
+      if (!book) return null;
+      const ads = await AdService.getAdsFromBook(book.uid.toString());
+      if (ads.length > 0) {
+        const minPrice = Math.min(...ads.map((ad) => ad.price));
+        return minPrice;
+      }
+      return null;
+    };
+    getLowestAdPrice().then((price) => setLowestAdPrice(price));
+  }, [book]);
+
   if (!book) {
     return (
       <ListItemButton
@@ -83,31 +99,42 @@ export default function SearchResultItem({ book, onBookClick }: Props) {
           <Typography variant="body2">{book.authors?.join(', ')}</Typography>
         </Stack>
       </Box>
-      <Box>
+
+      <Box sx={{ width: 'auto' }}>
         <Grid container spacing={1}>
-          <Grid
-            item
-            xs={12}
-            md={6}
-            sx={{ display: 'flex', justifyContent: 'right' }}
-          >
-            <Typography
-              variant="body1"
-              style={{ fontWeight: 'bold', color: 'red' }}
+          {lowestAdPrice && (
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{ display: 'flex', justifyContent: 'right' }}
             >
-              666 kr
-            </Typography>
-          </Grid>
+              <Typography
+                variant="body1"
+                noWrap
+                style={{ fontWeight: 'bold', color: 'red' }}
+              >
+                {lowestAdPrice} kr
+              </Typography>
+            </Grid>
+          )}
           <Grid
             item
             xs={12}
-            md={6}
-            sx={{ display: 'flex', justifyContent: 'right' }}
+            md={lowestAdPrice ? 6 : 12}
+            sx={{
+              display: 'flex',
+              justifyContent: 'right',
+            }}
           >
             <Tooltip title="Chalmer Store">
               <Typography
                 variant="body1"
-                style={{ fontWeight: 'bold', textDecoration: 'line-through' }}
+                noWrap
+                sx={{
+                  fontWeight: 'bold',
+                  textDecoration: lowestAdPrice ? 'line-through' : 'none',
+                }}
               >
                 {book.price} kr
               </Typography>
