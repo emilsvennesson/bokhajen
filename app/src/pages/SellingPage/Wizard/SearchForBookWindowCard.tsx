@@ -42,7 +42,7 @@ export default function SearchForBookWindowCard({
             onClick={() => {
               handleNext();
             }}
-            disabled={!active && canNext}
+            disabled={!active || !canNext}
             endIcon={<EastOutlinedIcon />}
           >
             Get started
