@@ -19,6 +19,7 @@ export default function AccountDetails() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber);
 
   const SavePassword = () => {
     if (newPassword === confirmNewPassword) console.log('saved password!');
@@ -99,8 +100,18 @@ export default function AccountDetails() {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </Grid>
+              {/* Phonenumber */}
+              <Grid item xs={8} md={5}>
+                <TextField
+                  id="phonenumber"
+                  value={phoneNumber || ''}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  label="Telefonnummer"
+                  fullWidth
+                />
+              </Grid>
               {/* E-mail */}
-              <Grid item xs={8} md={10}>
+              <Grid item xs={8} md={5}>
                 <TextField
                   required
                   id="email"
