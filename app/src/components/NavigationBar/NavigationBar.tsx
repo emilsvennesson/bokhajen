@@ -79,6 +79,8 @@ function NavigationBar() {
         }}
         onBookClick={(book) => {
           navigate(`/book/${book.uid}`, { replace: true });
+          setSearchModalOpen(false);
+          setSearchQuery('');
         }}
       />
 
