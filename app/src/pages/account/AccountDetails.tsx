@@ -9,14 +9,20 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useState } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 
 export default function AccountDetails() {
   const auth = useAuth();
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   return (
     <Container
       sx={{
-        marginTop: '80px',
+        marginTop: '70px',
         /* backgroundColor: 'gray', */
         direction: 'row',
         display: 'flex',
@@ -36,9 +42,10 @@ export default function AccountDetails() {
         </Stack>
       </Box>
       <Divider orientation="vertical" flexItem sx={{ marginTop: '80px' }} />
-      <Stack spacing={6} sx={{ marginLeft: '20px' }}>
+      <Stack spacing={4} sx={{ marginLeft: '20px' }}>
         <Box>
           <Box>
+            {/* WELCOME MESSAGE */}
             <Typography
               variant="h4"
               sx={{ fontWeight: 'bold', marginBottom: '20px' }}
@@ -65,20 +72,38 @@ export default function AccountDetails() {
               }
               /* sx={{ border: 1 }} */
             >
+              {/* FIRST NAME TEXTFIELD */}
               <Grid item xs={8} md={5}>
-                <TextField required label="Förnamn" fullWidth />
+                <TextField
+                  id="firstname"
+                  required
+                  label="Förnamn"
+                  fullWidth
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
               </Grid>
+              {/* LAST NAME TEXTFIELD */}
               <Grid item xs={8} md={5}>
-                <TextField required label="Efternamn" fullWidth />
+                <TextField
+                  id="lastname"
+                  required
+                  label="Efternamn"
+                  fullWidth
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </Grid>
+              {/* E-mail */}
               <Grid item xs={8} md={10}>
-                <TextField required label="E-mail" fullWidth />
-              </Grid>
-              <Grid item xs={8} md={5}>
-                <TextField required label="Lösenord" fullWidth />
-              </Grid>
-              <Grid item xs={8} md={5}>
-                <TextField required label="Bekräfta lösenord" fullWidth />
+                <TextField
+                  required
+                  id="email"
+                  value={auth.user?.email || ''}
+                  label="E-mail"
+                  fullWidth
+                  disabled
+                />
               </Grid>
               <Grid item xs={8} md={5}>
                 <Button variant="contained" size="large">
@@ -113,14 +138,32 @@ export default function AccountDetails() {
               columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             >
               <Grid item xs={12} md={6}>
-                <TextField required label="Nuvarande lösenord" fullWidth />
+                <TextField
+                  required
+                  label="Nuvarande lösenord"
+                  fullWidth
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
               </Grid>
               <Grid item xs={12} md={6} />
               <Grid item xs={12} md={6}>
-                <TextField required label="Nytt lösenord" fullWidth />
+                <TextField
+                  required
+                  label="Nytt lösenord"
+                  fullWidth
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField required label="Bekräfta nytt lösenord" fullWidth />
+                <TextField
+                  required
+                  label="Bekräfta nytt lösenord"
+                  fullWidth
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <Button variant="contained" size="large">
