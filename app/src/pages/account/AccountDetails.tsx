@@ -19,6 +19,11 @@ export default function AccountDetails() {
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const SavePassword = () => {
+    if (newPassword === confirmNewPassword) console.log('saved password!');
+  };
+
   return (
     <Container
       sx={{
@@ -166,7 +171,7 @@ export default function AccountDetails() {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <Button variant="contained" size="large">
+                <Button variant="contained" size="large" onClick={SavePassword}>
                   Ändra lösenord
                 </Button>
               </Grid>
