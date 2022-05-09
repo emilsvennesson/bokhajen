@@ -32,6 +32,8 @@ export default function AccountDetails() {
   const SaveDetails = () => {
     // This should be saving details into the database
     console.log('Saved details');
+    // If the code resets details before it manages to save details into database then -
+    // replace ResetDetails() with setBtnDisabled(true)
     ResetDetails();
   };
 
