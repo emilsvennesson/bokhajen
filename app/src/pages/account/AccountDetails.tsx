@@ -9,32 +9,40 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 
 export default function AccountDetails() {
   const auth = useAuth();
-  const [firstName, setFirstName] = useState(auth.user?.displayName);
-  const [lastName, setLastName] = useState(auth.user?.displayName);
-  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber);
+  const [firstName, setFirstName] = useState(auth.user?.displayName ?? '');
+  const [lastName, setLastName] = useState(auth.user?.displayName ?? '');
+  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber ?? '');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [reset, setReset] = useState(true);
 
-  const isMounted = useRef(false);
-
+  const ResetDetails = () => {
+    setReset(true);
+    setFirstName(auth.user?.displayName ?? '');
+    setLastName(auth.user?.displayName ?? '');
+    setPhoneNumber(auth.user?.phoneNumber ?? '');
+  };
   const SaveDetails = () => {
+    // This should be saving details into the database
     console.log('Saved details');
-    setBtnDisabled(true);
+    ResetDetails();
   };
 
   useEffect(() => {
     console.log('change button state');
-    if (isMounted.current) {
+    console.log(reset);
+    if (!reset) {
       setBtnDisabled(false);
     } else {
-      isMounted.current = true;
+      setBtnDisabled(true);
+      setReset(false);
     }
   }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
@@ -101,7 +109,6 @@ export default function AccountDetails() {
                   required
                   label="Förnamn"
                   fullWidth
-                  defaultValue={auth.user?.displayName}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -113,7 +120,6 @@ export default function AccountDetails() {
                   required
                   label="Efternamn"
                   fullWidth
-                  defaultValue={auth.user?.displayName}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -122,7 +128,6 @@ export default function AccountDetails() {
               <Grid item xs={8} md={5}>
                 <TextField
                   id="phonenumber"
-                  defaultValue={auth.user?.phoneNumber}
                   value={phoneNumber || ''}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   label="Telefonnummer"
@@ -150,11 +155,17 @@ export default function AccountDetails() {
                   Spara uppgifter
                 </Button>
               </Grid>
-              <Grid item xs={8} md={5}>
-                <Button variant="outlined" size="large">
-                  Avbryt
-                </Button>
-              </Grid>
+              {!btnDisabled && (
+                <Grid item xs={8} md={5}>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={ResetDetails}
+                  >
+                    Avbryt
+                  </Button>
+                </Grid>
+              )}
             </Grid>
             <Stack>
               <Avatar
