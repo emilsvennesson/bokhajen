@@ -21,6 +21,7 @@ export default function AccountDetails() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
+  const [passwordBtnDisabled, setPasswordBtnDisabled] = useState(true);
   const [reset, setReset] = useState(true);
 
   const ResetDetails = () => {
@@ -28,6 +29,13 @@ export default function AccountDetails() {
     setFirstName(auth.user?.displayName ?? '');
     setLastName(auth.user?.displayName ?? '');
     setPhoneNumber(auth.user?.phoneNumber ?? '');
+  };
+
+  const ResetPasswords = () => {
+    setReset(true);
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmNewPassword('');
   };
   const SaveDetails = () => {
     // This should be saving details into the database
@@ -49,8 +57,18 @@ export default function AccountDetails() {
   }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
   const SavePassword = () => {
-    if (newPassword === confirmNewPassword) console.log('saved password!');
+    if (newPassword === confirmNewPassword) {
+      console.log('saved password!');
+    }
+    ResetPasswords();
   };
+
+  useEffect(() => {
+    const length =
+      currentPassword.length + newPassword.length + confirmNewPassword.length;
+    if (length > 0) setPasswordBtnDisabled(false);
+    else setPasswordBtnDisabled(true);
+  }, [currentPassword, newPassword, confirmNewPassword]);
   return (
     <Container
       sx={{
@@ -224,7 +242,12 @@ export default function AccountDetails() {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <Button variant="contained" size="large" onClick={SavePassword}>
+                <Button
+                  variant="contained"
+                  disabled={passwordBtnDisabled}
+                  size="large"
+                  onClick={SavePassword}
+                >
                   Ändra lösenord
                 </Button>
               </Grid>
