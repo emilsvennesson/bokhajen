@@ -98,12 +98,6 @@ function NavigationBar() {
                 <Box component="img" src={bokWhite} width="100px" />
               </Box>
 
-              {/* <Button sx={{ display: 'block' }} component={Link} to="">
-                <Typography variant="h6" color="common.white">
-                  bok
-                </Typography>
-              </Button> */}
-
               {/* BUY BUTTON */}
               <Box
                 sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}
