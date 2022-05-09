@@ -5,6 +5,7 @@ export interface Advert {
   price: number;
   condition: string;
   conditionDescription: string;
+  status: 'available' | 'reserved' | 'sold';
 }
 
 export interface NewAdvert extends Omit<Advert, 'uid'> {}

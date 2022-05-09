@@ -63,6 +63,7 @@ export default class AdService {
         price: docs.data().price,
         condition: docs.data().condition,
         conditionDescription: docs.data().conditionDescription,
+        status: 'available',
       };
 
       ads.push(ad);

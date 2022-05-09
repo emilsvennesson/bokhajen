@@ -10,12 +10,24 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
+import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
 import AdService from '../../services/AdService';
 import { Advert } from '../../services/Advert';
 
 interface Props {
   bookUid: number;
 }
+
+const fakeAd: Advert = {
+  uid: 'uid',
+  userId: 'userid',
+  bookId: 'bookid',
+  price: 199,
+  condition: 'condition',
+  status: 'available',
+  conditionDescription:
+    'condition description. lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris',
+};
 
 function BookDetailViewAds({ bookUid }: Props) {
   const [ads, setAds] = useState<Advert[] | undefined>([]);
@@ -46,6 +58,7 @@ function BookDetailViewAds({ bookUid }: Props) {
         paddingBottom: '10px',
       }}
     >
+      <EditAdModal ad={fakeAd} />
       <Container sx={{ display: 'flex' }}>
         <Box
           sx={{
