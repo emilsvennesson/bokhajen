@@ -85,6 +85,7 @@ export default function AccountDetails() {
                   required
                   label="Förnamn"
                   fullWidth
+                  defaultValue={auth.user?.displayName}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -96,6 +97,7 @@ export default function AccountDetails() {
                   required
                   label="Efternamn"
                   fullWidth
+                  defaultValue={auth.user?.displayName}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -104,6 +106,7 @@ export default function AccountDetails() {
               <Grid item xs={8} md={5}>
                 <TextField
                   id="phonenumber"
+                  defaultValue={auth.user?.phoneNumber}
                   value={phoneNumber || ''}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                   label="Telefonnummer"
