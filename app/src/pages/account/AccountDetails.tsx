@@ -9,22 +9,38 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 
 export default function AccountDetails() {
   const auth = useAuth();
+  const [firstName, setFirstName] = useState(auth.user?.displayName);
+  const [lastName, setLastName] = useState(auth.user?.displayName);
+  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber);
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const isMounted = useRef(false);
+
+  const SaveDetails = () => {
+    console.log('Saved details');
+    setBtnDisabled(true);
+  };
+
+  useEffect(() => {
+    console.log('change button state');
+    if (isMounted.current) {
+      setBtnDisabled(false);
+    } else {
+      isMounted.current = true;
+    }
+  }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
   const SavePassword = () => {
     if (newPassword === confirmNewPassword) console.log('saved password!');
   };
-
   return (
     <Container
       sx={{
@@ -125,8 +141,18 @@ export default function AccountDetails() {
                 />
               </Grid>
               <Grid item xs={8} md={5}>
-                <Button variant="contained" size="large">
+                <Button
+                  variant="contained"
+                  disabled={btnDisabled}
+                  size="large"
+                  onClick={SaveDetails}
+                >
                   Spara uppgifter
+                </Button>
+              </Grid>
+              <Grid item xs={8} md={5}>
+                <Button variant="outlined" size="large">
+                  Avbryt
                 </Button>
               </Grid>
             </Grid>
