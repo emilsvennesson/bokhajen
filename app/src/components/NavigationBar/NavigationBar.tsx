@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
-  Typography,
   Box,
   AppBar,
   Container,
@@ -14,6 +13,7 @@ import {
 import SearchModal from './SearchModal';
 import NavAvatar from './NavAvatar';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import bokWhite from '../../assets/images/bokWhite.png';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -92,12 +92,17 @@ function NavigationBar() {
                     Now we have to import Link from react-router-dom and
                     MUI Button uses the Link component
                 */}
+
               {/* LOGO/ESCAPE HATCH BUTTON */}
-              <Button sx={{ display: 'block' }} component={Link} to="">
+              <Box component={Link} to="">
+                <Box component="img" src={bokWhite} width="100px" />
+              </Box>
+
+              {/* <Button sx={{ display: 'block' }} component={Link} to="">
                 <Typography variant="h6" color="common.white">
                   bok
                 </Typography>
-              </Button>
+              </Button> */}
 
               {/* BUY BUTTON */}
               <Box
