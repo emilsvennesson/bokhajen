@@ -11,8 +11,9 @@ import {
 import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
 import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
+import { BookCondition } from '../../config/BookCondition';
 import AdService from '../../services/AdService';
-import { Advert } from '../../services/Advert';
+import { AdStatus, Advert } from '../../services/Advert';
 
 interface Props {
   bookUid: number;
@@ -23,10 +24,9 @@ const fakeAd: Advert = {
   userId: 'userid',
   bookId: 'bookid',
   price: 199,
-  condition: 'condition',
-  status: 'available',
-  conditionDescription:
-    'condition description. lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris',
+  condition: BookCondition.GOOD,
+  status: AdStatus.AVAILABLE,
+  conditionDescription: 'Den här boken är bra',
 };
 
 function BookDetailViewAds({ bookUid }: Props) {

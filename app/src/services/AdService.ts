@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
-import { Advert, NewAdvert } from './Advert';
+import { AdStatus, Advert, NewAdvert } from './Advert';
 
 /**
  * Handles all fetching and publishing of ads
@@ -63,7 +63,7 @@ export default class AdService {
         price: docs.data().price,
         condition: docs.data().condition,
         conditionDescription: docs.data().conditionDescription,
-        status: 'available',
+        status: AdStatus.AVAILABLE,
       };
 
       ads.push(ad);
@@ -143,6 +143,19 @@ export default class AdService {
     newPrice: number,
   ): Promise<ServiceSuccessResponse> {
     return this.editAd(adUid, { price: newPrice });
+  }
+
+  /**
+   * Edits the status of the ad
+   * @param adUid the id of the ad that will be altered
+   * @param newStatus the new status that will be set on the ad
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  static async editAdStatus(
+    adUid: string,
+    newStatus: AdStatus,
+  ): Promise<ServiceSuccessResponse> {
+    return this.editAd(adUid, { status: newStatus });
   }
 
   /**

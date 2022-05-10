@@ -13,12 +13,20 @@ import {
   Stack,
   TextField,
   Typography,
+  Tooltip,
+  IconButton,
 } from '@mui/material';
 import React from 'react';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import CircleIcon from '@mui/icons-material/Circle';
-import { Advert } from '../../services/Advert';
+import CloseIcon from '@mui/icons-material/Close';
+import { AdStatus, Advert } from '../../services/Advert';
+import {
+  BookCondition,
+  getBookConditionDescription,
+} from '../../config/BookCondition';
+import AdService from '../../services/AdService';
 
 interface Props {
   ad: Advert;
@@ -31,37 +39,36 @@ export default function EditAdModal({ ad }: Props) {
     ad.conditionDescription,
   );
   const [adStatus, setAdStatus] = React.useState(ad.status);
-
   const adChanged =
     adPrice !== ad.price ||
     condition !== ad.condition ||
     adStatus !== ad.status ||
     conditionDescription !== ad.conditionDescription;
 
-  const getSwedishAdStatus = (status: 'available' | 'reserved' | 'sold') => {
+  const getStatusColor = (status: AdStatus) => {
     switch (status) {
-      case 'available':
-        return 'Tillgänglig';
-      case 'reserved':
-        return 'Reserverad';
-      case 'sold':
-        return 'Såld';
+      case 'Tillgänglig':
+        return '#00C853';
+      case 'Reserverad':
+        return '#FF9800';
+      case 'Såld':
+        return '#F44336';
       default:
         return '';
     }
   };
 
-  const getStatusColor = (status: 'available' | 'reserved' | 'sold') => {
-    switch (status) {
-      case 'available':
-        return '#00C853';
-      case 'reserved':
-        return '#FF9800';
-      case 'sold':
-        return '#F44336';
-      default:
-        return '';
-    }
+  const handleSubmit = () => {
+    // TODO: Handle errors
+    if (condition !== ad.condition)
+      AdService.editAdCondition(ad.uid, condition);
+
+    if (adPrice !== ad.price) AdService.editAdPrice(ad.uid, adPrice);
+
+    if (conditionDescription !== ad.conditionDescription)
+      AdService.editAdConditionDescription(ad.uid, conditionDescription);
+
+    if (adStatus !== ad.status) AdService.editAdStatus(ad.uid, adStatus);
   };
 
   const handlePriceChange = (
@@ -83,7 +90,7 @@ export default function EditAdModal({ ad }: Props) {
         sx={{
           position: 'relative',
           top: '50px',
-          width: 900,
+          width: 500,
           bgcolor: 'background.paper',
           border: '2px solid #FFF',
           boxShadow: 24,
@@ -94,8 +101,11 @@ export default function EditAdModal({ ad }: Props) {
           overflowY: 'hidden',
         }}
       >
+        <IconButton sx={{ position: 'absolute', top: 0, right: 0 }}>
+          <CloseIcon />
+        </IconButton>
         <Grid container spacing={1}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Box sx={{ p: 1, width: '100%' }}>
               {/* Ad Preview */}
               <Box sx={{ mb: 3 }}>
@@ -122,15 +132,19 @@ export default function EditAdModal({ ad }: Props) {
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       <Typography sx={{ fontStyle: 'italic', mr: 1 }}>
-                        {getSwedishAdStatus(ad.status)}
+                        {ad.status}
                       </Typography>
                       <CircleIcon sx={{ color: getStatusColor(ad.status) }} />
                     </Box>
                   </Box>
                   <Typography variant="body1">{ad.price} kr</Typography>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <MenuBookTwoToneIcon sx={{ mr: 1 }} />
-                    <Typography variant="body1">{ad.condition}</Typography>
+                    <Tooltip title={getBookConditionDescription(ad.condition)}>
+                      <Box sx={{ display: 'flex' }}>
+                        <MenuBookTwoToneIcon sx={{ mr: 1 }} />
+                        <Typography variant="body1">{ad.condition}</Typography>
+                      </Box>
+                    </Tooltip>
                   </Box>
                   <Box sx={{ display: 'flex' }}>
                     <ChatBubbleTwoToneIcon sx={{ mr: 1 }} />
@@ -141,7 +155,7 @@ export default function EditAdModal({ ad }: Props) {
                 </Stack>
               </Box>
               {/* Edit form */}
-              <Divider textAlign="left" />
+              <Divider />
               <Box
                 component="form"
                 onSubmit={() => console.log('handle submit')}
@@ -168,9 +182,15 @@ export default function EditAdModal({ ad }: Props) {
                           </InputAdornment>
                         }
                       >
-                        <MenuItem value="available">Tillgänglig</MenuItem>
-                        <MenuItem value="reserved">Reserverad</MenuItem>
-                        <MenuItem value="sold">Såld</MenuItem>
+                        <MenuItem value={AdStatus.AVAILABLE}>
+                          {AdStatus.AVAILABLE}
+                        </MenuItem>
+                        <MenuItem value={AdStatus.RESERVED}>
+                          {AdStatus.RESERVED}
+                        </MenuItem>
+                        <MenuItem value={AdStatus.SOLD}>
+                          {AdStatus.SOLD}
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -195,7 +215,11 @@ export default function EditAdModal({ ad }: Props) {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                  >
                     <FormControl fullWidth>
                       <InputLabel id="book-condition-select-label">
                         Bokskick
@@ -213,9 +237,15 @@ export default function EditAdModal({ ad }: Props) {
                         }
                       >
                         {/* TOOD: use condition enum? */}
-                        <MenuItem value="torn">Helt knas förstörd</MenuItem>
-                        <MenuItem value="good">Bra/Normal</MenuItem>
-                        <MenuItem value="new">Nyskick</MenuItem>
+                        <MenuItem value={BookCondition.EXCELLENT}>
+                          {BookCondition.EXCELLENT}
+                        </MenuItem>
+                        <MenuItem value={BookCondition.GOOD}>
+                          {BookCondition.GOOD}
+                        </MenuItem>
+                        <MenuItem value={BookCondition.BAD}>
+                          {BookCondition.BAD}
+                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -227,6 +257,8 @@ export default function EditAdModal({ ad }: Props) {
                       name="condition_description"
                       multiline
                       rows={4}
+                      value={conditionDescription}
+                      lang="sv"
                       onChange={(e) => setConditionDescription(e.target.value)}
                     >
                       {conditionDescription}
@@ -243,6 +275,7 @@ export default function EditAdModal({ ad }: Props) {
                         variant="contained"
                         color="primary"
                         disabled={!adChanged}
+                        onClick={handleSubmit}
                       >
                         Spara ändringar
                       </Button>
