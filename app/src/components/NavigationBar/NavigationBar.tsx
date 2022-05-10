@@ -9,7 +9,9 @@ import {
   styled,
   alpha,
   InputBase,
+  Stack,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import SearchModal from './SearchModal';
 import NavAvatar from './NavAvatar';
 import { useAuth } from '../../hooks/FBAuthProvider';
@@ -36,7 +38,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(0)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -68,6 +70,16 @@ function NavigationBar() {
     setSearchQuery(query);
   };
 
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+
   return (
     <>
       <SearchModal
@@ -84,9 +96,9 @@ function NavigationBar() {
         }}
       />
 
-      <Box component="nav" sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Container maxWidth="xl">
+      <Box component="nav" maxWidth="100%" sx={{ flexGrow: 1 }}>
+        <AppBar position="static" sx={{ width: '100%' }}>
+          <Container maxWidth="xl" sx={{ width: '100%' }} disableGutters>
             <Toolbar disableGutters>
               {/* Pre-MUI we used NavLink to navigate, e.g <NavLink to='/'> link </NavLink>
                     Now we have to import Link from react-router-dom and
@@ -94,39 +106,69 @@ function NavigationBar() {
                 */}
 
               {/* LOGO/ESCAPE HATCH BUTTON */}
-              <Box component={Link} to="">
-                <Box component="img" src={bokWhite} width="100px" />
-              </Box>
+              <Stack
+                sx={{
+                  flexGrow: 1,
 
-              <Box
-                sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}
+                  alignItems: 'center',
+                }}
+                justifyContent="center"
+                direction="row"
+                flexWrap="wrap"
               >
-                {/* SELL BUTTON */}
-                <Button
+                <Box
                   component={Link}
-                  to={sellNavigation()}
-                  color="secondary"
-                  size="large"
+                  to=""
+                  flexGrow={1}
+                  minWidth="150px"
+                  display="flex"
+                  justifyContent="center"
                 >
-                  SÄLJ BOK
-                </Button>
-
+                  <Box component="img" src={bokWhite} width="100px" />
+                </Box>
                 {/* SEARCH FIELD */}
-                <Search>
-                  <StyledInputBase
-                    placeholder="Boktitel/ISBN/Kurskod"
-                    inputProps={{ 'aria-label': 'search' }}
-                    value={searchModalOpen ? '' : searchQuery}
-                    onChange={(e) => handleChangedSearchQuery(e.target.value)}
-                    onClick={() => {
-                      if (searchQuery && !searchModalOpen) {
-                        setSearchModalOpen(true);
-                      }
-                    }}
-                  />
-                </Search>
-              </Box>
-              <NavAvatar />
+                <Box flexGrow={2} minWidth="300px" maxWidth="80%" margin={1}>
+                  <Search>
+                    <SearchIconWrapper>
+                      <SearchIcon />
+                    </SearchIconWrapper>
+
+                    <StyledInputBase
+                      placeholder="Boktitel/ISBN/Kurskod"
+                      inputProps={{ 'aria-label': 'search' }}
+                      value={searchModalOpen ? '' : searchQuery}
+                      onChange={(e) => handleChangedSearchQuery(e.target.value)}
+                      onClick={() => {
+                        if (searchQuery && !searchModalOpen) {
+                          setSearchModalOpen(true);
+                        }
+                      }}
+                      fullWidth
+                    />
+                  </Search>
+                </Box>
+                {/* SELL BUTTON */}
+                <Stack
+                  minWidth="400px"
+                  flexGrow={0.5}
+                  justifyContent="center"
+                  direction="row"
+                  spacing={2}
+                >
+                  <Button
+                    component={Link}
+                    to={sellNavigation()}
+                    color="secondary"
+                    size="large"
+                    sx={{ color: 'lightgray', fontWeight: 'bold' }}
+                  >
+                    SÄLJ BOK
+                  </Button>
+                  <Box>
+                    <NavAvatar />
+                  </Box>
+                </Stack>
+              </Stack>
             </Toolbar>
           </Container>
         </AppBar>

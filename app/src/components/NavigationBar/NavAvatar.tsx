@@ -8,6 +8,7 @@ import {
   Menu,
   Typography,
   MenuItem,
+  Stack,
 } from '@mui/material';
 import React from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
@@ -32,10 +33,15 @@ export default function NavAvatar() {
   };
   if (auth.user)
     return (
-      <Box sx={{ flexGrow: 0 }}>
+      <Box width="120px" sx={{ flexGrow: 0 }} marginLeft="10px">
         <Tooltip title="Open account settings">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar alt="Z" src="../assets/images/bok.png" />
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Avatar alt="D" src="../assets/images/bok.png" />
+              <Typography sx={{ color: 'white' }} fontWeight="bold">
+                Daniel
+              </Typography>
+            </Stack>
           </IconButton>
         </Tooltip>
         <Menu
@@ -65,23 +71,15 @@ export default function NavAvatar() {
     );
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box width="120px">
       {/* REGISTRATIONS BUTTON */}
-      <Button
-        component={Link}
-        to="/signup"
-        color="secondary"
-        variant="outlined"
-        size="large"
-      >
-        Registrera
-      </Button>
+
       {/* LOGIN BUTTON */}
       <Button
         component={Link}
         to="/login"
-        color="secondary"
-        variant="text"
+        color="primary"
+        variant="contained"
         size="large"
       >
         Logga in
