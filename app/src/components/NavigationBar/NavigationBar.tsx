@@ -98,28 +98,17 @@ function NavigationBar() {
                 <Box component="img" src={bokWhite} width="100px" />
               </Box>
 
-              {/* BUY BUTTON */}
               <Box
                 sx={{ flexGrow: 5, display: 'flex', justifyContent: 'right' }}
               >
-                <Button
-                  component={Link}
-                  to="/article"
-                  color="secondary"
-                  variant="contained"
-                  size="large"
-                >
-                  Köp
-                </Button>
                 {/* SELL BUTTON */}
                 <Button
                   component={Link}
                   to={sellNavigation()}
                   color="secondary"
-                  variant="contained"
                   size="large"
                 >
-                  Sälj
+                  SÄLJ BOK
                 </Button>
 
                 {/* SEARCH FIELD */}
