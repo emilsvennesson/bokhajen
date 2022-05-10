@@ -15,8 +15,11 @@ import {
   Typography,
   Tooltip,
   IconButton,
+  CircularProgress,
+  Snackbar,
+  Alert,
 } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -33,12 +36,17 @@ interface Props {
 }
 
 export default function EditAdModal({ ad }: Props) {
-  const [adPrice, setAdPrice] = React.useState<number>(ad.price);
-  const [condition, setCondition] = React.useState(ad.condition);
-  const [conditionDescription, setConditionDescription] = React.useState(
+  const [adPrice, setAdPrice] = useState<number>(ad.price);
+  const [condition, setCondition] = useState(ad.condition);
+  const [conditionDescription, setConditionDescription] = useState(
     ad.conditionDescription,
   );
-  const [adStatus, setAdStatus] = React.useState(ad.status);
+  const [adStatus, setAdStatus] = useState(ad.status);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [changesSaved, setChangesSaved] = useState<boolean | undefined>(
+    undefined,
+  );
+
   const adChanged =
     adPrice !== ad.price ||
     condition !== ad.condition ||
@@ -58,17 +66,49 @@ export default function EditAdModal({ ad }: Props) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // TODO: Handle errors
-    if (condition !== ad.condition)
-      AdService.editAdCondition(ad.uid, condition);
+    const sexy = async () => {
+      let succeded = false;
+      if (condition !== ad.condition) {
+        const { success: adConditionSuccess } = await AdService.editAdCondition(
+          ad.uid,
+          condition,
+        );
+        succeded = adConditionSuccess;
+      }
 
-    if (adPrice !== ad.price) AdService.editAdPrice(ad.uid, adPrice);
+      if (adPrice !== ad.price) {
+        const { success: adPriceSuccess } = await AdService.editAdPrice(
+          ad.uid,
+          adPrice,
+        );
+        succeded = adPriceSuccess;
+      }
 
-    if (conditionDescription !== ad.conditionDescription)
-      AdService.editAdConditionDescription(ad.uid, conditionDescription);
+      if (conditionDescription !== ad.conditionDescription) {
+        const { success: adConditionDescriptionSuccess } =
+          await AdService.editAdConditionDescription(
+            ad.uid,
+            conditionDescription,
+          );
+        succeded = adConditionDescriptionSuccess;
+      }
 
-    if (adStatus !== ad.status) AdService.editAdStatus(ad.uid, adStatus);
+      if (adStatus !== ad.status) {
+        const { success: adStatusSuccess } = await AdService.editAdStatus(
+          ad.uid,
+          adStatus,
+        );
+        succeded = adStatusSuccess;
+      }
+
+      return succeded;
+    };
+    setSubmitLoading(true);
+    const changesSucceded = await sexy();
+    setChangesSaved(changesSucceded);
+    setSubmitLoading(false);
   };
 
   const handlePriceChange = (
@@ -81,6 +121,10 @@ export default function EditAdModal({ ad }: Props) {
     } else {
       setAdPrice(parseInt(e.target.value, 10));
     }
+  };
+
+  const handleClose = () => {
+    setChangesSaved(undefined);
   };
 
   return (
@@ -98,9 +142,21 @@ export default function EditAdModal({ ad }: Props) {
           minHeight: '300px',
           borderRadius: 2,
           maxHeight: 'calc(100vh - 200px)',
-          overflowY: 'hidden',
+          overflowY: 'scroll',
         }}
       >
+        {changesSaved === true && (
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            open={changesSaved !== undefined}
+            onClose={handleClose}
+            key="topcenter"
+          >
+            <Alert severity={changesSaved === true ? 'success' : 'error'}>
+              {changesSaved ? 'Ändringarna sparades!' : 'Något gick fel!'}
+            </Alert>
+          </Snackbar>
+        )}
         <IconButton sx={{ position: 'absolute', top: 0, right: 0 }}>
           <CloseIcon />
         </IconButton>
@@ -160,8 +216,30 @@ export default function EditAdModal({ ad }: Props) {
                 component="form"
                 onSubmit={() => console.log('handle submit')}
                 noValidate
-                sx={{ mt: 3 }}
+                sx={{ mt: 3, position: 'relative' }}
               >
+                {submitLoading && (
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        height: '100%',
+                      }}
+                    >
+                      <CircularProgress />
+                    </Box>
+                  </Box>
+                )}
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <FormControl fullWidth>

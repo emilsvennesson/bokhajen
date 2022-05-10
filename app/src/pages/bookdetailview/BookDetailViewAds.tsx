@@ -20,10 +20,10 @@ interface Props {
 }
 
 const fakeAd: Advert = {
-  uid: 'uid',
-  userId: 'userid',
-  bookId: 'bookid',
-  price: 199,
+  uid: 'xUat6J95fQtDHkNqmRaG',
+  userId: 'RQ61sQt3BBNI4xXn3fr9htlB4W02',
+  bookId: 'dasdas',
+  price: 100,
   condition: BookCondition.GOOD,
   status: AdStatus.AVAILABLE,
   conditionDescription: 'Den här boken är bra',
