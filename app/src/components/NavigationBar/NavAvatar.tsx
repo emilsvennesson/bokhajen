@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   IconButton,
   Button,
@@ -14,6 +14,7 @@ import React from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 
 export default function NavAvatar() {
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -26,6 +27,10 @@ export default function NavAvatar() {
     setAnchorElUser(null);
   };
   const auth = useAuth();
+
+  const goToAccount = () => {
+    navigate('/account', { replace: true });
+  };
 
   const logoutUser = () => {
     auth.signout();
@@ -60,7 +65,7 @@ export default function NavAvatar() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem key="profile" onClick={handleCloseUserMenu}>
+          <MenuItem key="profile" onClick={goToAccount}>
             <Typography textAlign="center">Profile</Typography>
           </MenuItem>
           <MenuItem key="logoutUser" onClick={logoutUser}>
