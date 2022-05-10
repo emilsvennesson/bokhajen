@@ -1,6 +1,5 @@
 import { Box, Button, Container, Divider, Stack } from '@mui/material';
-import { Route, Routes } from 'react-router-dom';
-import AccountDetails from './AccountDetails';
+import { Outlet } from 'react-router-dom';
 
 export default function AccountProfile() {
   return (
@@ -26,9 +25,10 @@ export default function AccountProfile() {
         </Stack>
       </Box>
       <Divider orientation="vertical" flexItem sx={{ marginTop: '80px' }} />
-      <Routes>
-        <Route path="details" element={<AccountDetails />} />
-      </Routes>
+      {/* Since we nested the child route in RoutesConfig, we only
+      need to tell the parent where to render the child route.
+      This is done with React Router's Outlet component */}
+      <Outlet />
     </Container>
   );
 }
