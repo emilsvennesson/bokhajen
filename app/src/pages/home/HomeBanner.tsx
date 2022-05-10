@@ -31,6 +31,8 @@ export default function HomeBanner() {
               <Grid container display="flex">
                 <Grid item xs={12} sm={6} sx={{ padding: 1 }}>
                   <Button
+                    component={Link}
+                    to="/books"
                     variant="contained"
                     color="secondary"
                     size="large"
