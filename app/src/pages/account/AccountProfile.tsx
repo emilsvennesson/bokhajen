@@ -1,5 +1,5 @@
 import { Box, Button, Container, Divider, Stack } from '@mui/material';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function AccountProfile() {
   return (
@@ -18,10 +18,17 @@ export default function AccountProfile() {
         }}
       >
         <Stack>
-          <Button size="large" sx={{ fontWeight: 'bold', fontSize: '16px' }}>
+          <Button
+            component={Link}
+            to="details"
+            size="large"
+            sx={{ fontWeight: 'bold', fontSize: '16px' }}
+          >
             Mina uppgifter
           </Button>
-          <Button size="large">Mina annonser</Button>
+          <Button component={Link} to="ads" size="large">
+            Mina annonser
+          </Button>
         </Stack>
       </Box>
       <Divider orientation="vertical" flexItem sx={{ marginTop: '80px' }} />
