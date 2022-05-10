@@ -164,7 +164,10 @@ export default function AccountDetails() {
             <Avatar
               sx={{ height: '150px', width: '150px', marginBottom: '10px' }}
             />
-            <Button size="large">Välj bild</Button>
+            <Button size="large" component="label">
+              <input type="file" hidden />
+              Välj bild
+            </Button>
           </Stack>
         </Box>
       </Box>
