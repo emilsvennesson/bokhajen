@@ -13,8 +13,19 @@ export default function HomeBanner() {
     >
       <Grid container sx={{ marginTop: '50px' }}>
         <Grid item xs={12} md={6}>
-          <Box width="100%" display="flex" justifyContent="center">
-            <Box component="img" sx={{ width: '80%' }} src={shark} />
+          <Box
+            width="100%"
+            height="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Box
+              component="img"
+              maxWidth="sm"
+              sx={{ width: '70%' }}
+              src={shark}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
