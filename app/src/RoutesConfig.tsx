@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import AccountDetails from './pages/account/AccountDetails';
+import AccountProfile from './pages/account/AccountProfile';
 import Article from './pages/Article';
 import AuthTest from './pages/AuthTest';
 import Home from './pages/home/Home';
@@ -16,7 +17,9 @@ export default function RoutesConfig() {
       <Route path="authtest" element={<AuthTest />} />
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="account/details" element={<AccountDetails />} />
+      <Route path="/account" element={<AccountProfile />}>
+        <Route path="details" element={<AccountDetails />} />
+      </Route>
       <Route path="sell" element={<SellingPage />} />
       <Route path="*" element={<InvalidPage />} />
     </Routes>
