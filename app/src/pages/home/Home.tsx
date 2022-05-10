@@ -29,7 +29,7 @@ export default function Home() {
       alignItems="center"
     >
       <HomeBanner />
-      <Box component="main">
+      <Box component="main" sx={{ marginTop: '30px' }}>
         {CATEGORIES.map((name: string) => {
           const carousel = (
             <Fragment key={sliceIndex}>
