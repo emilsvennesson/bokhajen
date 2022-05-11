@@ -17,16 +17,24 @@ import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../theme';
 import { Advert } from '../services/Advert';
+import { useAuth } from '../hooks/FBAuthProvider';
+import EditAdModal from './edit_ad_modal/EditAdModal';
 
 interface Props {
   ad: Advert;
+  onChangesSaved: () => void;
 }
 
-export default function AdAccordion({ ad }: Props) {
+export default function AdAccordion({ ad, onChangesSaved }: Props) {
+  const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  const canEdit = ad.user.uid === user?.uid;
 
   return (
     <Container key={ad.uid}>
+      {editMode && <EditAdModal ad={ad} onChangesSaved={onChangesSaved} />}
       <Accordion
         sx={{
           marginTop: 1,
@@ -37,51 +45,69 @@ export default function AdAccordion({ ad }: Props) {
       >
         <AccordionSummary
           onClick={() => setExpanded(!expanded)}
-          expandIcon={<ExpandMoreIcon sx={{ marginLeft: 1 }} />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Avatar
-            sx={{ margin: 'auto' }}
-            alt="Remy Sharp"
-            src="../assets/images/bok.png"
-          />
-
-          <Stack sx={{ marginLeft: 2 }}>
-            <Typography
-              variant="h6"
-              sx={{ width: '20%', flexShrink: 0, marginBottom: 1 }}
-            >
-              {ad.user.firstName} {ad.user.lastName}
-            </Typography>
-
-            <Stack direction="row" spacing={1} sx={{ margin: 'auto' }}>
-              {!expanded && (
-                <Typography
-                  variant="body1"
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    margin: 'auto',
-                  }}
-                >
-                  {ad.condition}
-                </Typography>
-              )}
-            </Stack>
-          </Stack>
-
-          <Typography
+          <Box
             sx={{
-              marginRight: 1,
               display: 'flex',
-              justifyContent: 'end',
-              flexGrow: 1,
-              margin: 'auto',
+              justifyContent: 'space-between',
+              width: '100%',
             }}
           >
-            {ad.price} kr
-          </Typography>
+            <Box sx={{ display: 'flex' }}>
+              <Avatar
+                sx={{ margin: 'auto' }}
+                alt="Remy Sharp"
+                src="../assets/images/bok.png"
+              />
+
+              <Stack sx={{ marginLeft: 2 }}>
+                <Typography variant="h6" sx={{ flexShrink: 0 }}>
+                  {ad.user.firstName} {ad.user.lastName}
+                </Typography>
+
+                {!expanded && (
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'start',
+                    }}
+                  >
+                    {ad.condition}
+                  </Typography>
+                )}
+              </Stack>
+            </Box>
+
+            <Stack>
+              <Typography
+                sx={{
+                  marginRight: 1,
+                  display: 'flex',
+                  justifyContent: 'end',
+                  flexGrow: 1,
+                  margin: 'auto',
+                  alignItems: 'center',
+                }}
+              >
+                {ad.price} kr
+              </Typography>
+              {canEdit && (
+                <Button
+                  variant="text"
+                  onClick={() => {
+                    setEditMode(true);
+                    setExpanded(false);
+                  }}
+                >
+                  Redigera
+                </Button>
+              )}
+            </Stack>
+          </Box>
         </AccordionSummary>
         <AccordionDetails>
           <Stack direction="column">

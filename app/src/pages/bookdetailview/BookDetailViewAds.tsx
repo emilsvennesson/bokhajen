@@ -19,8 +19,8 @@ interface Props {
 
 function BookDetailViewAds({ bookUid }: Props) {
   const [ads, setAds] = useState<Advert[] | undefined>([]);
-
   const [sort, setSort] = useState('');
+  const [fetchedAds, setFetchedAds] = useState(false);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSort(event.target.value as string);
@@ -30,10 +30,10 @@ function BookDetailViewAds({ bookUid }: Props) {
     const getAds = async () => {
       const newAds = await AdService.getAdsFromBook(bookUid.toString());
       setAds(newAds);
-      console.log('new ads', newAds);
+      setFetchedAds(true);
     };
-    getAds();
-  }, [bookUid]);
+    if (!fetchedAds) getAds();
+  }, [bookUid, fetchedAds]);
 
   return (
     <Container
@@ -84,7 +84,10 @@ function BookDetailViewAds({ bookUid }: Props) {
         </Box>
       </Container>
 
-      {ads && ads.map((ad) => <AdAccordion ad={ad} />)}
+      {ads &&
+        ads.map((ad) => (
+          <AdAccordion ad={ad} onChangesSaved={() => setFetchedAds(false)} />
+        ))}
     </Container>
   );
 }

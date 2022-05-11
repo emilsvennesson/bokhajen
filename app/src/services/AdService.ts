@@ -77,7 +77,7 @@ export default class AdService {
       price: adDoc.data().price,
       condition: adDoc.data().condition,
       conditionDescription: adDoc.data().conditionDescription,
-      status: AdStatus.AVAILABLE,
+      status: adDoc.data().status,
     };
 
     return ad;
@@ -97,11 +97,16 @@ export default class AdService {
   ): Promise<ServiceSuccessResponse> {
     const docRef = doc(db, 'ads', adId);
 
+    let res: ServiceSuccessResponse = { success: false };
     await updateDoc(docRef, data)
-      .then(() => ({ success: true }))
-      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+      .then(() => {
+        res = { success: true };
+      })
+      .catch((e) => {
+        res = { success: false, error: (e as FirestoreError).message };
+      });
 
-    return { success: true };
+    return res;
   }
 
   /**
@@ -193,7 +198,7 @@ export default class AdService {
     newConditionDescription: string,
   ): Promise<ServiceSuccessResponse> {
     return this.editAd(adUid, {
-      conditionDescribtion: newConditionDescription,
+      conditionDescription: newConditionDescription,
     });
   }
 }

@@ -33,9 +33,10 @@ import AdService from '../../services/AdService';
 
 interface Props {
   ad: Advert;
+  onChangesSaved: () => void;
 }
 
-export default function EditAdModal({ ad }: Props) {
+export default function EditAdModal({ ad, onChangesSaved }: Props) {
   const [adPrice, setAdPrice] = useState<number>(ad.price);
   const [condition, setCondition] = useState(ad.condition);
   const [conditionDescription, setConditionDescription] = useState(
@@ -68,7 +69,7 @@ export default function EditAdModal({ ad }: Props) {
 
   const handleSubmit = async () => {
     // TODO: Handle errors
-    const sexy = async () => {
+    const uploadChanges = async () => {
       let succeded = false;
       if (condition !== ad.condition) {
         const { success: adConditionSuccess } = await AdService.editAdCondition(
@@ -106,7 +107,8 @@ export default function EditAdModal({ ad }: Props) {
       return succeded;
     };
     setSubmitLoading(true);
-    const changesSucceded = await sexy();
+    const changesSucceded = await uploadChanges();
+    onChangesSaved();
     setChangesSaved(changesSucceded);
     setSubmitLoading(false);
   };
@@ -143,7 +145,7 @@ export default function EditAdModal({ ad }: Props) {
           borderRadius: 2,
           height: 'min-content',
           maxHeight: 'calc(100vh - 150px)',
-          overflowY: 'scroll',
+          overflowY: 'auto',
         }}
       >
         {changesSaved === true && (
@@ -181,11 +183,13 @@ export default function EditAdModal({ ad }: Props) {
                       }}
                     >
                       <Avatar
-                        alt="Doktor Mugg"
+                        alt={ad.user.firstName + ad.user.lastName}
                         src="../assets/images/bok.png"
                         sx={{ mr: 1 }}
                       />
-                      <Typography variant="h6">Doktor Mugg</Typography>
+                      <Typography variant="h6">
+                        {ad.user.firstName} {ad.user.lastName}
+                      </Typography>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
                       <Typography sx={{ fontStyle: 'italic', mr: 1 }}>
