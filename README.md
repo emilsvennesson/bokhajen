@@ -7,11 +7,11 @@
 
 This is a project for course dat257, created by group: Xzibit. This app is a website created for selling old course literature to other students. This project is not intended to be published.
 
-## Project Status
+## Project Status :trophy:
 
 This is now in it's startup phase were we are actively implementing all of it's core features.
 
-### features :trophy:
+### Core features
 
 Not Started: :x: <br />
 Work in Progress: :open_file_folder: <br />
@@ -52,13 +52,13 @@ Done::white_check_mark:<br />
 - cremona - API handling books
 - docs - Documentation from group members throughout the course
 
-## External data and APIs
+## External data and APIs :part_alternation_mark:
 
 To store users we are using Firebase Authentication API and extending upon that using Firebase Firestore to store additional user data. For fetching books from Chalmers Store Library we are using Cremona. We are also using Firestore for handling book ads.
 
-## Installation and Setup Instructions
+## Installation and Setup Instructions  :play_or_pause_button:
 
-OBS! In order to start the application you need to be inside /app directory in the repository.
+:warning: OBS! In order to start the application you need to be inside /app directory in the repository.
 
 Installation:
 `npm install`
