@@ -93,7 +93,7 @@ export default function ConditionCheckCard({
         maxRows={4}
         value={describtion}
         onChange={handleDescribtionChange}
-        label="Beskriv kvaliteten på boken"
+        label="Beskriv kvaliten på boken"
       />
       <Button
         variant="contained"
