@@ -9,6 +9,8 @@ import {
   deleteDoc,
   updateDoc,
   getDoc,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
@@ -52,31 +54,33 @@ export default class AdService {
     const queryConstraints = [];
     if (bookUid) queryConstraints.push(where('bookId', '==', bookUid));
     if (userUid) queryConstraints.push(where('uid', '==', userUid));
-
     const q = query(collection(db, 'ads'), ...queryConstraints);
-
-    const ads: Advert[] = [];
     const querySnapshot = await getDocs(q);
+    const advertPromises: Promise<Advert>[] = [];
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const docs of querySnapshot.docs) {
-      // eslint-disable-next-line no-await-in-loop
-      const userDoc = await getDoc(docs.data().user);
+    querySnapshot.forEach((adDoc) => {
+      advertPromises.push(this.parseAd(adDoc));
+    });
 
-      const ad: Advert = {
-        uid: docs.id,
-        user: { uid: userDoc.id, ...(userDoc.data() as Object) } as FSUser,
-        bookId: docs.data().bookId,
-        price: docs.data().price,
-        condition: docs.data().condition,
-        conditionDescription: docs.data().conditionDescription,
-        status: AdStatus.AVAILABLE,
-      };
-
-      ads.push(ad);
-    }
-
+    const ads = await Promise.all(advertPromises);
     return ads;
+  }
+
+  private static async parseAd(
+    adDoc: QueryDocumentSnapshot<DocumentData>,
+  ): Promise<Advert> {
+    const userDoc = await getDoc(adDoc.data().user);
+    const ad: Advert = {
+      uid: adDoc.id,
+      user: { uid: userDoc.id, ...(userDoc.data() as Object) } as FSUser,
+      bookId: adDoc.data().bookId,
+      price: adDoc.data().price,
+      condition: adDoc.data().condition,
+      conditionDescription: adDoc.data().conditionDescription,
+      status: AdStatus.AVAILABLE,
+    };
+
+    return ad;
   }
 
   /**

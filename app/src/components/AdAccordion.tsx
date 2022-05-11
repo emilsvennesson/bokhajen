@@ -52,7 +52,7 @@ export default function AdAccordion({ ad }: Props) {
               variant="h6"
               sx={{ width: '20%', flexShrink: 0, marginBottom: 1 }}
             >
-              {ad.condition}
+              {ad.user.firstName} {ad.user.lastName}
             </Typography>
 
             <Stack direction="row" spacing={1} sx={{ margin: 'auto' }}>
