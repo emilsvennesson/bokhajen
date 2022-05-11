@@ -3,7 +3,7 @@
 ![Photo](/app/src/assets/images/bok.png)
 <br />
 
-## Introduction
+## Introduction :world_map:
 
 This is a project for course dat257, created by group: Xzibit. This app is a website created for selling old course literature to other students. This project is not intended to be published.
 
@@ -11,7 +11,7 @@ This is a project for course dat257, created by group: Xzibit. This app is a web
 
 This is now in it's startup phase were we are actively implementing all of it's core features.
 
-### features
+### features :trophy:
 
 Not Started: :x: <br />
 Work in Progress: :open_file_folder: <br />
@@ -24,7 +24,7 @@ Done::white_check_mark:<br />
 - Edit your own ads :white_check_mark:
 - Remove Ads : :open_file_folder:
 
-## Screen Shots
+## Screen Shots :computer:
 
 #### Home
 
@@ -46,7 +46,7 @@ Done::white_check_mark:<br />
 
 <img src='./app/public/Ad.png'  width="150">
 
-## File Structure
+## File Structure :file_folder:
 
 - app - This is the main react application for the website
 - cremona - API handling books
