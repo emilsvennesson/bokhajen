@@ -24,7 +24,7 @@ function CreateUser() {
       <button
         type="button"
         onClick={() => {
-          auth.signup(email, password);
+          auth.signup(email, password, '', '');
         }}
       >
         Create User

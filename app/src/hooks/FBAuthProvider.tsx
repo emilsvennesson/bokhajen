@@ -19,7 +19,12 @@ interface AuthContextType {
   user: User | null;
   signin: (email: string, password: string) => Promise<void>;
   signout: () => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
+  signup: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ) => Promise<void>;
   loading: boolean;
 }
 
@@ -44,7 +49,12 @@ export function FBAuthProvider({ children }: Props) {
     setLoading(false);
   };
 
-  const signup = async (email: string, password: string) => {
+  const signup = async (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ) => {
     setLoading(true);
     try {
       const { user: usr } = await createUserWithEmailAndPassword(
@@ -52,7 +62,7 @@ export function FBAuthProvider({ children }: Props) {
         email,
         password,
       );
-      UserService.addUser(usr);
+      UserService.addUser({ uid: usr.uid, email, firstName, lastName });
       setUser(usr);
     } catch (e) {
       throw e as Error;

@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 import { Book, CremonaClient } from 'cremona';
 import { Fragment, useEffect, useState } from 'react';
-import bok from '../../assets/images/bok.png';
 import CategoriesGrid from './CategoriesGrid';
+import HomeBanner from './HomeBanner';
 
 const CATEGORIES = ['Populär studentlitteratur', 'Matematik', 'Susvetenskap'];
 const GRID_SIZE = 12;
@@ -21,27 +21,15 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <Box
-        component="div"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box
-          component="header"
-          width="100%"
-          height={350}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          bgcolor="#DFDDDD"
-        >
-          <Box component="img" height={250} src={bok} />
-        </Box>
-      </Box>
-      <Box component="main">
+    <Box
+      component="div"
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <HomeBanner />
+      <Box component="main" sx={{ marginTop: '30px' }}>
         {CATEGORIES.map((name: string) => {
           const carousel = (
             <Fragment key={sliceIndex}>
@@ -55,6 +43,6 @@ export default function Home() {
           return carousel;
         })}
       </Box>
-    </>
+    </Box>
   );
 }
