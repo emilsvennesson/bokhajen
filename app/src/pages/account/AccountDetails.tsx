@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Avatar,
   Box,
@@ -52,7 +53,6 @@ export default function AccountDetails() {
       setBtnDisabled(true);
       setReset(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
   const SavePassword = () => {
