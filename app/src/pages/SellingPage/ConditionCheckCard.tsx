@@ -3,19 +3,20 @@ import {
   Button,
   Typography,
   Box,
-  FormControlLabel,
   TextField,
-  RadioGroup,
-  FormLabel,
   FormControl,
-  Radio,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
 import React from 'react';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import conditions from '../../config/Conditions';
 
 interface ConditionCheckCardProps {
   backButtonHandler: Function;
   nextButtonHandler: Function;
+  active: boolean;
   disabled?: boolean;
 }
 
@@ -30,13 +31,12 @@ export default function ConditionCheckCard({
   backButtonHandler,
   nextButtonHandler,
   disabled = false,
+  active,
 }: ConditionCheckCardProps) {
   const [condition, setCondition] = React.useState(conditions.good);
   const [describtion, setDescribtion] = React.useState('');
 
-  const handleConditionChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleConditionChange = (event: SelectChangeEvent) => {
     setCondition((event.target as HTMLInputElement).value);
   };
 
@@ -57,7 +57,7 @@ export default function ConditionCheckCard({
       padding={2}
       borderRadius={2}
       spacing={2}
-      height="100%"
+      height="360px"
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button
@@ -65,43 +65,35 @@ export default function ConditionCheckCard({
           disabled={disabled}
           onClick={() => backButtonHandler()}
         >
-          {'<-'}
+          <KeyboardBackspaceOutlinedIcon />
         </Button>
         <Typography textAlign="center" variant="h5" flexGrow={2}>
-          Condition
+          Tillstånd
         </Typography>
         <Box flexGrow={1} />
       </Stack>
 
-      <FormControl>
-        <FormLabel id="demo-controlled-radio-buttons-group">Gender</FormLabel>
-        <RadioGroup
+      <FormControl fullWidth disabled={!active}>
+        <Select
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
           value={condition}
           onChange={handleConditionChange}
         >
-          <FormControlLabel
-            value={conditions.torn}
-            control={<Radio />}
-            label="Torn"
-          />
-          <FormControlLabel
-            value={conditions.good}
-            control={<Radio />}
-            label="Good"
-          />
-          <FormControlLabel
-            value={conditions.new}
-            control={<Radio />}
-            label="New"
-          />
-        </RadioGroup>
+          <MenuItem value={conditions.torn}>Torn</MenuItem>
+          <MenuItem value={conditions.good}>Good</MenuItem>
+          <MenuItem value={conditions.new}>New</MenuItem>
+        </Select>
       </FormControl>
       <TextField
+        disabled={!active}
+        fullWidth
+        multiline
+        rows={4}
+        maxRows={4}
         value={describtion}
         onChange={handleDescribtionChange}
-        label="describe the quality"
+        label="Beskriv kvaliten på boken"
       />
       <Button
         variant="contained"
@@ -109,7 +101,7 @@ export default function ConditionCheckCard({
         onClick={handleContinue}
         disabled={disabled}
       >
-        Continue
+        Fortsätt
       </Button>
     </Stack>
   );

@@ -44,10 +44,10 @@ export default function BookDetailViewDescription({ book }: Props) {
                 gutterBottom
                 component="p"
                 sx={{
-                  alignSelf: 'center',
+                  alignSelf: 'start',
                   marginTop: '15px',
                   wordWrap: 'vertical-lr',
-                  width: '250px',
+                  width: '200px',
                 }}
               >
                 {/* AUTHORS */}
@@ -60,9 +60,9 @@ export default function BookDetailViewDescription({ book }: Props) {
                 gutterBottom
                 component="p"
                 sx={{
-                  alignSelf: 'center',
+                  alignSelf: 'start',
                   wordWrap: 'vertical-lr',
-                  width: '250px',
+                  width: '200px',
                 }}
               >
                 {/* YEAR */}
@@ -73,9 +73,9 @@ export default function BookDetailViewDescription({ book }: Props) {
                 gutterBottom
                 component="p"
                 sx={{
-                  alignSelf: 'center',
+                  alignSelf: 'start',
                   wordWrap: 'vertical-lr',
-                  width: '250px',
+                  width: '200px',
                 }}
               >
                 {/* ISBN */}
@@ -86,9 +86,9 @@ export default function BookDetailViewDescription({ book }: Props) {
                 gutterBottom
                 component="p"
                 sx={{
-                  alignSelf: 'center',
+                  alignSelf: 'start',
                   wordWrap: 'vertical-lr',
-                  width: '250px',
+                  width: '200px',
                 }}
               >
                 {/* WEIGHT */}
