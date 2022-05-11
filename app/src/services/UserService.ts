@@ -3,8 +3,6 @@ import db from '../firebase/db';
 import { FSUser } from './FSUser';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 
-// TODO: extract interface to new file?
-
 const removeEmpty = (obj: any) => {
   const newObj: any = {};
   Object.keys(obj).forEach((key) => {
@@ -16,7 +14,6 @@ const removeEmpty = (obj: any) => {
 
 export default class UserService {
   static async addUser(user: FSUser): Promise<ServiceSuccessResponse> {
-    // TODO: implement this correctly
     const uidRemovedUser = (({ uid, ...o }) => o)(user);
     const cleanedUser = removeEmpty(uidRemovedUser);
 
@@ -46,5 +43,21 @@ export default class UserService {
     }
     // doc.data() will be undefined in this case
     return undefined;
+  }
+
+  static async updateUser(user: FSUser): Promise<ServiceSuccessResponse> {
+    const uidRemovedUser = (({ uid, ...o }) => o)(user);
+    const cleanedUser = removeEmpty(uidRemovedUser);
+
+    try {
+      await setDoc(doc(db, 'users', user.uid), cleanedUser);
+      return { success: true };
+    } catch (e) {
+      console.error('something went wong....', e);
+      return {
+        success: false,
+        error: (e as FirestoreError).message,
+      };
+    }
   }
 }
