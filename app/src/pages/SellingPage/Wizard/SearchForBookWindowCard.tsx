@@ -30,7 +30,7 @@ export default function SearchForBookWindowCard({
           height="335px"
         >
           <Typography textAlign="center" variant="h2">
-            Get started
+            Starta!
           </Typography>
           <SearchBook
             disabled={!active}
@@ -45,7 +45,7 @@ export default function SearchForBookWindowCard({
             disabled={!active || !canNext}
             endIcon={<EastOutlinedIcon />}
           >
-            Get started
+            Fortsätt
           </Button>
         </Stack>
       </Paper>

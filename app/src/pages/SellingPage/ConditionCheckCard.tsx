@@ -68,7 +68,7 @@ export default function ConditionCheckCard({
           <KeyboardBackspaceOutlinedIcon />
         </Button>
         <Typography textAlign="center" variant="h5" flexGrow={2}>
-          Condition
+          Tillstånd
         </Typography>
         <Box flexGrow={1} />
       </Stack>
@@ -93,7 +93,7 @@ export default function ConditionCheckCard({
         maxRows={4}
         value={describtion}
         onChange={handleDescribtionChange}
-        label="describe the quality"
+        label="Beskriv kvaliteten på boken"
       />
       <Button
         variant="contained"
@@ -101,7 +101,7 @@ export default function ConditionCheckCard({
         onClick={handleContinue}
         disabled={disabled}
       >
-        Continue
+        Fortsätt
       </Button>
     </Stack>
   );

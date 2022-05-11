@@ -84,7 +84,7 @@ export default function SetPriceWindow({
                 <Box flexGrow={1}>
                   <TextField
                     type="number"
-                    label="price"
+                    label="Pris"
                     onChange={(value) => setPrice(+value.target.value)}
                     disabled={!active}
                   />
@@ -98,7 +98,7 @@ export default function SetPriceWindow({
                     size="large"
                     disabled={!active}
                   >
-                    Continue
+                    Fortsätt
                   </Button>
                 </Box>
               </Stack>

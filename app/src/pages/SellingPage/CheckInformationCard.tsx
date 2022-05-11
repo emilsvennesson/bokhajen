@@ -71,7 +71,7 @@ export default function CheckInformationCard({
             continueButtonHandler();
           }}
         >
-          Continue
+          Fortsätt
         </Button>
       </Stack>
     </Box>
