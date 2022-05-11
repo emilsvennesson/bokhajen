@@ -9,10 +9,12 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  getDoc,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 import { AdStatus, Advert, NewAdvert } from './Advert';
+import { FSUser } from './FSUser';
 
 /**
  * Handles all fetching and publishing of ads
@@ -23,8 +25,11 @@ import { AdStatus, Advert, NewAdvert } from './Advert';
  */
 export default class AdService {
   static async publishAd(ad: NewAdvert): Promise<ServiceSuccessResponse> {
+    const newAd: any = ad;
+    newAd.user = doc(db, `users/${ad.userUid}`);
+    delete newAd.userUid;
     try {
-      const docRef = await addDoc(collection(db, 'ads'), ad);
+      const docRef = await addDoc(collection(db, 'ads'), newAd);
       console.log('Document written with ID: ', docRef.id);
       return { success: true };
     } catch (e) {
@@ -55,10 +60,12 @@ export default class AdService {
     const ads: Advert[] = [];
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((docs) => {
+    querySnapshot.forEach(async (docs) => {
+      const userDoc = await getDoc(docs.data().user);
+
       const ad: Advert = {
         uid: docs.id,
-        userId: docs.data().uid,
+        user: { uid: userDoc.id, ...(userDoc.data() as Object) } as FSUser,
         bookId: docs.data().bookId,
         price: docs.data().price,
         condition: docs.data().condition,

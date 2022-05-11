@@ -21,7 +21,12 @@ interface Props {
 
 const fakeAd: Advert = {
   uid: 'xUat6J95fQtDHkNqmRaG',
-  userId: 'RQ61sQt3BBNI4xXn3fr9htlB4W02',
+  user: {
+    uid: 'xUat6J95fQtDHkNqmRaG',
+    email: 'emil',
+    firstName: 'Emil',
+    lastName: 'Kanstorp',
+  },
   bookId: 'dasdas',
   price: 100,
   condition: BookCondition.GOOD,
