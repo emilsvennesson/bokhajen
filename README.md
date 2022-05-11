@@ -17,7 +17,7 @@ This is now in it's startup phase were we are actively implementing all of it's 
 
 ## Screen Shots
 #### Home
-![Photo](/app/public/Hem.png)
+![Photo](/app/public/Home.png)
 
 #### Book Detailed View
 ![Photo](/app/public/BookDetail.png)
