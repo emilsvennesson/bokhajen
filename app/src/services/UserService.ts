@@ -1,4 +1,4 @@
-import { doc, FirestoreError, setDoc } from 'firebase/firestore';
+import { doc, FirestoreError, getDoc, setDoc } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 
@@ -36,5 +36,21 @@ export default class UserService {
         error: (e as FirestoreError).message,
       };
     }
+  }
+
+  static async getUser(uid: string): Promise<FSUSer | undefined> {
+    const docRef = doc(db, 'users', uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {
+        uid,
+        email: docSnap.data().email,
+        firstName: docSnap.data().firstName,
+        lastName: docSnap.data().lastName,
+        phoneNumber: docSnap.data().phoneNumber,
+      };
+    }
+    // doc.data() will be undefined in this case
+    return undefined;
   }
 }
