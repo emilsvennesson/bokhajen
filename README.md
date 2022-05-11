@@ -13,15 +13,16 @@ This is now in it's startup phase were we are actively implementing all of it's 
 
 ### features
 
-Not Started:
-Work in Progress:
-Done:
+Not Started: :x: <br />
+Work in Progress: :open_file_folder: <br />
+Done::white_check_mark:<br />
 
 - Login / Logout :white_check_mark:
-- Publish ads :white_check_mark:
+- Publish ads :open_file_folder:
 - Search for books :white_check_mark:
 - See corresponding ads to that book :white_check_mark:
 - Edit your own ads :white_check_mark:
+- Remove Ads : :open_file_folder:
 
 ## Screen Shots
 
