@@ -141,7 +141,8 @@ export default function EditAdModal({ ad }: Props) {
           p: 4,
           minHeight: '300px',
           borderRadius: 2,
-          maxHeight: 'calc(100vh - 200px)',
+          height: 'min-content',
+          maxHeight: 'calc(100vh - 150px)',
           overflowY: 'scroll',
         }}
       >
