@@ -1,15 +1,9 @@
 import { doc, FirestoreError, getDoc, setDoc } from 'firebase/firestore';
 import db from '../firebase/db';
+import { FSUSer } from './FSUser';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 // TODO: extract interface to new file?
-export interface FSUSer {
-  uid: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber?: string;
-}
 
 const removeEmpty = (obj: any) => {
   const newObj: any = {};
