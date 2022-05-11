@@ -33,11 +33,17 @@ export default function AdAccordion({ ad, onChangesSaved }: Props) {
   const canEdit = ad.user.uid === user?.uid;
 
   return (
-    <Container key={ad.uid}>
-      {editMode && <EditAdModal ad={ad} onChangesSaved={onChangesSaved} />}
+    <Container key={ad.uid} sx={{ mb: 1 }}>
+      {editMode && (
+        <EditAdModal
+          ad={ad}
+          onChangesSaved={onChangesSaved}
+          open
+          onClose={() => setEditMode(false)}
+        />
+      )}
       <Accordion
         sx={{
-          marginTop: 1,
           '&:hover': {
             bgcolor: mainTheme.palette.secondary.light,
           },
@@ -89,7 +95,6 @@ export default function AdAccordion({ ad, onChangesSaved }: Props) {
                   display: 'flex',
                   justifyContent: 'end',
                   flexGrow: 1,
-                  margin: 'auto',
                   alignItems: 'center',
                 }}
               >

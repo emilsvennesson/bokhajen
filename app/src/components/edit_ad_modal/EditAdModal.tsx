@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
   Tooltip,
-  IconButton,
   CircularProgress,
   Snackbar,
   Alert,
@@ -23,7 +22,6 @@ import React, { useState } from 'react';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import CircleIcon from '@mui/icons-material/Circle';
-import CloseIcon from '@mui/icons-material/Close';
 import { AdStatus, Advert } from '../../services/Advert';
 import {
   BookCondition,
@@ -34,9 +32,18 @@ import AdService from '../../services/AdService';
 interface Props {
   ad: Advert;
   onChangesSaved: () => void;
+  open?: boolean;
+  onClose?:
+    | ((event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void)
+    | undefined;
 }
 
-export default function EditAdModal({ ad, onChangesSaved }: Props) {
+export default function EditAdModal({
+  ad,
+  onChangesSaved,
+  open,
+  onClose,
+}: Props) {
   const [adPrice, setAdPrice] = useState<number>(ad.price);
   const [condition, setCondition] = useState(ad.condition);
   const [conditionDescription, setConditionDescription] = useState(
@@ -130,7 +137,11 @@ export default function EditAdModal({ ad, onChangesSaved }: Props) {
   };
 
   return (
-    <Modal open sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Modal
+      open={open || false}
+      onClose={onClose}
+      sx={{ display: 'flex', justifyContent: 'center' }}
+    >
       <Box
         component="main"
         sx={{
@@ -148,7 +159,7 @@ export default function EditAdModal({ ad, onChangesSaved }: Props) {
           overflowY: 'auto',
         }}
       >
-        {changesSaved === true && (
+        {changesSaved !== undefined && (
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             open={changesSaved !== undefined}
@@ -156,13 +167,12 @@ export default function EditAdModal({ ad, onChangesSaved }: Props) {
             key="topcenter"
           >
             <Alert severity={changesSaved === true ? 'success' : 'error'}>
-              {changesSaved ? 'Ändringarna sparades!' : 'Något gick fel!'}
+              {changesSaved
+                ? 'Ändringarna sparades!'
+                : 'Något gick fel, försök igen senare!'}
             </Alert>
           </Snackbar>
         )}
-        <IconButton sx={{ position: 'absolute', top: 0, right: 0 }}>
-          <CloseIcon />
-        </IconButton>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Box sx={{ p: 1, width: '100%' }}>
