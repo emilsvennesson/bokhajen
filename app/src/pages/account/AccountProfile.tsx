@@ -1,5 +1,6 @@
-import { Box, Button, Container, Divider, Stack } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
+import { Box, Container, Divider } from '@mui/material';
+import { Outlet } from 'react-router-dom';
+import AccountNavigation from './AccountNavigation';
 
 export default function AccountProfile() {
   return (
@@ -17,19 +18,7 @@ export default function AccountProfile() {
           width: '200px',
         }}
       >
-        <Stack>
-          <Button
-            component={Link}
-            to="details"
-            size="large"
-            sx={{ fontWeight: 'bold', fontSize: '16px' }}
-          >
-            Mina uppgifter
-          </Button>
-          <Button component={Link} to="ads" size="large">
-            Mina annonser
-          </Button>
-        </Stack>
+        <AccountNavigation />
       </Box>
       <Divider orientation="vertical" flexItem sx={{ marginTop: '80px' }} />
       {/* Since we nested the child route in RoutesConfig, we only
