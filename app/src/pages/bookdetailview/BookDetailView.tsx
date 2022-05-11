@@ -41,20 +41,16 @@ export default function BookDetailView() {
   return book ? (
     <Box
       sx={{
+        width: '100vw',
         display: 'flex',
-        width: '98vw',
+        justifyContent: 'center',
       }}
     >
       <Grid container>
         <Grid item xs={12} md={7}>
           <BookDetailViewDescription book={book} />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={5}
-          sx={{ boxShadow: '-8px 0 5px rgba(0,0,0,0.1)' }}
-        >
+        <Grid item xs={12} md={5}>
           <BookDetailViewAds bookUid={book.uid} />
         </Grid>
       </Grid>
