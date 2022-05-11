@@ -16,6 +16,20 @@ This is now in it's startup phase were we are actively implementing all of it's 
   - Edit your own ads :white_check_mark:
 
 ## Screen Shots
+#### Home
+![Photo](/app/public/Hem.png)
+
+#### Book Detailed View
+![Photo](/app/public/BookDetail.png)
+
+#### SellingPage
+![Photo](/app/public/SellingPage.png)
+
+#### Search
+![Photo](/app/public/Search.png)
+
+#### BookAds
+![Photo](/app/public/Ad.png)
 
 
 ## File Structure
