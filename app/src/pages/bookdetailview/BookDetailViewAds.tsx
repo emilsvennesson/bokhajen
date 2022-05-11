@@ -10,29 +10,12 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
-import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
-import { BookCondition } from '../../config/BookCondition';
 import AdService from '../../services/AdService';
-import { AdStatus, Advert } from '../../services/Advert';
+import { Advert } from '../../services/Advert';
 
 interface Props {
   bookUid: number;
 }
-
-const fakeAd: Advert = {
-  uid: 'xUat6J95fQtDHkNqmRaG',
-  user: {
-    uid: 'xUat6J95fQtDHkNqmRaG',
-    email: 'emil',
-    firstName: 'Emil',
-    lastName: 'Kanstorp',
-  },
-  bookId: 'dasdas',
-  price: 100,
-  condition: BookCondition.GOOD,
-  status: AdStatus.AVAILABLE,
-  conditionDescription: 'Den här boken är bra',
-};
 
 function BookDetailViewAds({ bookUid }: Props) {
   const [ads, setAds] = useState<Advert[] | undefined>([]);
@@ -47,7 +30,7 @@ function BookDetailViewAds({ bookUid }: Props) {
     const getAds = async () => {
       const newAds = await AdService.getAdsFromBook(bookUid.toString());
       setAds(newAds);
-      console.log(newAds);
+      console.log('new ads', newAds);
     };
     getAds();
   }, [bookUid]);
@@ -63,7 +46,6 @@ function BookDetailViewAds({ bookUid }: Props) {
         paddingBottom: '10px',
       }}
     >
-      <EditAdModal ad={fakeAd} />
       <Container sx={{ display: 'flex' }}>
         <Box
           sx={{
