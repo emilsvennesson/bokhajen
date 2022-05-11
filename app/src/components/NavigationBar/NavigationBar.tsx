@@ -160,7 +160,11 @@ function NavigationBar() {
                     to={sellNavigation()}
                     color="secondary"
                     size="large"
-                    sx={{ color: 'lightgray', fontWeight: 'bold' }}
+                    sx={{
+                      color: 'white',
+                      '&:hover': { color: 'darkgrey' },
+                      fontWeight: 'bold',
+                    }}
                   >
                     SÄLJ BOK
                   </Button>
