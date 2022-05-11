@@ -21,11 +21,12 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import React, { useState } from 'react';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 export default function SignUp() {
+  const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { signup } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,6 +43,15 @@ export default function SignUp() {
 
   const from = (location.state as any)?.from?.pathname || '/';
 
+  if (auth.loading) {
+    return <OverlayCircularProgress />;
+  }
+
+  if (auth.user) {
+    navigate(from, { replace: true });
+    return <OverlayCircularProgress />;
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password !== confirmPassword) {
@@ -49,7 +59,7 @@ export default function SignUp() {
       return;
     }
     try {
-      await signup(email, password);
+      await auth.signup(email, password, firstName, lastName);
     } catch (err) {
       setError((err as Error).message);
       return;

@@ -61,6 +61,7 @@ export default function Login() {
     navigate(from, { replace: true });
     return <OverlayCircularProgress />;
   }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

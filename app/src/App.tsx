@@ -1,6 +1,6 @@
 import './App.css';
 import { ThemeProvider } from '@emotion/react';
-import NavigationBar from './components/NavigationBar';
+import NavigationBar from './components/NavigationBar/NavigationBar';
 import { mainTheme } from './theme';
 import { FBAuthProvider } from './hooks/FBAuthProvider';
 
