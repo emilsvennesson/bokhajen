@@ -23,10 +23,10 @@ import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
 import SetPriceWindow from './Wizard/SetPriceWindow';
 
 const steps = [
-  'Find your book',
-  'Check information',
-  'Specify condition',
-  'Add price',
+  'Hitta din bok',
+  'Dubbelkolla Informationen',
+  'Beskriv Kvaliten',
+  'Sätt ett pris',
 ];
 
 interface Error {
