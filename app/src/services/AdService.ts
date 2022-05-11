@@ -58,7 +58,9 @@ export default class AdService {
     const ads: Advert[] = [];
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach(async (docs) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const docs of querySnapshot.docs) {
+      // eslint-disable-next-line no-await-in-loop
       const userDoc = await getDoc(docs.data().user);
 
       const ad: Advert = {
@@ -72,7 +74,7 @@ export default class AdService {
       };
 
       ads.push(ad);
-    });
+    }
 
     return ads;
   }
