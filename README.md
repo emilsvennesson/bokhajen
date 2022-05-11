@@ -9,6 +9,11 @@ This is a project for course dat257, created by group: Xzibit. This app is a web
 This is now in it's startup phase were we are actively implementing all of it's core features.
 
 ### features
+Not Started:
+Work in Progress:
+Done:
+
+
   - Login / Logout :white_check_mark:
   - Publish ads :white_check_mark:
   - Search for books :white_check_mark:
@@ -17,19 +22,25 @@ This is now in it's startup phase were we are actively implementing all of it's 
 
 ## Screen Shots
 #### Home
-![Photo](/app/public/Hem.png)
+<img src='./app/public/Home.png'  width="300">
+
+
 
 #### Book Detailed View
-![Photo](/app/public/BookDetail.png)
+<img src='./app/public/BookDetail.png'  width="300">
+
 
 #### SellingPage
-![Photo](/app/public/SellingPage.png)
+<img src='./app/public/SellingPage.png'  width="300">
+
 
 #### Search
-![Photo](/app/public/Search.png)
+<img src='./app/public/Search.png'  width="150">
+
 
 #### BookAds
-![Photo](/app/public/Ad.png)
+<img src='./app/public/Ad.png'  width="150">
+
 
 
 ## File Structure
