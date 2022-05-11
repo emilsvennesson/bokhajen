@@ -65,7 +65,7 @@ export default function AdAccordion({ ad, onChangesSaved }: Props) {
             <Box sx={{ display: 'flex' }}>
               <Avatar
                 sx={{ margin: 'auto' }}
-                alt="Remy Sharp"
+                alt={ad.user.firstName + ad.user.lastName}
                 src="../assets/images/bok.png"
               />
 
