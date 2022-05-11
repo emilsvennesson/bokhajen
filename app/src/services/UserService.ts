@@ -1,6 +1,6 @@
 import { doc, FirestoreError, getDoc, setDoc } from 'firebase/firestore';
 import db from '../firebase/db';
-import { FSUSer } from './FSUser';
+import { FSUser } from './FSUser';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
 
 // TODO: extract interface to new file?
@@ -15,7 +15,7 @@ const removeEmpty = (obj: any) => {
 };
 
 export default class UserService {
-  static async addUser(user: FSUSer): Promise<ServiceSuccessResponse> {
+  static async addUser(user: FSUser): Promise<ServiceSuccessResponse> {
     // TODO: implement this correctly
     const uidRemovedUser = (({ uid, ...o }) => o)(user);
     const cleanedUser = removeEmpty(uidRemovedUser);
@@ -32,7 +32,7 @@ export default class UserService {
     }
   }
 
-  static async getUser(uid: string): Promise<FSUSer | undefined> {
+  static async getUser(uid: string): Promise<FSUser | undefined> {
     const docRef = doc(db, 'users', uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {

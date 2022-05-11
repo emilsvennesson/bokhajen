@@ -1,4 +1,4 @@
-export interface FSUSer {
+export interface FSUser {
   uid: string;
   firstName: string;
   lastName: string;
