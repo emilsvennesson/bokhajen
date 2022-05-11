@@ -16,6 +16,7 @@ import AdService from '../../services/AdService';
 import { NewAdvert } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 import OverlayCircularProgress from '../../components/OverlayCircularProgress';
+// eslint-disable-next-line import/no-named-as-default
 import SearchForBookWindowCard from './Wizard/SearchForBookWindowCard';
 import CheckInformationWindow from './Wizard/CheckInformationWIndow';
 import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
