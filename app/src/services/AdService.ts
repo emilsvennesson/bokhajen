@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   collection,
   FirestoreError,
@@ -29,8 +28,7 @@ export default class AdService {
     newAd.user = doc(db, `users/${ad.userUid}`);
     delete newAd.userUid;
     try {
-      const docRef = await addDoc(collection(db, 'ads'), newAd);
-      console.log('Document written with ID: ', docRef.id);
+      await addDoc(collection(db, 'ads'), newAd);
       return { success: true };
     } catch (e) {
       console.error('something went wong....', e);
