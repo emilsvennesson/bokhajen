@@ -46,13 +46,13 @@ export default function AccountDetails() {
 
   useEffect(() => {
     console.log('change button state');
-    console.log(reset);
     if (!reset) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
       setReset(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
   const SavePassword = () => {
