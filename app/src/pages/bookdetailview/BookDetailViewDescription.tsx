@@ -13,10 +13,9 @@ export default function BookDetailViewDescription({ book }: Props) {
         marginTop: '50px',
       }}
     >
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={4}>
         <Container
           sx={{
-            flex: 3,
             display: 'flex',
             justifyContent: 'end',
           }}
@@ -110,8 +109,8 @@ export default function BookDetailViewDescription({ book }: Props) {
         </Container>
       </Grid>
 
-      <Grid item xs={12} md={6}>
-        <Container sx={{ flex: 3 }}>
+      <Grid item xs={12} md={8}>
+        <Container>
           <Typography variant="h4" gutterBottom component="div">
             {book && book.name}
           </Typography>

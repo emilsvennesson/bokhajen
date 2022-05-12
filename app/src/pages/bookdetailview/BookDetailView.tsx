@@ -1,4 +1,4 @@
-import { Grid, Box } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import { Book, CremonaClient } from 'cremona';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -39,7 +39,8 @@ export default function BookDetailView() {
   if (loading) return <OverlayCircularProgress />;
 
   return book ? (
-    <Box
+    <Container
+      maxWidth="xl"
       sx={{
         width: '100vw',
         display: 'flex',
@@ -47,14 +48,14 @@ export default function BookDetailView() {
       }}
     >
       <Grid container>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} xl={8}>
           <BookDetailViewDescription book={book} />
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} xl={4}>
           <BookDetailViewAds bookUid={book.uid} />
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   ) : (
     <InvalidPage />
   );

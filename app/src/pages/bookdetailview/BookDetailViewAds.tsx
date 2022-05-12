@@ -9,9 +9,13 @@ import {
   Container,
   Snackbar,
   Alert,
+  Stack,
+  Link,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import AdAccordion from '../../components/AdAccordion';
+import { Link as RouterLink } from 'react-router-dom';
+import AdAccordion from '../../components/ads/AdAccordion';
+import AdSkeleton from '../../components/ads/AdSkeleton';
 import AdService from '../../services/AdService';
 import { AdStatus, Advert } from '../../services/Advert';
 
@@ -20,7 +24,7 @@ interface Props {
 }
 
 function BookDetailViewAds({ bookUid }: Props) {
-  const [ads, setAds] = useState<Advert[] | undefined>([]);
+  const [ads, setAds] = useState<Advert[] | undefined>(undefined);
   const [sort, setSort] = useState('');
   const [fetchedAds, setFetchedAds] = useState(false);
   const [changesSaved, setChangesSaved] = useState<boolean | undefined>(
@@ -50,7 +54,6 @@ function BookDetailViewAds({ bookUid }: Props) {
         marginTop: '50px',
         display: 'flex',
         flexDirection: 'column',
-        minWidth: '300px',
         flexShrink: 0,
         paddingBottom: '10px',
       }}
@@ -69,57 +72,59 @@ function BookDetailViewAds({ bookUid }: Props) {
           </Alert>
         </Snackbar>
       )}
-      <Container sx={{ display: 'flex' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 3,
-            margin: 'auto',
-            marginTop: 0,
-            justifyContent: 'start',
-          }}
-        >
-          <Typography variant="h4">Annonser</Typography>
-        </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          mb: 1,
+        }}
+      >
+        <Typography variant="h4">Annonser</Typography>
+        <FormControl sx={{ minWidth: '150px' }}>
+          <InputLabel id="sorting-label">Sortera</InputLabel>
+          <Select
+            labelId="sorting-label"
+            id="sorting"
+            value={sort}
+            label="Sortera"
+            onChange={handleChange}
+            autoWidth
+          >
+            <MenuItem value={10}>Lägst pris först</MenuItem>
+            <MenuItem value={20}>Högst pris först</MenuItem>
+            <MenuItem value={30}>Bäst skick först</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Stack spacing={1}>
+        {ads
+          ? ads
+              .filter((ad) => ad.status === AdStatus.AVAILABLE)
+              .map((ad) => (
+                <AdAccordion
+                  ad={ad}
+                  onChangesSaved={(onChangesSaved) => {
+                    setFetchedAds(false);
+                    setChangesSaved(onChangesSaved);
+                  }}
+                  onAdDelete={() => setFetchedAds(false)}
+                />
+              ))
+          : Array.from({ length: 4 }, () => <AdSkeleton />)}
+        {ads && ads.length === 0 && (
+          <Box>
+            <Typography variant="h6">
+              Det finns inga annonser tillgängliga för den här boken.
+            </Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'end',
-          }}
-        >
-          <FormControl sx={{ m: 1, mr: 0, minWidth: 95 }}>
-            <InputLabel id="sorting-label">Sortera</InputLabel>
-            <Select
-              labelId="sorting-label"
-              id="sorting"
-              value={sort}
-              label="Sortera"
-              onChange={handleChange}
-              autoWidth
-            >
-              <MenuItem value={10}>Lägst pris först</MenuItem>
-              <MenuItem value={20}>Högst pris först</MenuItem>
-              <MenuItem value={30}>Bäst skick först</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-      </Container>
-
-      {ads &&
-        ads
-          .filter((ad) => ad.status === AdStatus.AVAILABLE)
-          .map((ad) => (
-            <AdAccordion
-              ad={ad}
-              onChangesSaved={(onChangesSaved) => {
-                setFetchedAds(false);
-                setChangesSaved(onChangesSaved);
-              }}
-              onAdDelete={() => setFetchedAds(false)}
-            />
-          ))}
+            <Link component={RouterLink} to="/sell" variant="h6">
+              Bli först med att sälja denna bok
+            </Link>
+          </Box>
+        )}
+      </Stack>
     </Container>
   );
 }
