@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { LockOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../../hooks/FBAuthProvider';
@@ -132,12 +132,16 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/forgot-password" variant="body2">
+              <Link
+                component={RouterLink}
+                to="/forgot-password"
+                variant="body2"
+              >
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link component={RouterLink} to="/signup" variant="body2">
                 Don&apos;t have an account? Sign Up
               </Link>
             </Grid>
