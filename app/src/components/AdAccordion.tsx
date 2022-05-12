@@ -111,7 +111,6 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
                   variant="text"
                   onClick={() => {
                     setEditMode(true);
-                    setExpanded(false);
                   }}
                 >
                   Redigera
