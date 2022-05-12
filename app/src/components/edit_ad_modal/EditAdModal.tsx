@@ -15,8 +15,6 @@ import {
   Typography,
   Tooltip,
   CircularProgress,
-  Snackbar,
-  Alert,
 } from '@mui/material';
 import React, { useState } from 'react';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
@@ -31,7 +29,7 @@ import AdService from '../../services/AdService';
 
 interface Props {
   ad: Advert;
-  onChangesSaved: () => void;
+  onChangesSaved: (changesSucceded: boolean) => void;
   open?: boolean;
   onClose?:
     | ((event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void)
@@ -53,9 +51,6 @@ export default function EditAdModal({
   );
   const [adStatus, setAdStatus] = useState(ad.status);
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [changesSaved, setChangesSaved] = useState<boolean | undefined>(
-    undefined,
-  );
 
   const adChanged =
     adPrice !== ad.price ||
@@ -117,9 +112,9 @@ export default function EditAdModal({
     };
     setSubmitLoading(true);
     const changesSucceded = await uploadChanges();
-    onChangesSaved();
-    setChangesSaved(changesSucceded);
+    onChangesSaved(changesSucceded);
     setSubmitLoading(false);
+    if (onClose) onClose({}, 'backdropClick');
   };
 
   const handlePriceChange = (
@@ -132,10 +127,6 @@ export default function EditAdModal({
     } else {
       setAdPrice(parseInt(e.target.value, 10));
     }
-  };
-
-  const handleClose = () => {
-    setChangesSaved(undefined);
   };
 
   const handleDeleteAd = async () => {
@@ -172,20 +163,6 @@ export default function EditAdModal({
           overflowY: 'auto',
         }}
       >
-        {changesSaved !== undefined && (
-          <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            open={changesSaved !== undefined}
-            onClose={handleClose}
-            key="topcenter"
-          >
-            <Alert severity={changesSaved === true ? 'success' : 'error'}>
-              {changesSaved
-                ? 'Ändringarna sparades!'
-                : 'Något gick fel, försök igen senare!'}
-            </Alert>
-          </Snackbar>
-        )}
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Box sx={{ p: 1, width: '100%' }}>

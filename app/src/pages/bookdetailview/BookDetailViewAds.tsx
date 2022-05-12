@@ -7,11 +7,13 @@ import {
   Select,
   Box,
   Container,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import AdAccordion from '../../components/AdAccordion';
 import AdService from '../../services/AdService';
-import { Advert } from '../../services/Advert';
+import { AdStatus, Advert } from '../../services/Advert';
 
 interface Props {
   bookUid: number;
@@ -21,6 +23,9 @@ function BookDetailViewAds({ bookUid }: Props) {
   const [ads, setAds] = useState<Advert[] | undefined>([]);
   const [sort, setSort] = useState('');
   const [fetchedAds, setFetchedAds] = useState(false);
+  const [changesSaved, setChangesSaved] = useState<boolean | undefined>(
+    undefined,
+  );
 
   const handleChange = (event: SelectChangeEvent) => {
     setSort(event.target.value as string);
@@ -35,6 +40,10 @@ function BookDetailViewAds({ bookUid }: Props) {
     if (!fetchedAds) getAds();
   }, [bookUid, fetchedAds]);
 
+  const handleClose = () => {
+    setChangesSaved(undefined);
+  };
+
   return (
     <Container
       sx={{
@@ -46,6 +55,20 @@ function BookDetailViewAds({ bookUid }: Props) {
         paddingBottom: '10px',
       }}
     >
+      {changesSaved !== undefined && (
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={changesSaved !== undefined}
+          onClose={handleClose}
+          key="topcenter"
+        >
+          <Alert severity={changesSaved === true ? 'success' : 'error'}>
+            {changesSaved
+              ? 'Ändringarna sparades!'
+              : 'Något gick fel, försök igen senare!'}
+          </Alert>
+        </Snackbar>
+      )}
       <Container sx={{ display: 'flex' }}>
         <Box
           sx={{
@@ -85,13 +108,18 @@ function BookDetailViewAds({ bookUid }: Props) {
       </Container>
 
       {ads &&
-        ads.map((ad) => (
-          <AdAccordion
-            ad={ad}
-            onChangesSaved={() => setFetchedAds(false)}
-            onAdDelete={() => setFetchedAds(false)}
-          />
-        ))}
+        ads
+          .filter((ad) => ad.status === AdStatus.AVAILABLE)
+          .map((ad) => (
+            <AdAccordion
+              ad={ad}
+              onChangesSaved={(onChangesSaved) => {
+                setFetchedAds(false);
+                setChangesSaved(onChangesSaved);
+              }}
+              onAdDelete={() => setFetchedAds(false)}
+            />
+          ))}
     </Container>
   );
 }

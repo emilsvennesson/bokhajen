@@ -10,7 +10,7 @@ import {
   Divider,
   Button,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
@@ -22,7 +22,7 @@ import EditAdModal from './edit_ad_modal/EditAdModal';
 
 interface Props {
   ad: Advert;
-  onChangesSaved: () => void;
+  onChangesSaved: (changesSucceded: boolean) => void;
   onAdDelete: () => void;
 }
 
@@ -30,6 +30,10 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    setEditMode(false);
+  }, [ad]);
 
   const canEdit = ad.user.uid === user?.uid;
 
@@ -145,6 +149,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
               <Button
                 variant="contained"
                 startIcon={<ContactPageRoundedIcon />}
+                disabled={canEdit}
               >
                 Kontakta säljaren
               </Button>
