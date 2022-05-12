@@ -62,7 +62,7 @@ export default function AdAccordion({ ad, onChangesSaved }: Props) {
               width: '100%',
             }}
           >
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Avatar
                 sx={{ margin: 'auto' }}
                 alt={ad.user.firstName + ad.user.lastName}
