@@ -23,9 +23,10 @@ import EditAdModal from './edit_ad_modal/EditAdModal';
 interface Props {
   ad: Advert;
   onChangesSaved: () => void;
+  onAdDelete: () => void;
 }
 
-export default function AdAccordion({ ad, onChangesSaved }: Props) {
+export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -40,6 +41,7 @@ export default function AdAccordion({ ad, onChangesSaved }: Props) {
           onChangesSaved={onChangesSaved}
           open
           onClose={() => setEditMode(false)}
+          onAdDelete={onAdDelete}
         />
       )}
       <Accordion

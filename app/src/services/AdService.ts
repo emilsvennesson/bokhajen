@@ -141,9 +141,13 @@ export default class AdService {
    * @returns Promise<ServiceSuccessResponse>
    */
   static async removeAd(adUid: string): Promise<ServiceSuccessResponse> {
-    const success = await deleteDoc(doc(db, 'ads', adUid))
-      .then(() => ({ success: true }))
-      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+    let success: ServiceSuccessResponse = { success: false };
+    try {
+      await deleteDoc(doc(db, 'ads', adUid));
+      success = { success: true };
+    } catch (e) {
+      success = { success: false, error: (e as FirestoreError).message };
+    }
 
     return success;
   }

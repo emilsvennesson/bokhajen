@@ -36,6 +36,7 @@ interface Props {
   onClose?:
     | ((event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void)
     | undefined;
+  onAdDelete: () => void;
 }
 
 export default function EditAdModal({
@@ -43,6 +44,7 @@ export default function EditAdModal({
   onChangesSaved,
   open,
   onClose,
+  onAdDelete,
 }: Props) {
   const [adPrice, setAdPrice] = useState<number>(ad.price);
   const [condition, setCondition] = useState(ad.condition);
@@ -134,6 +136,17 @@ export default function EditAdModal({
 
   const handleClose = () => {
     setChangesSaved(undefined);
+  };
+
+  const handleDeleteAd = async () => {
+    const { success: deleted } = await AdService.removeAd(ad.uid);
+    if (!deleted) {
+      return;
+    }
+    if (onClose) {
+      onClose({}, 'escapeKeyDown');
+    }
+    onAdDelete();
   };
 
   return (
@@ -361,13 +374,17 @@ export default function EditAdModal({
                     <Box
                       sx={{ display: 'flex', justifyContent: 'space-between' }}
                     >
-                      <Button variant="text" color="error">
+                      <Button
+                        variant="text"
+                        color="error"
+                        onClick={handleDeleteAd}
+                      >
                         Radera Annons
                       </Button>
                       <Button
                         variant="contained"
                         color="primary"
-                        disabled={!adChanged}
+                        disabled={!adChanged || submitLoading}
                         onClick={handleSubmit}
                       >
                         Spara ändringar

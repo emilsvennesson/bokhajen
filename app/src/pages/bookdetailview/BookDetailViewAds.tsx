@@ -86,7 +86,11 @@ function BookDetailViewAds({ bookUid }: Props) {
 
       {ads &&
         ads.map((ad) => (
-          <AdAccordion ad={ad} onChangesSaved={() => setFetchedAds(false)} />
+          <AdAccordion
+            ad={ad}
+            onChangesSaved={() => setFetchedAds(false)}
+            onAdDelete={() => setFetchedAds(false)}
+          />
         ))}
     </Container>
   );
