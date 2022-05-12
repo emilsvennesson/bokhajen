@@ -10,26 +10,46 @@ import {
   Divider,
   Button,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../theme';
 import { Advert } from '../services/Advert';
+import { useAuth } from '../hooks/FBAuthProvider';
+import EditAdModal from './edit_ad_modal/EditAdModal';
 
 interface Props {
   ad: Advert;
+  onChangesSaved: (changesSucceded: boolean) => void;
+  onAdDelete: () => void;
 }
 
-export default function AdAccordion({ ad }: Props) {
+export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
+  const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  useEffect(() => {
+    setEditMode(false);
+  }, [ad]);
+
+  const canEdit = ad.user.uid === user?.uid;
 
   return (
-    <Container key={ad.uid}>
+    <Container key={ad.uid} sx={{ mb: 1 }}>
+      {editMode && (
+        <EditAdModal
+          ad={ad}
+          onChangesSaved={onChangesSaved}
+          open
+          onClose={() => setEditMode(false)}
+          onAdDelete={onAdDelete}
+        />
+      )}
       <Accordion
         sx={{
-          marginTop: 1,
           '&:hover': {
             bgcolor: mainTheme.palette.secondary.light,
           },
@@ -37,51 +57,67 @@ export default function AdAccordion({ ad }: Props) {
       >
         <AccordionSummary
           onClick={() => setExpanded(!expanded)}
-          expandIcon={<ExpandMoreIcon sx={{ marginLeft: 1 }} />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Avatar
-            sx={{ margin: 'auto' }}
-            alt="Remy Sharp"
-            src="../assets/images/bok.png"
-          />
-
-          <Stack sx={{ marginLeft: 2 }}>
-            <Typography
-              variant="h6"
-              sx={{ width: '20%', flexShrink: 0, marginBottom: 1 }}
-            >
-              {ad.condition}
-            </Typography>
-
-            <Stack direction="row" spacing={1} sx={{ margin: 'auto' }}>
-              {!expanded && (
-                <Typography
-                  variant="body1"
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'start',
-                    margin: 'auto',
-                  }}
-                >
-                  {ad.condition}
-                </Typography>
-              )}
-            </Stack>
-          </Stack>
-
-          <Typography
+          <Box
             sx={{
-              marginRight: 1,
               display: 'flex',
-              justifyContent: 'end',
-              flexGrow: 1,
-              margin: 'auto',
+              justifyContent: 'space-between',
+              width: '100%',
             }}
           >
-            {ad.price} kr
-          </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                sx={{ margin: 'auto' }}
+                alt={ad.user.firstName + ad.user.lastName}
+                src="../assets/images/bok.png"
+              />
+
+              <Stack sx={{ marginLeft: 2 }}>
+                <Typography variant="h6" sx={{ flexShrink: 0 }}>
+                  {ad.user.firstName} {ad.user.lastName}
+                </Typography>
+
+                {!expanded && (
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'start',
+                    }}
+                  >
+                    {ad.condition}
+                  </Typography>
+                )}
+              </Stack>
+            </Box>
+
+            <Stack>
+              <Typography
+                sx={{
+                  marginRight: 1,
+                  display: 'flex',
+                  justifyContent: 'end',
+                  flexGrow: 1,
+                  alignItems: 'center',
+                }}
+              >
+                {ad.price} kr
+              </Typography>
+              {canEdit && (
+                <Button
+                  variant="text"
+                  onClick={() => {
+                    setEditMode(true);
+                  }}
+                >
+                  Redigera
+                </Button>
+              )}
+            </Stack>
+          </Box>
         </AccordionSummary>
         <AccordionDetails>
           <Stack direction="column">
@@ -112,6 +148,7 @@ export default function AdAccordion({ ad }: Props) {
               <Button
                 variant="contained"
                 startIcon={<ContactPageRoundedIcon />}
+                disabled={canEdit}
               >
                 Kontakta säljaren
               </Button>

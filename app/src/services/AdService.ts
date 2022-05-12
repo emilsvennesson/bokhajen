@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {
   collection,
   FirestoreError,
@@ -9,10 +8,14 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  getDoc,
+  QueryDocumentSnapshot,
+  DocumentData,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
-import { Advert, NewAdvert } from './Advert';
+import { AdStatus, Advert, NewAdvert } from './Advert';
+import { FSUser } from './FSUser';
 
 /**
  * Handles all fetching and publishing of ads
@@ -23,9 +26,11 @@ import { Advert, NewAdvert } from './Advert';
  */
 export default class AdService {
   static async publishAd(ad: NewAdvert): Promise<ServiceSuccessResponse> {
+    const newAd: any = ad;
+    newAd.user = doc(db, `users/${ad.userUid}`);
+    delete newAd.userUid;
     try {
-      const docRef = await addDoc(collection(db, 'ads'), ad);
-      console.log('Document written with ID: ', docRef.id);
+      await addDoc(collection(db, 'ads'), newAd);
       return { success: true };
     } catch (e) {
       console.error('something went wong....', e);
@@ -49,26 +54,33 @@ export default class AdService {
     const queryConstraints = [];
     if (bookUid) queryConstraints.push(where('bookId', '==', bookUid));
     if (userUid) queryConstraints.push(where('uid', '==', userUid));
-
     const q = query(collection(db, 'ads'), ...queryConstraints);
-
-    const ads: Advert[] = [];
     const querySnapshot = await getDocs(q);
+    const advertPromises: Promise<Advert>[] = [];
 
-    querySnapshot.forEach((docs) => {
-      const ad: Advert = {
-        uid: docs.id,
-        userId: docs.data().uid,
-        bookId: docs.data().bookId,
-        price: docs.data().price,
-        condition: docs.data().condition,
-        conditionDescription: docs.data().conditionDescription,
-      };
-
-      ads.push(ad);
+    querySnapshot.forEach((adDoc) => {
+      advertPromises.push(this.parseAd(adDoc));
     });
 
+    const ads = await Promise.all(advertPromises);
     return ads;
+  }
+
+  private static async parseAd(
+    adDoc: QueryDocumentSnapshot<DocumentData>,
+  ): Promise<Advert> {
+    const userDoc = await getDoc(adDoc.data().user);
+    const ad: Advert = {
+      uid: adDoc.id,
+      user: { uid: userDoc.id, ...(userDoc.data() as Object) } as FSUser,
+      bookId: adDoc.data().bookId,
+      price: adDoc.data().price,
+      condition: adDoc.data().condition,
+      conditionDescription: adDoc.data().conditionDescription,
+      status: adDoc.data().status,
+    };
+
+    return ad;
   }
 
   /**
@@ -85,11 +97,16 @@ export default class AdService {
   ): Promise<ServiceSuccessResponse> {
     const docRef = doc(db, 'ads', adId);
 
+    let res: ServiceSuccessResponse = { success: false };
     await updateDoc(docRef, data)
-      .then(() => ({ success: true }))
-      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+      .then(() => {
+        res = { success: true };
+      })
+      .catch((e) => {
+        res = { success: false, error: (e as FirestoreError).message };
+      });
 
-    return { success: true };
+    return res;
   }
 
   /**
@@ -124,9 +141,13 @@ export default class AdService {
    * @returns Promise<ServiceSuccessResponse>
    */
   static async removeAd(adUid: string): Promise<ServiceSuccessResponse> {
-    const success = await deleteDoc(doc(db, 'ads', adUid))
-      .then(() => ({ success: true }))
-      .catch((e) => ({ success: false, error: (e as FirestoreError).message }));
+    let success: ServiceSuccessResponse = { success: false };
+    try {
+      await deleteDoc(doc(db, 'ads', adUid));
+      success = { success: true };
+    } catch (e) {
+      success = { success: false, error: (e as FirestoreError).message };
+    }
 
     return success;
   }
@@ -142,6 +163,19 @@ export default class AdService {
     newPrice: number,
   ): Promise<ServiceSuccessResponse> {
     return this.editAd(adUid, { price: newPrice });
+  }
+
+  /**
+   * Edits the status of the ad
+   * @param adUid the id of the ad that will be altered
+   * @param newStatus the new status that will be set on the ad
+   * @returns Promise<ServiceSuccessResponse>
+   */
+  static async editAdStatus(
+    adUid: string,
+    newStatus: AdStatus,
+  ): Promise<ServiceSuccessResponse> {
+    return this.editAd(adUid, { status: newStatus });
   }
 
   /**
@@ -168,7 +202,7 @@ export default class AdService {
     newConditionDescription: string,
   ): Promise<ServiceSuccessResponse> {
     return this.editAd(adUid, {
-      conditionDescribtion: newConditionDescription,
+      conditionDescription: newConditionDescription,
     });
   }
 }
