@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { Book } from 'cremona';
 
 interface Props {
@@ -17,59 +17,57 @@ export default function BookDetailViewDescription({ book }: Props) {
     bookInfo.push({ title: 'Kurskoder', value: book.courseCodes.join(', ') });
   console.log('desc', book.description);
   return (
-    <Grid container>
-      <Grid item xs={12} md={4}>
+    <Stack direction="row">
+      <Box
+        sx={{
+          display: 'flex',
+        }}
+      >
         <Box
           sx={{
-            display: 'flex',
+            width: '250px',
+            alignSelf: 'start',
           }}
         >
-          <Box
-            sx={{
-              width: '250px',
-              alignSelf: 'start',
-            }}
-          >
+          <Stack spacing={1}>
+            {/* BOOK IMAGE */}
+            {book && (
+              <Box
+                component="img"
+                height={300}
+                width={200}
+                src={book.image}
+                sx={{ alignSelf: 'start' }}
+              />
+            )}
             <Stack spacing={1}>
-              {/* BOOK IMAGE */}
-              {book && (
-                <Box
-                  component="img"
-                  height={300}
-                  width={200}
-                  src={book.image}
-                  sx={{ alignSelf: 'start' }}
-                />
-              )}
-              <Stack spacing={1}>
-                {bookInfo.map((info) => (
-                  <Typography sx={{ fontWeight: 'bold' }}>
-                    {info.title}:{' '}
-                    <Typography sx={{ display: 'inline' }}>
-                      {info.value}
-                    </Typography>
+              {bookInfo.map((info) => (
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  {info.title}:{' '}
+                  <Typography sx={{ display: 'inline' }}>
+                    {info.value}
                   </Typography>
-                ))}
-              </Stack>
-
-              <Button
-                variant="contained"
-                sx={{ width: '200px', marginTop: '15px' }}
-              >
-                Sälj denna boken
-              </Button>
+                </Typography>
+              ))}
             </Stack>
-          </Box>
-        </Box>
-      </Grid>
 
-      <Grid item xs={12} md={8}>
+            <Button
+              variant="contained"
+              sx={{ width: '200px', marginTop: '15px' }}
+            >
+              Sälj denna boken
+            </Button>
+          </Stack>
+        </Box>
+      </Box>
+
+      <Stack sx={{ maxWidth: '600px' }}>
         <Typography variant="h4" gutterBottom>
           {book && book.name}
         </Typography>
         {/* Jag skulle vilja att descriptionen här har en newline per stycke */}
         <Typography variant="body1">{book && book.description}</Typography>
-      </Grid>
-    </Grid>
+      </Stack>
+    </Stack>
   );
 }

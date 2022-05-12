@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   Box,
-  Container,
   Snackbar,
   Alert,
   Stack,
@@ -49,13 +48,13 @@ function BookDetailViewAds({ bookUid }: Props) {
   };
 
   return (
-    <Container
+    <Box
       sx={{
-        marginTop: '50px',
         display: 'flex',
         flexDirection: 'column',
         flexShrink: 0,
         paddingBottom: '10px',
+        minWidth: '400px',
       }}
     >
       {changesSaved !== undefined && (
@@ -125,7 +124,7 @@ function BookDetailViewAds({ bookUid }: Props) {
           </Box>
         )}
       </Stack>
-    </Container>
+    </Box>
   );
 }
 export default BookDetailViewAds;

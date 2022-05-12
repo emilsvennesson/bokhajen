@@ -1,4 +1,4 @@
-import { Grid, Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { Book, CremonaClient } from 'cremona';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -42,19 +42,25 @@ export default function BookDetailView() {
     <Container
       maxWidth="xl"
       sx={{
-        width: '100vw',
         display: 'flex',
         justifyContent: 'center',
+        mt: '50px',
       }}
     >
-      <Grid container>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+      >
+        <BookDetailViewDescription book={book} />
+        <BookDetailViewAds bookUid={book.uid} />
+      </Box>
+      {/* <Grid container spacing={2}>
         <Grid item xs={12} xl={8}>
           <BookDetailViewDescription book={book} />
         </Grid>
         <Grid item xs={12} xl={4}>
           <BookDetailViewAds bookUid={book.uid} />
         </Grid>
-      </Grid>
+      </Grid> */}
     </Container>
   ) : (
     <InvalidPage />
