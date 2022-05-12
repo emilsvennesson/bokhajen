@@ -1,23 +1,27 @@
-import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { Book } from 'cremona';
 
 interface Props {
-  book?: Book;
+  book: Book;
 }
 
 export default function BookDetailViewDescription({ book }: Props) {
+  const bookInfo = [];
+
+  if (book.authors && book.authors.length > 0)
+    bookInfo.push({ title: 'Författare', value: book.authors.join(', ') });
+  if (book.year) bookInfo.push({ title: 'Utgiven', value: book.year });
+  if (book.isbn) bookInfo.push({ title: 'ISBN', value: book.isbn });
+  if (book.weight) bookInfo.push({ title: 'Vikt', value: book.weight });
+  if (book.courseCodes && book.courseCodes.length > 0)
+    bookInfo.push({ title: 'Kurskoder', value: book.courseCodes.join(', ') });
+  console.log('desc', book.description);
   return (
-    <Grid
-      container
-      sx={{
-        marginTop: '50px',
-      }}
-    >
+    <Grid container>
       <Grid item xs={12} md={4}>
-        <Container
+        <Box
           sx={{
             display: 'flex',
-            justifyContent: 'end',
           }}
         >
           <Box
@@ -26,7 +30,7 @@ export default function BookDetailViewDescription({ book }: Props) {
               alignSelf: 'start',
             }}
           >
-            <Stack>
+            <Stack spacing={1}>
               {/* BOOK IMAGE */}
               {book && (
                 <Box
@@ -37,67 +41,17 @@ export default function BookDetailViewDescription({ book }: Props) {
                   sx={{ alignSelf: 'start' }}
                 />
               )}
+              <Stack spacing={1}>
+                {bookInfo.map((info) => (
+                  <Typography sx={{ fontWeight: 'bold' }}>
+                    {info.title}:{' '}
+                    <Typography sx={{ display: 'inline' }}>
+                      {info.value}
+                    </Typography>
+                  </Typography>
+                ))}
+              </Stack>
 
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                component="p"
-                sx={{
-                  alignSelf: 'start',
-                  marginTop: '15px',
-                  wordWrap: 'vertical-lr',
-                  width: '200px',
-                }}
-              >
-                {/* AUTHORS */}
-                {book &&
-                  book.authors &&
-                  `Författare: ${book.authors.join(', ')}`}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                component="p"
-                sx={{
-                  alignSelf: 'start',
-                  wordWrap: 'vertical-lr',
-                  width: '200px',
-                }}
-              >
-                {/* YEAR */}
-                {book && book.year && `Utgiven: ${book.year}`}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                component="p"
-                sx={{
-                  alignSelf: 'start',
-                  wordWrap: 'vertical-lr',
-                  width: '200px',
-                }}
-              >
-                {/* ISBN */}
-                {book && book.isbn && `ISBN: ${book.isbn}`}
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                gutterBottom
-                component="p"
-                sx={{
-                  alignSelf: 'start',
-                  wordWrap: 'vertical-lr',
-                  width: '200px',
-                }}
-              >
-                {/* WEIGHT */}
-                {book && book.weight && `Vikt: ${book.weight} gram`}
-              </Typography>
-              <Typography>
-                {book &&
-                  book.courseCodes &&
-                  `Kurskoder: ${book.courseCodes.join(', ')}`}
-              </Typography>
               <Button
                 variant="contained"
                 sx={{ width: '200px', marginTop: '15px' }}
@@ -106,19 +60,15 @@ export default function BookDetailViewDescription({ book }: Props) {
               </Button>
             </Stack>
           </Box>
-        </Container>
+        </Box>
       </Grid>
 
       <Grid item xs={12} md={8}>
-        <Container>
-          <Typography variant="h4" gutterBottom component="div">
-            {book && book.name}
-          </Typography>
-          {/* Jag skulle vilja att descriptionen här har en newline per stycke */}
-          <Typography variant="body1" gutterBottom component="p" sx={{}}>
-            {book && book.description}
-          </Typography>
-        </Container>
+        <Typography variant="h4" gutterBottom>
+          {book && book.name}
+        </Typography>
+        {/* Jag skulle vilja att descriptionen här har en newline per stycke */}
+        <Typography variant="body1">{book && book.description}</Typography>
       </Grid>
     </Grid>
   );
