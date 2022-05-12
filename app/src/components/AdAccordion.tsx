@@ -9,11 +9,14 @@ import {
   Box,
   Divider,
   Button,
+  IconButton,
+  Snackbar,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
+import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone';
 import { mainTheme } from '../theme';
 import { Advert } from '../services/Advert';
 import { useAuth } from '../hooks/FBAuthProvider';
@@ -29,10 +32,16 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     setEditMode(false);
   }, [ad]);
+
+  const CopyToClipboard = () => {
+    navigator.clipboard.writeText(ad.user.email);
+    setOpen(true);
+  };
 
   const canEdit = ad.user.uid === user?.uid;
 
@@ -156,19 +165,25 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
                   )}
                   {!ad.user.phoneNumber && <Typography>-</Typography>}
                 </Stack>
-                <Stack direction="row" spacing={1}>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                >
                   <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
                   <Typography>{ad.user.email}</Typography>
+                  <IconButton onClick={CopyToClipboard}>
+                    <ContentCopyTwoToneIcon />
+                  </IconButton>
+                  <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    open={open}
+                    autoHideDuration={2000}
+                    onClose={() => setOpen(false)}
+                    message="Kopierat"
+                  />
                 </Stack>
               </Stack>
-
-              {/*               <Button
-                variant="contained"
-                startIcon={<ContactPageRoundedIcon />}
-                disabled={canEdit}
-              >
-                Kontakta säljaren
-              </Button> */}
             </Box>
           </Stack>
         </AccordionDetails>
