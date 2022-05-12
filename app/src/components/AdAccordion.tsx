@@ -13,7 +13,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../theme';
 import { Advert } from '../services/Advert';
@@ -120,7 +119,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <Stack direction="column">
+          <Stack direction="column" sx={{ border: 0 }}>
             <Box sx={{ display: 'flex', flex: 5 }}>
               <Stack direction="column">
                 <Stack direction="row">
@@ -137,21 +136,39 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
             <Box
               sx={{
                 display: 'flex',
-                flex: 3,
-                border: 0,
                 justifyContent: 'center',
-                margin: 'auto',
-                marginBottom: 0,
-                marginTop: 1,
               }}
             >
-              <Button
+              <Typography variant="h6">Kontaktinformation</Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'start',
+              }}
+            >
+              <Stack>
+                <Stack direction="row" spacing={1}>
+                  <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
+                  {ad.user.phoneNumber && (
+                    <Typography>{ad.user.phoneNumber}</Typography>
+                  )}
+                  {!ad.user.phoneNumber && <Typography>-</Typography>}
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
+                  <Typography>{ad.user.email}</Typography>
+                </Stack>
+              </Stack>
+
+              {/*               <Button
                 variant="contained"
                 startIcon={<ContactPageRoundedIcon />}
                 disabled={canEdit}
               >
                 Kontakta säljaren
-              </Button>
+              </Button> */}
             </Box>
           </Stack>
         </AccordionDetails>
