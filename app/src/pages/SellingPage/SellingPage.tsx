@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Stack,
@@ -11,9 +11,8 @@ import {
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
 import BookInformationInput from './BookInformationInput';
-import Conditions from '../../config/Conditions';
 import AdService from '../../services/AdService';
-import { NewAdvert } from '../../services/Advert';
+import { NewAdvert, AdStatus } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 // eslint-disable-next-line import/no-named-as-default
@@ -21,6 +20,7 @@ import SearchForBookWindowCard from './Wizard/SearchForBookWindowCard';
 import CheckInformationWindow from './Wizard/CheckInformationWIndow';
 import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
 import SetPriceWindow from './Wizard/SetPriceWindow';
+import { BookCondition } from '../../config/BookCondition';
 
 const steps = [
   'Hitta din bok',
@@ -39,17 +39,19 @@ interface Error {
  * @returns
  */
 export default function SellingPage() {
-  const [book, setBook] = React.useState<Book | undefined>(undefined);
-  const [edit, setEdit] = React.useState(false);
-  const [bookPrice, setPrice] = React.useState<number | undefined>(undefined);
-  const [bookCondition, setCondition] = React.useState(Conditions.good);
-  const [describtion, setdescribtion] = React.useState('');
-  const [error, setError] = React.useState<Error>({
+  const [book, setBook] = useState<Book | undefined>(undefined);
+  const [edit, setEdit] = useState(false);
+  const [bookPrice, setPrice] = useState<number | undefined>(undefined);
+  const [bookCondition, setCondition] = useState<BookCondition>(
+    BookCondition.GOOD,
+  );
+  const [description, setDescription] = useState('');
+  const [error, setError] = useState<Error>({
     open: false,
     message: '',
   });
 
-  const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
 
   const { user, loading } = useAuth();
   const navigate = useNavigate();
@@ -100,11 +102,12 @@ export default function SellingPage() {
     }
 
     const ad: NewAdvert = {
-      userId: user.uid,
+      userUid: user.uid,
       bookId: book.uid.toString(),
       price: bookPrice,
       condition: bookCondition,
-      conditionDescription: describtion,
+      conditionDescription: description,
+      status: AdStatus.AVAILABLE,
     };
 
     AdService.publishAd(ad)
@@ -175,7 +178,7 @@ export default function SellingPage() {
             handleBack={handleBack}
             show={activeStep > 1 && book != null}
             setCondition={setCondition}
-            setDescription={setdescribtion}
+            setDescription={setDescription}
             active={activeStep === 2}
           />
         </Stack>

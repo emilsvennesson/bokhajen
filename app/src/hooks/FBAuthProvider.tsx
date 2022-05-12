@@ -6,6 +6,9 @@ import {
   User,
   signOut,
   onAuthStateChanged,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword as updatePasswordFirebase,
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase/config';
@@ -26,6 +29,11 @@ interface AuthContextType {
     lastName: string,
   ) => Promise<void>;
   loading: boolean;
+  updatePassword: (
+    email: string,
+    password: string,
+    newPassword: string,
+  ) => Promise<boolean>;
 }
 
 const AuthContext = React.createContext<AuthContextType>(null!);
@@ -81,6 +89,30 @@ export function FBAuthProvider({ children }: Props) {
     setLoading(false);
   };
 
+  const updatePassword = async (
+    email: string,
+    password: string,
+    newPassword: string,
+  ): Promise<boolean> => {
+    if (!user) return false;
+    const credentials = EmailAuthProvider.credential(email, password);
+
+    try {
+      await reauthenticateWithCredential(user, credentials);
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+
+    try {
+      await updatePasswordFirebase(user, newPassword);
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (usr) => {
@@ -93,7 +125,7 @@ export function FBAuthProvider({ children }: Props) {
   }, []);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const value = { user, signin, signout, signup, loading };
+  const value = { user, signin, signout, signup, loading, updatePassword };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
