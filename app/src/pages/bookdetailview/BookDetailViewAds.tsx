@@ -114,6 +114,7 @@ function BookDetailViewAds({ bookUid }: Props) {
                   setChangesSaved(onChangesSaved);
                 }}
                 onAdDelete={() => setFetchedAds(false)}
+                key={ad.uid}
               />
             ))
           : Array.from({ length: 4 }, () => (

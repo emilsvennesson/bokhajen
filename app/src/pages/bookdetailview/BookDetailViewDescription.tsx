@@ -43,7 +43,7 @@ export default function BookDetailViewDescription({ book }: Props) {
             )}
             <Stack spacing={1}>
               {bookInfo.map((info) => (
-                <Typography sx={{ fontWeight: 'bold' }}>
+                <Typography sx={{ fontWeight: 'bold' }} key={info.title}>
                   {info.title}:{' '}
                   <Typography sx={{ display: 'inline' }}>
                     {info.value}
