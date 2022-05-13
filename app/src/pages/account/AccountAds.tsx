@@ -4,11 +4,12 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import { useEffect } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 import { AdStatus, Advert } from '../../services/Advert';
 import AdService from '../../services/AdService';
-import AccountAdsAccordion from './AccountAdsAccordion';
+import AccountAdsCard from './AccountAdsCard';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,6 +48,7 @@ export default function AccountAds() {
   const auth = useAuth();
   const [value, setValue] = React.useState(0);
   const [ads, setAds] = React.useState<Advert[] | undefined>(undefined);
+  const adStatuses = [AdStatus.AVAILABLE, AdStatus.RESERVED, AdStatus.SOLD];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -63,30 +65,33 @@ export default function AccountAds() {
   }, [auth]);
 
   return (
-    <Box sx={{ border: 1, width: '85vh' }}>
+    <Box sx={{ width: '45vw' }}>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
+            <Tabs value={value} onChange={handleChange} aria-label="ads tabs">
               <Tab label="Aktiva annonser" {...a11yProps(0)} />
-              <Tab label="Arkiverade annonser" {...a11yProps(1)} />
+              <Tab label="Reserverade annonser" {...a11yProps(1)} />
+              <Tab label="Arkiverade annonser" {...a11yProps(2)} />
             </Tabs>
           </Box>
         </Box>
-        <TabPanel value={value} index={0}>
-          <AccountAdsAccordion
-            ads={ads?.filter((ad) => ad.status === AdStatus.AVAILABLE)}
-          />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <AccountAdsAccordion
-            ads={ads?.filter((ad) => ad.status === AdStatus.SOLD)}
-          />
-        </TabPanel>
+        <Stack>
+          {ads &&
+            adStatuses.map((status, index) => (
+              <Box key={status}>
+                <TabPanel value={value} index={index}>
+                  {ads
+                    ?.filter((ad) => ad.status === status)
+                    .map((ad) => (
+                      <Box key={ad.uid}>
+                        <AccountAdsCard ad={ad} />
+                      </Box>
+                    ))}
+                </TabPanel>
+              </Box>
+            ))}
+        </Stack>
       </Box>
     </Box>
   );
