@@ -51,13 +51,16 @@ export default class AdService {
     bookUid?: string,
     userUid?: string,
   ): Promise<Advert[]> {
+    const advertPromises: Promise<Advert>[] = [];
     const queryConstraints = [];
+
     if (bookUid) queryConstraints.push(where('bookId', '==', bookUid));
-    if (userUid) queryConstraints.push(where('uid', '==', userUid));
+    if (userUid) {
+      const docRef = doc(db, 'users', userUid);
+      queryConstraints.push(where('user', '==', docRef));
+    }
     const q = query(collection(db, 'ads'), ...queryConstraints);
     const querySnapshot = await getDocs(q);
-    const advertPromises: Promise<Advert>[] = [];
-
     querySnapshot.forEach((adDoc) => {
       advertPromises.push(this.parseAd(adDoc));
     });
