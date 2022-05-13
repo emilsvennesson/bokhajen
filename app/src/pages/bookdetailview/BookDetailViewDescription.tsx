@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography, useMediaQuery } from '@mui/material';
 import { Book } from 'cremona';
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
 
 export default function BookDetailViewDescription({ book }: Props) {
   const bookInfo = [];
+  const sm = useMediaQuery('(min-width:600px)');
 
   if (book.authors && book.authors.length > 0)
     bookInfo.push({ title: 'Författare', value: book.authors.join(', ') });
@@ -15,18 +16,18 @@ export default function BookDetailViewDescription({ book }: Props) {
   if (book.weight) bookInfo.push({ title: 'Vikt', value: book.weight });
   if (book.courseCodes && book.courseCodes.length > 0)
     bookInfo.push({ title: 'Kurskoder', value: book.courseCodes.join(', ') });
-  console.log('desc', book.description);
   return (
-    <Stack direction="row">
+    <Stack direction={sm ? 'row' : 'column'}>
       <Box
         sx={{
           display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <Box
           sx={{
             width: '250px',
-            alignSelf: 'start',
+            justifyContent: 'center',
           }}
         >
           <Stack spacing={1}>
@@ -61,7 +62,7 @@ export default function BookDetailViewDescription({ book }: Props) {
         </Box>
       </Box>
 
-      <Stack sx={{ maxWidth: '600px' }}>
+      <Stack sx={{ maxWidth: sm ? '70%' : '100%' }}>
         <Typography variant="h4" gutterBottom>
           {book && book.name}
         </Typography>

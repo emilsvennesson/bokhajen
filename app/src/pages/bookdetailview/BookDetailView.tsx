@@ -2,6 +2,7 @@ import { Container, Box } from '@mui/material';
 import { Book, CremonaClient } from 'cremona';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 import InvalidPage from '../InvalidPage';
 import BookDetailViewAds from './BookDetailViewAds';
@@ -12,6 +13,7 @@ const client = new CremonaClient();
 export default function BookDetailView() {
   const [book, setBook] = useState<Book | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
+  const lg = useMediaQuery('(min-width:1300px)');
 
   let { uid } = useParams();
   if (!uid) uid = ''; // this is sus, but it'll do
@@ -48,7 +50,12 @@ export default function BookDetailView() {
       }}
     >
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          flexDirection: lg ? 'row' : 'column',
+        }}
       >
         <BookDetailViewDescription book={book} />
         <BookDetailViewAds bookUid={book.uid} />
