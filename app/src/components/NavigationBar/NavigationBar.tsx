@@ -90,7 +90,7 @@ function NavigationBar() {
           setSearchModalOpen(false);
         }}
         onBookClick={(book) => {
-          navigate(`/book/${book.uid}`, { replace: true });
+          navigate(`/books/${book.uid}`, { replace: true });
           setSearchModalOpen(false);
           setSearchQuery('');
         }}
