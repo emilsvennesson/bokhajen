@@ -6,21 +6,25 @@ import {
   MenuItem,
   Select,
   Box,
-  Container,
   Snackbar,
   Alert,
+  Stack,
+  Link,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import AdAccordion from '../../components/AdAccordion';
+import { Link as RouterLink } from 'react-router-dom';
+import AdAccordion from '../../components/ads/AdAccordion';
+import AdSkeleton from '../../components/ads/AdSkeleton';
 import AdService from '../../services/AdService';
 import { AdStatus, Advert } from '../../services/Advert';
+import sadshark from '../../assets/images/sadshark.png';
 
 interface Props {
   bookUid: number;
 }
 
 function BookDetailViewAds({ bookUid }: Props) {
-  const [ads, setAds] = useState<Advert[] | undefined>([]);
+  const [ads, setAds] = useState<Advert[] | undefined>(undefined);
   const [sort, setSort] = useState('');
   const [fetchedAds, setFetchedAds] = useState(false);
   const [changesSaved, setChangesSaved] = useState<boolean | undefined>(
@@ -33,8 +37,12 @@ function BookDetailViewAds({ bookUid }: Props) {
 
   useEffect(() => {
     const getAds = async () => {
-      const newAds = await AdService.getAdsFromBook(bookUid.toString());
-      setAds(newAds);
+      try {
+        const newAds = await AdService.getAdsFromBook(bookUid.toString());
+        setAds(newAds.filter((ad) => ad.status === AdStatus.AVAILABLE));
+      } catch (e) {
+        console.log(e);
+      }
       setFetchedAds(true);
     };
     if (!fetchedAds) getAds();
@@ -45,14 +53,12 @@ function BookDetailViewAds({ bookUid }: Props) {
   };
 
   return (
-    <Container
+    <Box
       sx={{
-        marginTop: '50px',
         display: 'flex',
         flexDirection: 'column',
-        minWidth: '300px',
-        flexShrink: 0,
         paddingBottom: '10px',
+        minWidth: '400px',
       }}
     >
       {changesSaved !== undefined && (
@@ -69,58 +75,75 @@ function BookDetailViewAds({ bookUid }: Props) {
           </Alert>
         </Snackbar>
       )}
-      <Container sx={{ display: 'flex' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 3,
-            margin: 'auto',
-            marginTop: 0,
-            justifyContent: 'start',
-          }}
-        >
-          <Typography variant="h4">Annonser</Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            flex: 1,
-            justifyContent: 'end',
-          }}
-        >
-          <FormControl sx={{ m: 1, mr: 0, minWidth: 95 }}>
-            <InputLabel id="sorting-label">Sortera</InputLabel>
-            <Select
-              labelId="sorting-label"
-              id="sorting"
-              value={sort}
-              label="Sortera"
-              onChange={handleChange}
-              autoWidth
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          mb: 1,
+        }}
+      >
+        <Typography variant="h4">Annonser</Typography>
+        <FormControl sx={{ minWidth: '150px' }}>
+          <InputLabel id="sorting-label">Sortera</InputLabel>
+          <Select
+            labelId="sorting-label"
+            id="sorting"
+            value={sort}
+            label="Sortera"
+            onChange={handleChange}
+            autoWidth
+          >
+            <MenuItem value={10}>Lägst pris först</MenuItem>
+            <MenuItem value={20}>Högst pris först</MenuItem>
+            <MenuItem value={30}>Bäst skick först</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+      <Stack
+        spacing={1}
+        sx={{ height: 'calc(100vh - 200px)', overflowY: 'auto' }}
+      >
+        {ads
+          ? ads.map((ad) => (
+              <AdAccordion
+                ad={ad}
+                onChangesSaved={(onChangesSaved) => {
+                  setFetchedAds(false);
+                  setChangesSaved(onChangesSaved);
+                }}
+                onAdDelete={() => setFetchedAds(false)}
+                key={ad.uid}
+              />
+            ))
+          : Array.from({ length: 4 }, () => (
+              <AdSkeleton key={Math.random() * 1000} />
+            ))}
+        {ads && ads.length === 0 && (
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              sx={{ display: 'flex', justifyContent: 'center', mb: 2, mt: 4 }}
             >
-              <MenuItem value={10}>Lägst pris först</MenuItem>
-              <MenuItem value={20}>Högst pris först</MenuItem>
-              <MenuItem value={30}>Bäst skick först</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-      </Container>
+              <Box component="img" width="200px" src={sadshark} />
+            </Box>
+            <Typography variant="body1">
+              Det finns inga annonser tillgängliga för den här boken.
+            </Typography>
 
-      {ads &&
-        ads
-          .filter((ad) => ad.status === AdStatus.AVAILABLE)
-          .map((ad) => (
-            <AdAccordion
-              ad={ad}
-              onChangesSaved={(onChangesSaved) => {
-                setFetchedAds(false);
-                setChangesSaved(onChangesSaved);
-              }}
-              onAdDelete={() => setFetchedAds(false)}
-            />
-          ))}
-    </Container>
+            <Link component={RouterLink} to="/sell" variant="body1">
+              Bli först med att sälja denna bok!
+            </Link>
+          </Box>
+        )}
+      </Stack>
+    </Box>
   );
 }
 export default BookDetailViewAds;
