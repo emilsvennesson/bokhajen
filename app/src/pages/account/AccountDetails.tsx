@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Divider,
+  CircularProgress,
   Grid,
   Stack,
   TextField,
@@ -120,7 +121,27 @@ export default function AccountDetails() {
             </Divider>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', width: '700px' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            width: '700px',
+            position: 'relative',
+          }}
+        >
+          {loadingUser && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                width: '100%',
+                position: 'absolute',
+              }}
+            >
+              <CircularProgress size={80} />
+            </Box>
+          )}
           <Grid
             container
             rowSpacing={2}
@@ -137,6 +158,7 @@ export default function AccountDetails() {
               <TextField
                 id="firstname"
                 required
+                disabled={loadingUser}
                 label="Förnamn"
                 fullWidth
                 value={firstName}
@@ -148,6 +170,7 @@ export default function AccountDetails() {
               <TextField
                 id="lastname"
                 required
+                disabled={loadingUser}
                 label="Efternamn"
                 fullWidth
                 value={lastName}
@@ -159,6 +182,7 @@ export default function AccountDetails() {
               <TextField
                 id="phonenumber"
                 value={phoneNumber || ''}
+                disabled={loadingUser}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 label="Telefonnummer"
                 fullWidth
