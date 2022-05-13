@@ -145,12 +145,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
               </Typography>
             </Box>
 
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'start',
-              }}
-            >
+            <Box>
               <Stack>
                 <Stack direction="row" spacing={1}>
                   <CallTwoToneIcon />
