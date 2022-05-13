@@ -8,11 +8,13 @@ import {
   Box,
   Divider,
   Button,
+  Link,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import CallTwoToneIcon from '@mui/icons-material/CallTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
 import { mainTheme } from '../../theme';
 import { Advert } from '../../services/Advert';
@@ -135,21 +137,37 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
             <Box
               sx={{
                 display: 'flex',
-                flex: 3,
-                border: 0,
-                justifyContent: 'center',
-                margin: 'auto',
-                marginBottom: 0,
-                marginTop: 1,
+                justifyContent: 'start',
               }}
             >
-              <Button
-                variant="contained"
-                startIcon={<ContactPageRoundedIcon />}
-                disabled={canEdit}
-              >
-                Kontakta säljaren
-              </Button>
+              <Typography variant="h6" sx={{ mb: 1 }}>
+                Kontaktinformation
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'start',
+              }}
+            >
+              <Stack>
+                <Stack direction="row" spacing={1}>
+                  <CallTwoToneIcon />
+                  <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
+                  {ad.user.phoneNumber && (
+                    <Typography>{ad.user.phoneNumber}</Typography>
+                  )}
+                  {!ad.user.phoneNumber && <Typography>-</Typography>}
+                </Stack>
+                <Stack direction="row" spacing={1}>
+                  <EmailTwoToneIcon />
+                  <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
+                  <Link component="a" href={`mailto: ${ad.user.email}`}>
+                    {ad.user.email}
+                  </Link>
+                </Stack>
+              </Stack>
             </Box>
           </Stack>
         </AccordionDetails>
