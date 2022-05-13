@@ -37,15 +37,14 @@ export default class CremonaService {
   static async getBooks(
     limit?: number | undefined,
     offset?: number | undefined,
-  ): Promise<Book> {
-    let book: Book;
+  ): Promise<Book[]> {
+    let books: Book[];
     try {
-      const [retrievedBook] = await client.getBooks(limit, offset);
-      book = retrievedBook;
+      books = await client.getBooks(limit, offset);
     } catch (e) {
       // TODO: Handle error
       throw new Error('Could not get books');
     }
-    return book;
+    return books;
   }
 }
