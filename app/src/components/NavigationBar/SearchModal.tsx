@@ -105,8 +105,7 @@ export default function SearchModal({
         <List
           sx={{
             overflowY: 'auto',
-            maxHeight: '100%',
-            height: '80%',
+            height: '90%',
             mt: 1,
           }}
         >
