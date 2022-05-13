@@ -3,14 +3,37 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Book, CremonaClient } from 'cremona';
+import { useEffect, useState } from 'react';
 import { Advert } from '../../services/Advert';
 
 interface Props {
-  ads?: Advert[];
+  ad?: Advert;
 }
 
-export default function AccountAdsAccordion({ ads }: Props) {
-  console.log(ads);
+const client = new CremonaClient();
+
+export default function AccountAdsAccordion({ ad }: Props) {
+  const [book, setBook] = useState<Book | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const getBook = async () => {
+      setLoading(true);
+      let cBooks: Book[] = [];
+      try {
+        if (ad) cBooks = await client.getBook(parseInt(ad?.bookId, 10));
+      } catch (e) {
+        // do some cringe
+      }
+      if (cBooks[0]) {
+        // do some cringe
+        setBook(cBooks[0]);
+      }
+      setLoading(false);
+    };
+    getBook();
+  }, [ad]);
   return (
     <div>
       <Accordion>
@@ -19,7 +42,7 @@ export default function AccountAdsAccordion({ ads }: Props) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>sussy little boy</Typography>
+          {!loading && book && <Typography>{book.name}</Typography>}
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
