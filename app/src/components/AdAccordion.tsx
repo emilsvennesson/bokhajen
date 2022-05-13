@@ -9,14 +9,14 @@ import {
   Box,
   Divider,
   Button,
-  IconButton,
-  Snackbar,
+  Link,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
-import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone';
+import CallTwoToneIcon from '@mui/icons-material/CallTwoTone';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import { mainTheme } from '../theme';
 import { Advert } from '../services/Advert';
 import { useAuth } from '../hooks/FBAuthProvider';
@@ -32,16 +32,10 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setEditMode(false);
   }, [ad]);
-
-  const CopyToClipboard = () => {
-    navigator.clipboard.writeText(ad.user.email);
-    setOpen(true);
-  };
 
   const canEdit = ad.user.uid === user?.uid;
 
@@ -145,10 +139,12 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'start',
               }}
             >
-              <Typography variant="h6">Kontaktinformation</Typography>
+              <Typography variant="h6" sx={{ mb: 1 }}>
+                Kontaktinformation
+              </Typography>
             </Box>
 
             <Box
@@ -159,29 +155,19 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
             >
               <Stack>
                 <Stack direction="row" spacing={1}>
+                  <CallTwoToneIcon />
                   <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
                   {ad.user.phoneNumber && (
                     <Typography>{ad.user.phoneNumber}</Typography>
                   )}
                   {!ad.user.phoneNumber && <Typography>-</Typography>}
                 </Stack>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  sx={{ display: 'flex', alignItems: 'center' }}
-                >
+                <Stack direction="row" spacing={1}>
+                  <EmailTwoToneIcon />
                   <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
-                  <Typography>{ad.user.email}</Typography>
-                  <IconButton onClick={CopyToClipboard}>
-                    <ContentCopyTwoToneIcon sx={{ fontSize: 'medium' }} />
-                  </IconButton>
-                  <Snackbar
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                    open={open}
-                    autoHideDuration={2000}
-                    onClose={() => setOpen(false)}
-                    message="Kopierat"
-                  />
+                  <Link component="a" href={`mailto: ${ad.user.email}`}>
+                    {ad.user.email}
+                  </Link>
                 </Stack>
               </Stack>
             </Box>
