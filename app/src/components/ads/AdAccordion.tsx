@@ -1,5 +1,4 @@
 import {
-  Container,
   Accordion,
   AccordionSummary,
   Avatar,
@@ -9,16 +8,18 @@ import {
   Box,
   Divider,
   Button,
+  Link,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import CallTwoToneIcon from '@mui/icons-material/CallTwoTone';
 import ChatBubbleTwoToneIcon from '@mui/icons-material/ChatBubbleTwoTone';
-import { mainTheme } from '../theme';
-import { Advert } from '../services/Advert';
-import { useAuth } from '../hooks/FBAuthProvider';
-import EditAdModal from './edit_ad_modal/EditAdModal';
+import { mainTheme } from '../../theme';
+import { Advert } from '../../services/Advert';
+import { useAuth } from '../../hooks/FBAuthProvider';
+import EditAdModal from '../edit_ad_modal/EditAdModal';
 
 interface Props {
   ad: Advert;
@@ -38,7 +39,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const canEdit = ad.user.uid === user?.uid;
 
   return (
-    <Container key={ad.uid} sx={{ mb: 1 }}>
+    <Box key={ad.uid} sx={{ width: '100%' }}>
       {editMode && (
         <EditAdModal
           ad={ad}
@@ -70,7 +71,6 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
           >
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Avatar
-                sx={{ margin: 'auto' }}
                 alt={ad.user.firstName + ad.user.lastName}
                 src="../assets/images/bok.png"
               />
@@ -121,7 +121,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
         </AccordionSummary>
         <AccordionDetails>
           <Stack direction="column">
-            <Box sx={{ display: 'flex', flex: 5 }}>
+            <Box sx={{ display: 'flex' }}>
               <Stack direction="column">
                 <Stack direction="row">
                   <MenuBookTwoToneIcon sx={{ marginRight: 1 }} />
@@ -134,28 +134,30 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
               </Stack>
             </Box>
             <Divider sx={{ margin: 1 }} />
-            <Box
-              sx={{
-                display: 'flex',
-                flex: 3,
-                border: 0,
-                justifyContent: 'center',
-                margin: 'auto',
-                marginBottom: 0,
-                marginTop: 1,
-              }}
-            >
-              <Button
-                variant="contained"
-                startIcon={<ContactPageRoundedIcon />}
-                disabled={canEdit}
-              >
-                Kontakta säljaren
-              </Button>
-            </Box>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Kontaktinformation
+            </Typography>
+
+            <Stack>
+              <Stack direction="row" spacing={1}>
+                <CallTwoToneIcon />
+                <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
+                {ad.user.phoneNumber && (
+                  <Typography>{ad.user.phoneNumber}</Typography>
+                )}
+                {!ad.user.phoneNumber && <Typography>-</Typography>}
+              </Stack>
+              <Stack direction="row" spacing={1}>
+                <EmailTwoToneIcon />
+                <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
+                <Link component="a" href={`mailto: ${ad.user.email}`}>
+                  {ad.user.email}
+                </Link>
+              </Stack>
+            </Stack>
           </Stack>
         </AccordionDetails>
       </Accordion>
-    </Container>
+    </Box>
   );
 }
