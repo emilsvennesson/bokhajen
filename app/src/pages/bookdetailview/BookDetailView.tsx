@@ -18,8 +18,7 @@ export default function BookDetailView() {
   let { uid } = useParams();
   if (!uid) uid = ''; // this is sus, but it'll do
 
-  // eslint-disable-next-line radix
-  const uidInt = parseInt(uid);
+  const uidInt = parseInt(uid, 10);
   useEffect(() => {
     const getBook = async () => {
       setLoading(true);
@@ -61,14 +60,6 @@ export default function BookDetailView() {
         <BookDetailViewDescription book={book} />
         <BookDetailViewAds bookUid={book.uid} />
       </Box>
-      {/* <Grid container spacing={2}>
-        <Grid item xs={12} xl={8}>
-          <BookDetailViewDescription book={book} />
-        </Grid>
-        <Grid item xs={12} xl={4}>
-          <BookDetailViewAds bookUid={book.uid} />
-        </Grid>
-      </Grid> */}
     </Container>
   ) : (
     <InvalidPage />
