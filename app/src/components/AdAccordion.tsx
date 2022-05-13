@@ -32,7 +32,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
   const { user } = useAuth();
   const [expanded, setExpanded] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setEditMode(false);
@@ -173,7 +173,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
                   <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
                   <Typography>{ad.user.email}</Typography>
                   <IconButton onClick={CopyToClipboard}>
-                    <ContentCopyTwoToneIcon />
+                    <ContentCopyTwoToneIcon sx={{ fontSize: 'medium' }} />
                   </IconButton>
                   <Snackbar
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
