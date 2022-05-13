@@ -2,7 +2,6 @@ import { Box, Paper, Skeleton, Stack } from '@mui/material';
 import React from 'react';
 
 export default function AdSkeleton() {
-  console.log('hello');
   return (
     <Paper
       elevation={2}

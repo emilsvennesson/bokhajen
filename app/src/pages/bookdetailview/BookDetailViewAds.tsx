@@ -17,6 +17,7 @@ import AdAccordion from '../../components/ads/AdAccordion';
 import AdSkeleton from '../../components/ads/AdSkeleton';
 import AdService from '../../services/AdService';
 import { AdStatus, Advert } from '../../services/Advert';
+import sadshark from '../../assets/images/sadshark.png';
 
 interface Props {
   bookUid: number;
@@ -36,8 +37,12 @@ function BookDetailViewAds({ bookUid }: Props) {
 
   useEffect(() => {
     const getAds = async () => {
-      const newAds = await AdService.getAdsFromBook(bookUid.toString());
-      setAds(newAds);
+      try {
+        const newAds = await AdService.getAdsFromBook(bookUid.toString());
+        setAds(newAds);
+      } catch (e) {
+        console.log(e);
+      }
       setFetchedAds(true);
     };
     if (!fetchedAds) getAds();
@@ -111,15 +116,28 @@ function BookDetailViewAds({ bookUid }: Props) {
                   onAdDelete={() => setFetchedAds(false)}
                 />
               ))
-          : Array.from({ length: 4 }, () => <AdSkeleton />)}
+          : Array.from({ length: 4 }, () => (
+              <AdSkeleton key={Math.random() * 1000} />
+            ))}
         {ads && ads.length === 0 && (
-          <Box>
-            <Typography variant="h6">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              sx={{ display: 'flex', justifyContent: 'center', mb: 2, mt: 4 }}
+            >
+              <Box component="img" width="200px" src={sadshark} />
+            </Box>
+            <Typography variant="body1">
               Det finns inga annonser tillgängliga för den här boken.
             </Typography>
 
-            <Link component={RouterLink} to="/sell" variant="h6">
-              Bli först med att sälja denna bok
+            <Link component={RouterLink} to="/sell" variant="body1">
+              Bli först med att sälja denna bok!
             </Link>
           </Box>
         )}
