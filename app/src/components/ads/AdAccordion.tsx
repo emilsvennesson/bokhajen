@@ -134,12 +134,7 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
               </Stack>
             </Box>
             <Divider sx={{ margin: 1 }} />
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'start',
-              }}
-            >
+            <Box>
               <Typography variant="h6" sx={{ mb: 1 }}>
                 Kontaktinformation
               </Typography>
