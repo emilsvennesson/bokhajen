@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import React, { useState } from 'react';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
@@ -216,7 +216,7 @@ export default function SignUp() {
           >
             Sign up
           </Button>
-          <Link href="/login" variant="body2">
+          <Link component={RouterLink} to="/login" variant="body2">
             Already have an account? Sign in
           </Link>
         </Box>
