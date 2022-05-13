@@ -47,6 +47,7 @@ export default function BookDetailView() {
         display: 'flex',
         justifyContent: 'center',
         mt: '50px',
+        mb: '100px',
       }}
     >
       <Box

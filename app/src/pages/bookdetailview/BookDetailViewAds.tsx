@@ -39,7 +39,7 @@ function BookDetailViewAds({ bookUid }: Props) {
     const getAds = async () => {
       try {
         const newAds = await AdService.getAdsFromBook(bookUid.toString());
-        setAds(newAds);
+        setAds(newAds.filter((ad) => ad.status === AdStatus.AVAILABLE));
       } catch (e) {
         console.log(e);
       }
@@ -57,7 +57,6 @@ function BookDetailViewAds({ bookUid }: Props) {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        flexShrink: 0,
         paddingBottom: '10px',
         minWidth: '400px',
       }}
@@ -102,20 +101,21 @@ function BookDetailViewAds({ bookUid }: Props) {
           </Select>
         </FormControl>
       </Box>
-      <Stack spacing={1}>
+      <Stack
+        spacing={1}
+        sx={{ height: 'calc(100vh - 200px)', overflowY: 'auto' }}
+      >
         {ads
-          ? ads
-              .filter((ad) => ad.status === AdStatus.AVAILABLE)
-              .map((ad) => (
-                <AdAccordion
-                  ad={ad}
-                  onChangesSaved={(onChangesSaved) => {
-                    setFetchedAds(false);
-                    setChangesSaved(onChangesSaved);
-                  }}
-                  onAdDelete={() => setFetchedAds(false)}
-                />
-              ))
+          ? ads.map((ad) => (
+              <AdAccordion
+                ad={ad}
+                onChangesSaved={(onChangesSaved) => {
+                  setFetchedAds(false);
+                  setChangesSaved(onChangesSaved);
+                }}
+                onAdDelete={() => setFetchedAds(false)}
+              />
+            ))
           : Array.from({ length: 4 }, () => (
               <AdSkeleton key={Math.random() * 1000} />
             ))}
