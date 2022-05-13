@@ -134,31 +134,27 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
               </Stack>
             </Box>
             <Divider sx={{ margin: 1 }} />
-            <Box>
-              <Typography variant="h6" sx={{ mb: 1 }}>
-                Kontaktinformation
-              </Typography>
-            </Box>
+            <Typography variant="h6" sx={{ mb: 1 }}>
+              Kontaktinformation
+            </Typography>
 
-            <Box>
-              <Stack>
-                <Stack direction="row" spacing={1}>
-                  <CallTwoToneIcon />
-                  <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
-                  {ad.user.phoneNumber && (
-                    <Typography>{ad.user.phoneNumber}</Typography>
-                  )}
-                  {!ad.user.phoneNumber && <Typography>-</Typography>}
-                </Stack>
-                <Stack direction="row" spacing={1}>
-                  <EmailTwoToneIcon />
-                  <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
-                  <Link component="a" href={`mailto: ${ad.user.email}`}>
-                    {ad.user.email}
-                  </Link>
-                </Stack>
+            <Stack>
+              <Stack direction="row" spacing={1}>
+                <CallTwoToneIcon />
+                <Typography sx={{ fontWeight: 'bold' }}>Telefon: </Typography>
+                {ad.user.phoneNumber && (
+                  <Typography>{ad.user.phoneNumber}</Typography>
+                )}
+                {!ad.user.phoneNumber && <Typography>-</Typography>}
               </Stack>
-            </Box>
+              <Stack direction="row" spacing={1}>
+                <EmailTwoToneIcon />
+                <Typography sx={{ fontWeight: 'bold' }}>E-mail: </Typography>
+                <Link component="a" href={`mailto: ${ad.user.email}`}>
+                  {ad.user.email}
+                </Link>
+              </Stack>
+            </Stack>
           </Stack>
         </AccordionDetails>
       </Accordion>
