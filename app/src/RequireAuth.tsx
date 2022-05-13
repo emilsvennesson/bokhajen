@@ -6,19 +6,24 @@ import { useAuth } from './hooks/FBAuthProvider';
 interface Props {
   children: JSX.Element;
   loggedIn?: boolean;
+  to?: string;
 }
 
-export default function RequireAuth({ children, loggedIn = true }: Props) {
+export default function RequireAuth({
+  children,
+  loggedIn = true,
+  to = '/',
+}: Props) {
   const auth = useAuth();
   const navigate = useNavigate();
 
   if (auth.loading) return <OverlayCircularProgress />;
   if (loggedIn && !auth.user) {
-    navigate('/login', { replace: true });
+    navigate(to, { replace: true });
     return <OverlayCircularProgress />;
   }
   if (!loggedIn && auth.user) {
-    navigate('/', { replace: true });
+    navigate(to, { replace: true });
     return <OverlayCircularProgress />;
   }
 

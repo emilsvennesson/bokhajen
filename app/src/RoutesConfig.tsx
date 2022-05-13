@@ -34,7 +34,7 @@ export default function RoutesConfig() {
       <Route
         path="sell"
         element={
-          <RequireAuth>
+          <RequireAuth to="/login">
             <SellingPage />
           </RequireAuth>
         }
