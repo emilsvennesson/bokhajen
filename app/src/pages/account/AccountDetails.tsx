@@ -11,24 +11,56 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import UserService from '../../services/UserService';
+import { FSUser } from '../../services/FSUser';
 
 export default function AccountDetails() {
   const auth = useAuth();
-  const [firstName, setFirstName] = useState(auth.user?.displayName ?? '');
-  const [lastName, setLastName] = useState(auth.user?.displayName ?? '');
-  const [phoneNumber, setPhoneNumber] = useState(auth.user?.phoneNumber ?? '');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [passwordBtnDisabled, setPasswordBtnDisabled] = useState(true);
   const [reset, setReset] = useState(true);
+  const [user, setUser] = useState<FSUser | undefined>(undefined);
+  const [loadingUser, setLoadingUser] = useState(true);
+
+  console.log(`Reset status: ${reset}`);
+  const LoadDetails = () => {
+    if (user) {
+      setFirstName(user?.firstName);
+      setLastName(user?.lastName);
+      if (user.phoneNumber) setPhoneNumber(user?.phoneNumber);
+      setLoadingUser(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      LoadDetails();
+    }
+    console.log(user);
+  }, [user]); // Rerun if any of these values change
+
+  useEffect(() => {
+    const getUser = async () => {
+      if (!auth.loading && auth.user) {
+        const newUser = await UserService.getUser(auth.user.uid);
+        setUser(newUser);
+      }
+    };
+    getUser();
+  }, [auth]); // Rerun if any of these values change
 
   const ResetDetails = () => {
     setReset(true);
-    setFirstName(auth.user?.displayName ?? '');
-    setLastName(auth.user?.displayName ?? '');
-    setPhoneNumber(auth.user?.phoneNumber ?? '');
+    setFirstName(user?.firstName || '');
+    setLastName(user?.lastName || '');
+    setPhoneNumber(user?.phoneNumber || '');
+    setBtnDisabled(true);
   };
 
   const ResetPasswords = () => {
@@ -39,20 +71,20 @@ export default function AccountDetails() {
   };
   const SaveDetails = () => {
     // This should be saving details into the database
+    if (user) {
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.phoneNumber = phoneNumber;
+      UserService.updateUser(user);
+      setBtnDisabled(true);
+    }
     console.log('Saved details');
-    // If the code resets details before it manages to save details into database then -
-    // replace ResetDetails() with setBtnDisabled(true)
-    ResetDetails();
   };
 
   useEffect(() => {
     console.log('change button state');
-    if (!reset) {
-      setBtnDisabled(false);
-    } else {
-      setBtnDisabled(true);
-      setReset(false);
-    }
+    if (!loadingUser && !reset) setBtnDisabled(false);
+    if (!loadingUser) setReset(false);
   }, [firstName, lastName, phoneNumber]); // Rerun if any of these values change
 
   const SavePassword = () => {
@@ -68,6 +100,7 @@ export default function AccountDetails() {
     if (length > 0) setPasswordBtnDisabled(false);
     else setPasswordBtnDisabled(true);
   }, [currentPassword, newPassword, confirmNewPassword]);
+
   return (
     <Stack spacing={4} sx={{ marginLeft: '20px' }}>
       <Box>
@@ -77,7 +110,7 @@ export default function AccountDetails() {
             variant="h4"
             sx={{ fontWeight: 'bold', marginBottom: '20px' }}
           >
-            Välkommen {auth.user?.email}!
+            Välkommen {user?.firstName}!
           </Typography>
           <Box sx={{ marginBottom: '20px', width: '450px' }}>
             <Divider textAlign="left">
