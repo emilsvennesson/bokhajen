@@ -250,6 +250,7 @@ export default function AccountDetails() {
               <TextField
                 required
                 label="Nuvarande lösenord"
+                type="password"
                 fullWidth
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
@@ -260,6 +261,7 @@ export default function AccountDetails() {
               <TextField
                 required
                 label="Nytt lösenord"
+                type="password"
                 fullWidth
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -269,6 +271,7 @@ export default function AccountDetails() {
               <TextField
                 required
                 label="Bekräfta nytt lösenord"
+                type="password"
                 fullWidth
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
