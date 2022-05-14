@@ -63,10 +63,11 @@ export default function SearchForBookWindowCard({
             value={searchModalOpen ? '' : searchQuery}
             onChange={(e) => handleChangedSearchQuery(e.target.value)}
             onClick={() => {
-              if (searchQuery && !searchModalOpen) {
+              if (searchQuery && !searchModalOpen && active) {
                 setSearchModalOpen(true);
               }
             }}
+            disabled={!active}
           />
           <Button
             size="large"
