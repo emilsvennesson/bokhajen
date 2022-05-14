@@ -1,4 +1,4 @@
-import { Book, CremonaClient } from 'cremona';
+import { Book } from 'cremona';
 import { useEffect, useState } from 'react';
 import {
   Box,
@@ -13,13 +13,12 @@ import { Advert } from '../../services/Advert';
 import BasicBookInformation from '../../components/BasicBookInformation';
 import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
 import AdCardSkeleton from './AdCardSkeleton';
+import CremonaService from '../../services/CremonaService';
 
 interface Props {
   ad: Advert;
   onChange: () => void;
 }
-
-const client = new CremonaClient();
 
 export default function AdCard({ ad, onChange }: Props) {
   const [book, setBook] = useState<Book | undefined>(undefined);
@@ -29,13 +28,12 @@ export default function AdCard({ ad, onChange }: Props) {
   useEffect(() => {
     const getBook = async () => {
       setLoading(true);
-      let cBooks: Book[] = [];
+      let cBook: Book;
       try {
-        if (ad) cBooks = await client.getBook(parseInt(ad?.bookId, 10));
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
-      if (cBooks[0]) {
-        setBook(cBooks[0]);
+        cBook = await CremonaService.getBook(parseInt(ad?.bookId, 10));
+        setBook(cBook);
+      } catch (e) {
+        // do some cringe
       }
       setLoading(false);
     };
