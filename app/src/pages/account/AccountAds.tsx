@@ -72,7 +72,7 @@ export default function AccountAds() {
             <Tabs value={value} onChange={handleChange} aria-label="ads tabs">
               <Tab label="Aktiva annonser" {...a11yProps(0)} />
               <Tab label="Reserverade annonser" {...a11yProps(1)} />
-              <Tab label="Arkiverade annonser" {...a11yProps(2)} />
+              <Tab label="Sålda annonser" {...a11yProps(2)} />
             </Tabs>
           </Box>
         </Box>

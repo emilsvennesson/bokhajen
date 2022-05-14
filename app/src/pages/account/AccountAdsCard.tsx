@@ -8,6 +8,7 @@ import {
   CardContent,
   Typography,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { Advert } from '../../services/Advert';
 import BasicBookInformation from '../../components/BasicBookInformation';
 
@@ -36,41 +37,50 @@ export default function AccountAdsCard({ ad }: Props) {
     };
     getBook();
   }, [ad]);
-  return (
-    <Box sx={{ marginBottom: 1 }}>
-      <Card variant="outlined">
-        <CardContent sx={{ pb: 0, '&:last-child': { pb: 0 } }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            {!loading && book && <BasicBookInformation book={book} />}
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'flex-end',
-              }}
-            >
-              <Box>
-                <Typography>2022-05-13</Typography>
-              </Box>
-              <Box>
-                {ad && (
-                  <Typography style={{ fontWeight: 'bold' }}>
-                    {ad.price} kr
-                  </Typography>
-                )}
+
+  if (!loading && book) {
+    return (
+      <Box sx={{ marginBottom: 1 }}>
+        <Card variant="outlined">
+          <CardContent sx={{ pb: 0, '&:last-child': { pb: 0 } }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <BasicBookInformation book={book} />
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <Box>
+                  <Typography>2022-05-13</Typography>
+                </Box>
+                <Box>
+                  {ad && (
+                    <Typography style={{ fontWeight: 'bold' }}>
+                      {ad.price} kr
+                    </Typography>
+                  )}
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </CardContent>
-        <CardActions>
-          <Button variant="text" size="small">
-            Gå till bok
-          </Button>
-          <Button variant="text" size="small">
-            Redigera annons
-          </Button>
-        </CardActions>
-      </Card>
-    </Box>
-  );
+          </CardContent>
+          <CardActions>
+            <Button
+              component={Link}
+              to={`../../books/${book.uid}`}
+              variant="text"
+              size="small"
+            >
+              Gå till bok
+            </Button>
+            <Button variant="text" size="small">
+              Redigera annons
+            </Button>
+          </CardActions>
+        </Card>
+      </Box>
+    );
+  }
+  return <div />;
 }
