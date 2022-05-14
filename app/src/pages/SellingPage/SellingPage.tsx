@@ -88,7 +88,7 @@ export default function SellingPage() {
    */
   const handleDone = () => {
     if (!user || !book) return;
-    if (bookPrice === undefined) {
+    if (bookPrice === undefined || bookPrice === 0) {
       displayError('Price is not set');
       return;
     }
