@@ -13,7 +13,7 @@ export default function BookDetailViewDescription({ book }: Props) {
     bookInfo.push({ title: 'Författare', value: book.authors.join(', ') });
   if (book.year) bookInfo.push({ title: 'Utgiven', value: book.year });
   if (book.isbn) bookInfo.push({ title: 'ISBN', value: book.isbn });
-  if (book.weight) bookInfo.push({ title: 'Vikt', value: book.weight });
+  if (book.weight) bookInfo.push({ title: 'Vikt', value: `${book.weight} g` });
   if (book.courseCodes && book.courseCodes.length > 0)
     bookInfo.push({ title: 'Kurskoder', value: book.courseCodes.join(', ') });
   return (
