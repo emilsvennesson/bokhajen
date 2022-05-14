@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { Advert } from '../../services/Advert';
 import BasicBookInformation from '../../components/BasicBookInformation';
 import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
+import AdCardSkeleton from './AdCardSkeleton';
 
 interface Props {
   ad: Advert;
@@ -20,7 +21,7 @@ interface Props {
 
 const client = new CremonaClient();
 
-export default function AccountAdsCard({ ad, onChange }: Props) {
+export default function AdCard({ ad, onChange }: Props) {
   const [book, setBook] = useState<Book | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [editMode, setEditMode] = useState(false);
@@ -53,7 +54,7 @@ export default function AccountAdsCard({ ad, onChange }: Props) {
             onAdDelete={onChange}
           />
         )}
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{ height: '135px' }}>
           <CardContent sx={{ pb: 0, '&:last-child': { pb: 0 } }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <BasicBookInformation book={book} />
@@ -100,5 +101,5 @@ export default function AccountAdsCard({ ad, onChange }: Props) {
       </Box>
     );
   }
-  return <div />;
+  return <AdCardSkeleton />;
 }

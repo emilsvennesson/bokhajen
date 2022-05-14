@@ -9,7 +9,8 @@ import { useEffect } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
 import { AdStatus, Advert } from '../../services/Advert';
 import AdService from '../../services/AdService';
-import AccountAdsCard from './AccountAdsCard';
+import AdCard from './AdCard';
+import AdCardSkeleton from './AdCardSkeleton';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,6 +50,7 @@ export default function AccountAds() {
   const [value, setValue] = React.useState(0);
   const [ads, setAds] = React.useState<Advert[] | undefined>(undefined);
   const [adsFetched, setAdsFetched] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const adStatuses = [AdStatus.AVAILABLE, AdStatus.RESERVED, AdStatus.SOLD];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -61,6 +63,7 @@ export default function AccountAds() {
         const newAds = await AdService.getAdsFromUser(auth.user.uid);
         setAds(newAds);
         setAdsFetched(true);
+        setIsLoading(false);
       }
     };
     getAds();
@@ -79,23 +82,32 @@ export default function AccountAds() {
           </Box>
         </Box>
         <Stack>
-          {ads &&
-            adStatuses.map((status, index) => (
-              <Box key={status}>
-                <TabPanel value={value} index={index}>
-                  {ads
-                    ?.filter((ad) => ad.status === status)
-                    .map((ad) => (
-                      <Box key={ad.uid}>
-                        <AccountAdsCard
-                          ad={ad}
-                          onChange={() => setAdsFetched(false)}
-                        />
-                      </Box>
-                    ))}
-                </TabPanel>
-              </Box>
-            ))}
+          {adStatuses.map((status, index) => (
+            <Box key={status}>
+              <TabPanel value={value} index={index}>
+                {isLoading &&
+                  [...Array(3)].map((e, i) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Box key={i}>
+                      <AdCardSkeleton />
+                    </Box>
+                  ))}
+                {ads
+                  ?.filter((ad) => ad.status === status)
+                  .map((ad) => (
+                    <Box key={ad.uid}>
+                      <AdCard
+                        ad={ad}
+                        onChange={() => {
+                          setAds(undefined);
+                          setAdsFetched(false);
+                        }}
+                      />
+                    </Box>
+                  ))}
+              </TabPanel>
+            </Box>
+          ))}
         </Stack>
       </Box>
     </Box>
