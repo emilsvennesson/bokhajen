@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import OverlayCircularProgress from './components/OverlayCircularProgress';
 import { useAuth } from './hooks/FBAuthProvider';
 
@@ -15,16 +15,14 @@ export default function RequireAuth({
   to = '/',
 }: Props) {
   const auth = useAuth();
-  const navigate = useNavigate();
+  const location = useLocation();
 
   if (auth.loading) return <OverlayCircularProgress />;
   if (loggedIn && !auth.user) {
-    navigate(to, { replace: true });
-    return <OverlayCircularProgress />;
+    return <Navigate to={to} state={{ from: location }} replace />;
   }
   if (!loggedIn && auth.user) {
-    navigate(to, { replace: true });
-    return <OverlayCircularProgress />;
+    return <Navigate to={to} state={{ from: location }} replace />;
   }
 
   return children;

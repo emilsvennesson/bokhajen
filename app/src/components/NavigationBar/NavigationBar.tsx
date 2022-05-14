@@ -14,7 +14,6 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import SearchModal from './SearchModal';
 import NavAvatar from './NavAvatar';
-import { useAuth } from '../../hooks/FBAuthProvider';
 import bokWhite from '../../assets/images/bokWhite.png';
 
 const Search = styled('div')(({ theme }) => ({
@@ -55,12 +54,7 @@ function NavigationBar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
-  const auth = useAuth();
-  const sellNavigation = () => {
-    if (auth.user) return '/sell';
-    return '/login';
-  };
-
+  const sellNavigation = () => '/sell';
   const handleChangedSearchQuery = (query: string) => {
     if (query) {
       setSearchModalOpen(true);
