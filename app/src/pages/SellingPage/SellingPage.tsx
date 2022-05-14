@@ -163,7 +163,7 @@ export default function SellingPage() {
           </Grid>
 
           {/** Check information */}
-          <Grid item maxWidth="650px" flexGrow={2}>
+          <Grid item maxWidth="650px" minWidth="280px" flexGrow={2}>
             <CheckInformationWindow
               book={book}
               handleBack={handleBack}
