@@ -12,6 +12,7 @@ import AdService from '../../services/AdService';
 import AdCard from './AdCard';
 import AdCardSkeleton from './AdCardSkeleton';
 import { getStatusColor } from '../../config/StatusColor';
+import NoAds from './NoAds';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -117,6 +118,9 @@ export default function AccountAds() {
                       />
                     </Box>
                   ))}
+                {ads?.filter((ad) => ad.status === status).length === 0 && (
+                  <NoAds />
+                )}
               </TabPanel>
             </Box>
           ))}
