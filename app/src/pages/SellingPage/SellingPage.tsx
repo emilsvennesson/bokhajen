@@ -117,29 +117,6 @@ export default function SellingPage() {
 
   return (
     <Box paddingTop={2}>
-      <ConfirmationModal
-        open={confirmationModalOpen}
-        title="Dubbelkoll"
-        onAccept={handleDone}
-        onCancel={() => setConfirmationModalOpen(false)}
-        acceptButtonText="Publisera"
-        cancelButtonText="Avbryt"
-      >
-        <Stack justifyContent="center" alignItems="center">
-          <InformationTextLine label="Book:" labelBold>
-            {book?.name ?? 'kul grej'}
-          </InformationTextLine>
-          <InformationTextLine label="Tillstånd:" labelBold>
-            {bookCondition}
-          </InformationTextLine>
-          <InformationTextLine label="Beskrivning:" labelBold>
-            {description ?? 'kul grej'}
-          </InformationTextLine>
-          <InformationTextLine label="Pris:" labelBold>
-            {`${bookPrice} kr`}
-          </InformationTextLine>
-        </Stack>
-      </ConfirmationModal>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
@@ -152,7 +129,7 @@ export default function SellingPage() {
         </Alert>
       </Snackbar>
       <Stack direction="column" spacing={2} alignItems="center" flexWrap="wrap">
-        <Box bgcolor="white" borderRadius={2} maxWidth="100%" width="90%">
+        <Box bgcolor="white" borderRadius={2}>
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
               const stepProps: { completed?: boolean } = {};
@@ -175,7 +152,7 @@ export default function SellingPage() {
           justifyContent="space-evenly"
           margin={0}
         >
-          <Grid minWidth="340px" item maxWidth="370px" flexGrow={1} xl={3}>
+          <Grid item maxWidth="370px" flexGrow={1}>
             {/** Search ISBN */}
             <SearchForBookWindowCard
               setBook={setBook}
@@ -186,7 +163,7 @@ export default function SellingPage() {
           </Grid>
 
           {/** Check information */}
-          <Grid item maxWidth="650px" minWidth="280px" flexGrow={2} xl={5}>
+          <Grid item maxWidth="650px" flexGrow={2}>
             <CheckInformationWindow
               book={book}
               handleBack={handleBack}
@@ -198,7 +175,7 @@ export default function SellingPage() {
           </Grid>
 
           {/** Set quality */}
-          <Grid item maxWidth="350px" flexGrow={1} xl={3}>
+          <Grid item maxWidth="350px" flexGrow={1}>
             <ConditionCheckWindow
               handleNext={handleNext}
               handleBack={handleBack}
