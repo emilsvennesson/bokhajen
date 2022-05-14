@@ -34,18 +34,14 @@ export default function InformationTextLine({
     if (text.length === 0) return <Typography />;
 
     if (labelBold) {
-      <Typography
-        width="50px"
-        fontSize={fontSize}
-        fontWeight="bold"
-        marginRight={1}
-        noWrap
-      >
-        {text}
-      </Typography>;
+      return (
+        <Typography fontSize={fontSize} fontWeight="bold" marginRight={1}>
+          {text}
+        </Typography>
+      );
     }
     return (
-      <Typography width="200px" fontSize={fontSize} marginRight={1}>
+      <Typography fontSize={fontSize} marginRight={1} flexShrink={5}>
         {text}
       </Typography>
     );
@@ -64,6 +60,7 @@ export default function InformationTextLine({
           fontWeight="bold"
           width="350px"
           paragraph
+          flexShrink={5}
         >
           {text}
         </Typography>

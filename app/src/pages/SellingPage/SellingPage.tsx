@@ -22,6 +22,8 @@ import CheckInformationWindow from './Wizard/CheckInformationWIndow';
 import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
 import SetPriceWindow from './Wizard/SetPriceWindow';
 import { BookCondition } from '../../config/BookCondition';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import InformationTextLine from '../../components/InformationTextLine';
 
 const steps = [
   'Hitta din bok',
@@ -51,6 +53,7 @@ export default function SellingPage() {
     open: false,
     message: '',
   });
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
   const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -89,6 +92,10 @@ export default function SellingPage() {
       displayError('Price is not set');
       return;
     }
+    if (!confirmationModalOpen) {
+      setConfirmationModalOpen(true);
+      return;
+    }
 
     const ad: NewAdvert = {
       userUid: user.uid,
@@ -110,6 +117,29 @@ export default function SellingPage() {
 
   return (
     <Box paddingTop={2}>
+      <ConfirmationModal
+        open={confirmationModalOpen}
+        title="Dubbelkoll"
+        onAccept={handleDone}
+        onCancel={() => setConfirmationModalOpen(false)}
+        acceptButtonText="Publisera"
+        cancelButtonText="Avbryt"
+      >
+        <Stack justifyContent="center" alignItems="center">
+          <InformationTextLine label="Book:" labelBold>
+            {book?.name ?? 'kul grej'}
+          </InformationTextLine>
+          <InformationTextLine label="Tillstånd:" labelBold>
+            {bookCondition}
+          </InformationTextLine>
+          <InformationTextLine label="Beskrivning:" labelBold>
+            {description ?? 'kul grej'}
+          </InformationTextLine>
+          <InformationTextLine label="Pris:" labelBold>
+            {`${bookPrice} kr`}
+          </InformationTextLine>
+        </Stack>
+      </ConfirmationModal>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
@@ -145,7 +175,7 @@ export default function SellingPage() {
           justifyContent="space-evenly"
           margin={0}
         >
-          <Grid item maxWidth="370px" flexGrow={1}>
+          <Grid minWidth="340px" item maxWidth="370px" flexGrow={1} xl={3}>
             {/** Search ISBN */}
             <SearchForBookWindowCard
               setBook={setBook}
@@ -156,7 +186,7 @@ export default function SellingPage() {
           </Grid>
 
           {/** Check information */}
-          <Grid item maxWidth="650px" minWidth="280px" flexGrow={2}>
+          <Grid item maxWidth="650px" minWidth="280px" flexGrow={2} xl={5}>
             <CheckInformationWindow
               book={book}
               handleBack={handleBack}
@@ -168,7 +198,7 @@ export default function SellingPage() {
           </Grid>
 
           {/** Set quality */}
-          <Grid item maxWidth="350px" flexGrow={1}>
+          <Grid item maxWidth="350px" flexGrow={1} xl={3}>
             <ConditionCheckWindow
               handleNext={handleNext}
               handleBack={handleBack}
