@@ -11,6 +11,7 @@ import { AdStatus, Advert } from '../../services/Advert';
 import AdService from '../../services/AdService';
 import AdCard from './AdCard';
 import AdCardSkeleton from './AdCardSkeleton';
+import { getStatusColor } from '../../config/StatusColor';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,9 +53,13 @@ export default function AccountAds() {
   const [adsFetched, setAdsFetched] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const adStatuses = [AdStatus.AVAILABLE, AdStatus.RESERVED, AdStatus.SOLD];
+  const [indicatorColor, setIndicatorColor] = React.useState(
+    getStatusColor(adStatuses[value]),
+  );
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
+    setIndicatorColor(getStatusColor(adStatuses[newValue]));
   };
 
   useEffect(() => {
@@ -74,7 +79,14 @@ export default function AccountAds() {
       <Box sx={{ width: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="ads tabs">
+            <Tabs
+              TabIndicatorProps={{
+                style: { background: indicatorColor },
+              }}
+              value={value}
+              onChange={handleChange}
+              aria-label="ads tabs"
+            >
               <Tab label="Aktiva annonser" {...a11yProps(0)} />
               <Tab label="Reserverade annonser" {...a11yProps(1)} />
               <Tab label="Sålda annonser" {...a11yProps(2)} />

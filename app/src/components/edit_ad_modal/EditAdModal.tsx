@@ -25,6 +25,7 @@ import {
   BookCondition,
   getBookConditionDescription,
 } from '../../config/BookCondition';
+import { getStatusColor } from '../../config/StatusColor';
 import AdService from '../../services/AdService';
 
 interface Props {
@@ -57,19 +58,6 @@ export default function EditAdModal({
     condition !== ad.condition ||
     adStatus !== ad.status ||
     conditionDescription !== ad.conditionDescription;
-
-  const getStatusColor = (status: AdStatus) => {
-    switch (status) {
-      case 'Tillgänglig':
-        return '#00C853';
-      case 'Reserverad':
-        return '#FF9800';
-      case 'Såld':
-        return '#F44336';
-      default:
-        return '';
-    }
-  };
 
   const handleSubmit = async () => {
     // TODO: Handle errors
