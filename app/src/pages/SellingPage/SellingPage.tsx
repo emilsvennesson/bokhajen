@@ -122,7 +122,7 @@ export default function SellingPage() {
         </Alert>
       </Snackbar>
       <Stack direction="column" spacing={2} alignItems="center" flexWrap="wrap">
-        <Box bgcolor="white" borderRadius={2}>
+        <Box bgcolor="white" borderRadius={2} maxWidth="100%" width="90%">
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
               const stepProps: { completed?: boolean } = {};
