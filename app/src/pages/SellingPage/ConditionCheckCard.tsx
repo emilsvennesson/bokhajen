@@ -57,7 +57,8 @@ export default function ConditionCheckCard({
       padding={2}
       borderRadius={2}
       spacing={2}
-      height="360px"
+      minHeight="360px"
+      minWidth="300px"
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button

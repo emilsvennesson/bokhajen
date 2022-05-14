@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Typography, Button } from '@mui/material';
+import { Paper, Stack, Typography, Button } from '@mui/material';
 import { Book } from 'cremona';
 import React from 'react';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
@@ -18,37 +18,33 @@ export default function SearchForBookWindowCard({
   canNext,
 }: SearchForBookWindowCardProps) {
   return (
-    <Box flexGrow={1}>
-      <Paper elevation={5}>
-        <Stack
-          bgcolor="white"
-          alignItems="center"
-          spacing={5}
-          padding={2}
-          paddingTop={5}
-          borderRadius={2}
-          height="335px"
+    <Paper elevation={5}>
+      <Stack
+        bgcolor="white"
+        alignItems="center"
+        spacing={5}
+        padding={2}
+        minHeight="360px"
+      >
+        <Typography textAlign="center" variant="h2">
+          Starta!
+        </Typography>
+        <SearchBook
+          disabled={!active}
+          bookSearchHandler={(inBook: Book) => setBook(inBook)}
+        />
+        <Button
+          size="large"
+          variant="contained"
+          onClick={() => {
+            handleNext();
+          }}
+          disabled={!active || !canNext}
+          endIcon={<EastOutlinedIcon />}
         >
-          <Typography textAlign="center" variant="h2">
-            Starta!
-          </Typography>
-          <SearchBook
-            disabled={!active}
-            bookSearchHandler={(inBook: Book) => setBook(inBook)}
-          />
-          <Button
-            size="large"
-            variant="contained"
-            onClick={() => {
-              handleNext();
-            }}
-            disabled={!active || !canNext}
-            endIcon={<EastOutlinedIcon />}
-          >
-            Fortsätt
-          </Button>
-        </Stack>
-      </Paper>
-    </Box>
+          Fortsätt
+        </Button>
+      </Stack>
+    </Paper>
   );
 }

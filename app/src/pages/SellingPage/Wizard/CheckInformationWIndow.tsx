@@ -1,6 +1,7 @@
-import { Box, Paper, Grow } from '@mui/material';
+import { Paper, Grow } from '@mui/material';
 import { Book } from 'cremona';
 import React from 'react';
+
 import CheckInformationCard from '../CheckInformationCard';
 
 interface CheckInformationWindowProps {
@@ -22,19 +23,17 @@ export default function CheckInformationWindow({
 }: CheckInformationWindowProps) {
   return (
     <Grow in={show}>
-      <Box flexGrow={1.5} height="300px">
-        <Paper elevation={5}>
-          <CheckInformationCard
-            book={book}
-            backButtonHandler={() => {
-              handleBack();
-            }}
-            disabled={!active}
-            continueButtonHandler={() => handleNext()}
-            editButtonHandler={() => setEdit(true)}
-          />
-        </Paper>
-      </Box>
+      <Paper elevation={5}>
+        <CheckInformationCard
+          book={book}
+          backButtonHandler={() => {
+            handleBack();
+          }}
+          disabled={!active}
+          continueButtonHandler={() => handleNext()}
+          editButtonHandler={() => setEdit(true)}
+        />
+      </Paper>
     </Grow>
   );
 }

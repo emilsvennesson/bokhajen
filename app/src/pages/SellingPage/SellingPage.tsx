@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import {
   Box,
   Stack,
@@ -7,6 +8,7 @@ import {
   StepLabel,
   Snackbar,
   Alert,
+  Grid,
 } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
 import { useNavigate } from 'react-router-dom';
@@ -107,7 +109,7 @@ export default function SellingPage() {
   };
 
   return (
-    <Box height="500px">
+    <Box paddingTop={2}>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
@@ -119,14 +121,8 @@ export default function SellingPage() {
           {error.message ?? 'Book did not get published'}
         </Alert>
       </Snackbar>
-      <Stack
-        padding="2%"
-        paddingTop={1}
-        direction="column"
-        spacing={4}
-        alignItems="center"
-      >
-        <Box bgcolor="white" padding={2} borderRadius={2} width="90vw">
+      <Stack direction="column" spacing={2} alignItems="center" flexWrap="wrap">
+        <Box bgcolor="white" borderRadius={2}>
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
               const stepProps: { completed?: boolean } = {};
@@ -140,44 +136,59 @@ export default function SellingPage() {
           </Stepper>
         </Box>
         {/** Wizard */}
-        <Stack direction="row" width="100%" spacing={1}>
-          {/** Search ISBN */}
-          <SearchForBookWindowCard
-            setBook={setBook}
-            handleNext={handleNext}
-            active={activeStep === 0}
-            canNext={book !== undefined}
-          />
+        <Grid
+          container
+          direction="row"
+          width="95%"
+          rowGap={1}
+          columnSpacing={1}
+          justifyContent="space-evenly"
+          margin={0}
+        >
+          <Grid item maxWidth="370px" flexGrow={1}>
+            {/** Search ISBN */}
+            <SearchForBookWindowCard
+              setBook={setBook}
+              handleNext={handleNext}
+              active={activeStep === 0}
+              canNext={book !== undefined}
+            />
+          </Grid>
+
           {/** Check information */}
-          <CheckInformationWindow
-            book={book}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            setEdit={setEdit}
-            active={activeStep === 1}
-            show={!edit && activeStep > 0}
-          />
+          <Grid item maxWidth="650px" flexGrow={2}>
+            <CheckInformationWindow
+              book={book}
+              handleBack={handleBack}
+              handleNext={handleNext}
+              setEdit={setEdit}
+              active={activeStep === 1}
+              show={!edit && activeStep > 0}
+            />
+          </Grid>
 
           {/** Set quality */}
-
-          <ConditionCheckWindow
-            handleNext={handleNext}
-            handleBack={handleBack}
-            show={activeStep > 1 && book != null}
-            setCondition={setCondition}
-            setDescription={setDescription}
-            active={activeStep === 2}
-          />
-        </Stack>
-
-        <SetPriceWindow
-          book={book}
-          handleBack={handleBack}
-          handleNext={handleDone}
-          setPrice={setPrice}
-          show={book != null && activeStep > 2}
-          active={activeStep === 3}
-        />
+          <Grid item maxWidth="350px" flexGrow={1}>
+            <ConditionCheckWindow
+              handleNext={handleNext}
+              handleBack={handleBack}
+              show={activeStep > 1 && book != null}
+              setCondition={setCondition}
+              setDescription={setDescription}
+              active={activeStep === 2}
+            />
+          </Grid>
+          <Grid item maxWidth="600px" flexGrow={2}>
+            <SetPriceWindow
+              book={book}
+              handleBack={handleBack}
+              handleNext={handleDone}
+              setPrice={setPrice}
+              show={book != null && activeStep > 2}
+              active={activeStep === 3}
+            />
+          </Grid>
+        </Grid>
       </Stack>
       <BookInformationInput
         book={book}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Book } from 'cremona/dist/Book';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import InformationTextLine from '../../components/InformationTextLine';
 
 interface BookInformationProps {
@@ -29,7 +29,7 @@ export default function BookInformation({
   authors,
 }: BookInformationProps) {
   return (
-    <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">
+    <Stack padding="40px" flexDirection="row" overflow="hidden" flexWrap="wrap">
       {/* Cover */}
       <Box component="div" height={200} width={150}>
         <Box
@@ -56,6 +56,6 @@ export default function BookInformation({
           {authors?.toString() ?? book?.authors?.toString() ?? ''}
         </InformationTextLine>
       </Box>
-    </Box>
+    </Stack>
   );
 }
