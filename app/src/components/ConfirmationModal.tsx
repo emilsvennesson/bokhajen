@@ -4,7 +4,7 @@ import React from 'react';
 interface Props {
   open: boolean;
   title: string;
-  text?: string | undefined;
+  text?: string;
   acceptButtonText?: string;
   cancelButtonText?: string;
   onAccept: Function;
