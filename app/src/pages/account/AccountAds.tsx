@@ -40,7 +40,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    'aria-controls': `ad-tab-${index}`,
   };
 }
 
@@ -48,6 +48,7 @@ export default function AccountAds() {
   const auth = useAuth();
   const [value, setValue] = React.useState(0);
   const [ads, setAds] = React.useState<Advert[] | undefined>(undefined);
+  const [adsFetched, setAdsFetched] = React.useState(false);
   const adStatuses = [AdStatus.AVAILABLE, AdStatus.RESERVED, AdStatus.SOLD];
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -56,13 +57,14 @@ export default function AccountAds() {
 
   useEffect(() => {
     const getAds = async () => {
-      if (!auth.loading && auth.user) {
+      if (!auth.loading && auth.user && !adsFetched) {
         const newAds = await AdService.getAdsFromUser(auth.user.uid);
         setAds(newAds);
+        setAdsFetched(true);
       }
     };
     getAds();
-  }, [auth]);
+  }, [auth, adsFetched]);
 
   return (
     <Box sx={{ width: '45vw' }}>
@@ -85,7 +87,10 @@ export default function AccountAds() {
                     ?.filter((ad) => ad.status === status)
                     .map((ad) => (
                       <Box key={ad.uid}>
-                        <AccountAdsCard ad={ad} />
+                        <AccountAdsCard
+                          ad={ad}
+                          onChange={() => setAdsFetched(false)}
+                        />
                       </Box>
                     ))}
                 </TabPanel>

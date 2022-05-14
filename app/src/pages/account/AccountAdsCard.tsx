@@ -11,16 +11,19 @@ import {
 import { Link } from 'react-router-dom';
 import { Advert } from '../../services/Advert';
 import BasicBookInformation from '../../components/BasicBookInformation';
+import EditAdModal from '../../components/edit_ad_modal/EditAdModal';
 
 interface Props {
-  ad?: Advert;
+  ad: Advert;
+  onChange: () => void;
 }
 
 const client = new CremonaClient();
 
-export default function AccountAdsCard({ ad }: Props) {
+export default function AccountAdsCard({ ad, onChange }: Props) {
   const [book, setBook] = useState<Book | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const getBook = async () => {
@@ -41,6 +44,15 @@ export default function AccountAdsCard({ ad }: Props) {
   if (!loading && book) {
     return (
       <Box sx={{ marginBottom: 1 }}>
+        {editMode && (
+          <EditAdModal
+            ad={ad}
+            onChangesSaved={onChange}
+            open
+            onClose={() => setEditMode(false)}
+            onAdDelete={onChange}
+          />
+        )}
         <Card variant="outlined">
           <CardContent sx={{ pb: 0, '&:last-child': { pb: 0 } }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -74,7 +86,13 @@ export default function AccountAdsCard({ ad }: Props) {
             >
               Gå till bok
             </Button>
-            <Button variant="text" size="small">
+            <Button
+              variant="text"
+              size="small"
+              onClick={() => {
+                setEditMode(true);
+              }}
+            >
               Redigera annons
             </Button>
           </CardActions>
