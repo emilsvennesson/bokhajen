@@ -1,12 +1,12 @@
 import { Box } from '@mui/material';
-import { Book, CremonaClient } from 'cremona';
+import { Book } from 'cremona';
 import { Fragment, useEffect, useState } from 'react';
+import CremonaService from '../../services/CremonaService';
 import CategoriesGrid from './CategoriesGrid';
 import HomeBanner from './HomeBanner';
 
 const CATEGORIES = ['Populär studentlitteratur', 'Matematik', 'Susvetenskap'];
 const GRID_SIZE = 12;
-const client = new CremonaClient();
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     const getBooks = async () => {
-      const cBooks = await client.getBooks(30);
+      const cBooks = await CremonaService.getBooks(30);
       setBooks(cBooks);
     };
     getBooks();
