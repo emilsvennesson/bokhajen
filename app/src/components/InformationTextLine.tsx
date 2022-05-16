@@ -35,13 +35,18 @@ export default function InformationTextLine({
 
     if (labelBold) {
       return (
-        <Typography fontSize={fontSize} fontWeight="bold" marginRight={1}>
+        <Typography
+          fontSize={fontSize}
+          fontWeight="bold"
+          marginRight={1}
+          noWrap
+        >
           {text}
         </Typography>
       );
     }
     return (
-      <Typography fontSize={fontSize} marginRight={1} flexShrink={5}>
+      <Typography fontSize={fontSize} marginRight={1} flexShrink={5} noWrap>
         {text}
       </Typography>
     );
@@ -71,9 +76,17 @@ export default function InformationTextLine({
   }
 
   return (
-    <Box display="flex" flexDirection="row" marginLeft={1} width="340px">
-      {formatLabel(label)}
-      {formatText(children)}
+    <Box
+      display="flex"
+      flexDirection="row"
+      marginLeft={1}
+      minWidth="200px"
+      flexWrap="wrap"
+    >
+      <Box flexShrink={2}>{formatLabel(label)}</Box>
+      <Box flexGrow={4} display="flex" justifyContent="left">
+        {formatText(children)}
+      </Box>
     </Box>
   );
 }

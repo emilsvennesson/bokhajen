@@ -29,7 +29,7 @@ export default function BookInformation({
   authors,
 }: BookInformationProps) {
   return (
-    <Stack padding="40px" flexDirection="row" overflow="hidden" flexWrap="wrap">
+    <Stack padding="20px" flexDirection="row" overflow="hidden" flexWrap="wrap">
       {/* Cover */}
       <Box component="div" height={200} width={150}>
         <Box

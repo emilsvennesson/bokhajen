@@ -17,10 +17,10 @@ import AdService from '../../services/AdService';
 import { NewAdvert, AdStatus } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 // eslint-disable-next-line import/no-named-as-default
-import SearchForBookWindowCard from './Wizard/SearchForBookWindowCard';
-import CheckInformationWindow from './Wizard/CheckInformationWIndow';
-import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
-import SetPriceWindow from './Wizard/SetPriceWindow';
+import SearchForBookWindowCard from './wizard/SearchForBookWindowCard';
+import CheckInformationWindow from './wizard/CheckInformationWIndow';
+import ConditionCheckWindow from './wizard/ConditionCheckWindow';
+import SetPriceWindow from './wizard/SetPriceWindow';
 import { BookCondition } from '../../config/BookCondition';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import InformationTextLine from '../../components/InformationTextLine';
@@ -151,7 +151,13 @@ export default function SellingPage() {
           {error.message ?? 'Book did not get published'}
         </Alert>
       </Snackbar>
-      <Stack direction="column" spacing={2} alignItems="center" flexWrap="wrap">
+      <Stack
+        direction="column"
+        spacing={2}
+        alignItems="center"
+        flexWrap="wrap"
+        marginBottom="200px"
+      >
         <Box bgcolor="white" borderRadius={2} maxWidth="100%" width="90%">
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {

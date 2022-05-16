@@ -121,7 +121,7 @@ export default function BookInformationInput({
           width="500px"
           height="90vh"
           bgcolor="white"
-          padding="30px"
+          padding="20px"
           borderRadius={2}
           zIndex={1}
           alignItems="center"
