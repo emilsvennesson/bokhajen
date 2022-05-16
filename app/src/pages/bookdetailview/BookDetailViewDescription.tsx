@@ -19,7 +19,7 @@ export default function BookDetailViewDescription({ book }: Props) {
   if (book.courseCodes && book.courseCodes.length > 0)
     bookInfo.push({ title: 'Kurskod(er)', value: book.courseCodes.join(', ') });
   return (
-    <Stack direction={sm ? 'row' : 'column'}>
+    <Stack direction={sm ? 'row' : 'column'} sx={{ marginRight: '25px' }}>
       <Box
         sx={{
           display: 'flex',
