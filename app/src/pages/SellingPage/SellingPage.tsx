@@ -85,7 +85,7 @@ export default function SellingPage() {
         getBook();
       }
     }
-  }, [loading, uidInt]);
+  }, [user, uid, uidInt, navigate, loading]);
 
   if (loading && siteLoading) {
     return <OverlayCircularProgress />;
