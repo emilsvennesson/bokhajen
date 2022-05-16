@@ -65,6 +65,8 @@ export default function SellingPage() {
   let { uid } = useParams();
   if (!uid) uid = '';
 
+  console.log('hej');
+
   const uidInt = parseInt(uid, 10);
   useEffect(() => {
     if (!loading) {
@@ -85,7 +87,7 @@ export default function SellingPage() {
         getBook();
       }
     }
-  }, [user, uid, uidInt, navigate, loading]);
+  }, [user, uid, uidInt, navigate, loading, activeStep]);
 
   if (loading && siteLoading) {
     return <OverlayCircularProgress />;
