@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   IconButton,
   Button,
@@ -10,11 +10,15 @@ import {
   MenuItem,
   Stack,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/FBAuthProvider';
+import UserService from '../../services/UserService';
+import { FSUser } from '../../services/FSUser';
 
 export default function NavAvatar() {
+  const [user, setUser] = useState<FSUser | undefined>(undefined);
   const navigate = useNavigate();
+  const location = useLocation();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -36,15 +40,25 @@ export default function NavAvatar() {
     auth.signout();
     handleCloseUserMenu();
   };
-  if (auth.user)
+
+  useEffect(() => {
+    const getUser = async () => {
+      if (!auth.loading && auth.user) {
+        const newUser = await UserService.getUser(auth.user.uid);
+        setUser(newUser);
+      }
+    };
+    getUser();
+  }, [auth]); // Rerun if any of these values change
+  if (auth.user) {
     return (
       <Box width="120px" sx={{ flexGrow: 0 }} marginLeft="10px">
-        <Tooltip title="Open account settings">
+        <Tooltip title="Öppna kontoinställningar">
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Stack direction="row" alignItems="center" spacing={1}>
-              <Avatar alt="D" src="../assets/images/bok.png" />
+              <Avatar alt={user?.firstName} src="../assets/images/bok.png" />
               <Typography sx={{ color: 'white' }} fontWeight="bold">
-                Daniel
+                {user?.firstName}
               </Typography>
             </Stack>
           </IconButton>
@@ -66,14 +80,15 @@ export default function NavAvatar() {
           onClose={handleCloseUserMenu}
         >
           <MenuItem key="profile" onClick={goToAccount}>
-            <Typography textAlign="center">Profile</Typography>
+            <Typography textAlign="center">Profil</Typography>
           </MenuItem>
           <MenuItem key="logoutUser" onClick={logoutUser}>
-            <Typography textAlign="center">Logout</Typography>
+            <Typography textAlign="center">Logga ut</Typography>
           </MenuItem>
         </Menu>
       </Box>
     );
+  }
 
   return (
     <Box width="120px">
@@ -81,11 +96,12 @@ export default function NavAvatar() {
 
       {/* LOGIN BUTTON */}
       <Button
-        component={Link}
-        to="/login"
         color="primary"
         variant="contained"
         size="large"
+        onClick={() =>
+          navigate('/login', { replace: true, state: { from: location } })
+        }
       >
         Logga in
       </Button>

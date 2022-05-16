@@ -20,7 +20,6 @@ import { useLocation, useNavigate, Link as RouterLink } from 'react-router-dom';
 import React, { useState } from 'react';
 import { LockOutlined, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useAuth } from '../../hooks/FBAuthProvider';
-import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -52,15 +51,6 @@ export default function Login() {
   ) => {
     event.preventDefault();
   };
-
-  if (auth.loading) {
-    return <OverlayCircularProgress />;
-  }
-
-  if (auth.user) {
-    navigate(from, { replace: true });
-    return <OverlayCircularProgress />;
-  }
 
   return (
     <Container component="main" maxWidth="xs">

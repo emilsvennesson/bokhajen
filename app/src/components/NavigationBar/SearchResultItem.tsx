@@ -11,6 +11,7 @@ import {
 import { Book } from 'cremona';
 import React, { useEffect, useState } from 'react';
 import AdService from '../../services/AdService';
+import { AdStatus } from '../../services/Advert';
 
 interface Props {
   book?: Book;
@@ -23,7 +24,9 @@ export default function SearchResultItem({ book, onBookClick }: Props) {
   useEffect(() => {
     const getLowestAdPrice = async () => {
       if (!book) return null;
-      const ads = await AdService.getAdsFromBook(book.uid.toString());
+      const ads = (await AdService.getAdsFromBook(book.uid.toString())).filter(
+        (ad) => ad.status === AdStatus.AVAILABLE,
+      );
       if (ads.length > 0) {
         const minPrice = Math.min(...ads.map((ad) => ad.price));
         return minPrice;
