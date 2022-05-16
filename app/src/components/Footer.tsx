@@ -14,7 +14,7 @@ export default function Footer() {
         pb: '3em',
       }}
     >
-      <Grid container spacing={10} sx={{ pr: '3em', pl: '3em' }}>
+      <Grid container spacing="3em" sx={{ pr: '3em', pl: '3em' }}>
         <Grid item xs={12} sm={4}>
           <Stack>
             <Box borderBottom={1} marginBottom={1} color="lightgrey">
