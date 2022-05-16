@@ -12,7 +12,7 @@ import CremonaService from '../../services/CremonaService';
 export default function BookDetailView() {
   const [book, setBook] = useState<Book | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
-  const lg = useMediaQuery('(min-width:1300px)');
+  const lg = useMediaQuery('(min-width:1000px)');
 
   let { uid } = useParams();
   if (!uid) uid = ''; // this is sus, but it'll do
