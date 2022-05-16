@@ -11,7 +11,7 @@ import {
   Grid,
 } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BookInformationInput from './BookInformationInput';
 import AdService from '../../services/AdService';
 import { NewAdvert, AdStatus } from '../../services/Advert';
@@ -24,6 +24,7 @@ import SetPriceWindow from './wizard/SetPriceWindow';
 import { BookCondition } from '../../config/BookCondition';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import InformationTextLine from '../../components/InformationTextLine';
+import CremonaService from '../../services/CremonaService';
 
 const steps = [
   'Hitta din bok',
@@ -56,9 +57,39 @@ export default function SellingPage() {
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [siteLoading, setSiteLoading] = useState(false);
 
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  let { uid } = useParams();
+  if (!uid) uid = '';
+
+  const uidInt = parseInt(uid, 10);
+  useEffect(() => {
+    if (!loading) {
+      if (uid) {
+        const getBook = async () => {
+          setSiteLoading(true);
+          let cBook: Book;
+          try {
+            cBook = await CremonaService.getBook(uidInt);
+            setBook(cBook);
+            if (activeStep < 1) setActiveStep(1);
+          } catch (e) {
+            // do some cringe
+          }
+
+          setSiteLoading(false);
+        };
+        getBook();
+      }
+    }
+  }, [loading, uidInt]);
+
+  if (loading && siteLoading) {
+    return <OverlayCircularProgress />;
+  }
 
   /**
    * This is called to back the stepper in the page
@@ -71,6 +102,9 @@ export default function SellingPage() {
    * This is called to next the stepper in the page
    */
   const handleBack = () => {
+    if (activeStep === 1 && uid) {
+      navigate('/sell', { replace: true });
+    }
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 

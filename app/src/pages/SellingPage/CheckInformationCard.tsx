@@ -57,7 +57,7 @@ export default function CheckInformationCard({
       </Box>
       <Stack direction="row" spacing={2}>
         <Button
-          disabled={disabled}
+          disabled={disabled || true}
           variant="contained"
           size="large"
           onClick={() => editButtonHandler()}
