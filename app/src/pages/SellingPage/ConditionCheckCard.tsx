@@ -91,7 +91,6 @@ export default function ConditionCheckCard({
         fullWidth
         multiline
         rows={4}
-        maxRows={4}
         value={describtion}
         onChange={handleDescribtionChange}
         label="Beskriv kvaliten på boken"
