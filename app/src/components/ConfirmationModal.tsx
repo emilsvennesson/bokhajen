@@ -1,4 +1,11 @@
-import { Button, Modal, Paper, Stack, Typography } from '@mui/material';
+import {
+  Button,
+  ButtonGroup,
+  Modal,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 
 interface Props {
@@ -43,15 +50,17 @@ export default function ComfirmationCard({
   return (
     <Modal open={open}>
       <Paper sx={style}>
-        <Stack>
+        <Stack spacing={3}>
           <Typography textAlign="center" fontSize={30} fontWeight="bold">
             {title}
           </Typography>
           {formatText()}
           {children}
-          <Stack>
-            <Button onClick={() => onAccept()}>{acceptButtonText}</Button>
-            <Button onClick={() => onCancel()}>{cancelButtonText}</Button>
+          <Stack alignItems="center">
+            <ButtonGroup variant="contained">
+              <Button onClick={() => onCancel()}>{cancelButtonText}</Button>
+              <Button onClick={() => onAccept()}>{acceptButtonText}</Button>
+            </ButtonGroup>
           </Stack>
         </Stack>
       </Paper>

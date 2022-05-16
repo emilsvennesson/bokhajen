@@ -125,9 +125,9 @@ export default function SellingPage() {
         acceptButtonText="Publisera"
         cancelButtonText="Avbryt"
       >
-        <Stack justifyContent="center" alignItems="center">
+        <Stack justifyContent="left" alignItems="left" spacing={1} padding={2}>
           <InformationTextLine label="Book:" labelBold>
-            {book?.name ?? 'kul grej'}
+            {book?.name ?? 'name'}
           </InformationTextLine>
           <InformationTextLine label="Tillstånd:" labelBold>
             {bookCondition}
