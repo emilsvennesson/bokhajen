@@ -9,13 +9,15 @@ export default function BookDetailViewDescription({ book }: Props) {
   const bookInfo = [];
   const sm = useMediaQuery('(min-width:600px)');
 
+  bookInfo.push({ title: 'Ordinarie pris', value: `${book.price} kr` });
+  if (book.edition) bookInfo.push({ title: 'Upplaga', value: book.edition });
   if (book.authors && book.authors.length > 0)
     bookInfo.push({ title: 'Författare', value: book.authors.join(', ') });
   if (book.year) bookInfo.push({ title: 'Utgiven', value: book.year });
   if (book.isbn) bookInfo.push({ title: 'ISBN', value: book.isbn });
-  if (book.weight) bookInfo.push({ title: 'Vikt', value: book.weight });
+  if (book.weight) bookInfo.push({ title: 'Vikt', value: `${book.weight} g` });
   if (book.courseCodes && book.courseCodes.length > 0)
-    bookInfo.push({ title: 'Kurskoder', value: book.courseCodes.join(', ') });
+    bookInfo.push({ title: 'Kurskod(er)', value: book.courseCodes.join(', ') });
   return (
     <Stack direction={sm ? 'row' : 'column'}>
       <Box
