@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   IconButton,
   Button,
@@ -15,6 +15,7 @@ import { useAuth } from '../../hooks/FBAuthProvider';
 
 export default function NavAvatar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
@@ -81,11 +82,12 @@ export default function NavAvatar() {
 
       {/* LOGIN BUTTON */}
       <Button
-        component={Link}
-        to="/login"
         color="primary"
         variant="contained"
         size="large"
+        onClick={() =>
+          navigate('/login', { replace: true, state: { from: location } })
+        }
       >
         Logga in
       </Button>
