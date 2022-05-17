@@ -17,14 +17,15 @@ import AdService from '../../services/AdService';
 import { NewAdvert, AdStatus } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 // eslint-disable-next-line import/no-named-as-default
-import SearchForBookWindowCard from './wizard/SearchForBookWindowCard';
-import CheckInformationWindow from './wizard/CheckInformationWIndow';
-import ConditionCheckWindow from './wizard/ConditionCheckWindow';
-import SetPriceWindow from './wizard/SetPriceWindow';
+
 import { BookCondition } from '../../config/BookCondition';
 import ConfirmationModal from '../../components/ConfirmationModal';
 import InformationTextLine from '../../components/InformationTextLine';
 import CremonaService from '../../services/CremonaService';
+import CheckInformationWindow from './wizard/CheckInformationWIndow';
+import ConditionCheckWindow from './wizard/ConditionCheckWindow';
+import SearchForBookWindowCard from './wizard/SearchForBookWindowCard';
+import SetPriceWindow from './wizard/SetPriceWindow';
 
 const steps = [
   'Hitta din bok',
@@ -64,8 +65,6 @@ export default function SellingPage() {
 
   let { uid } = useParams();
   if (!uid) uid = '';
-
-  console.log('hej');
 
   const uidInt = parseInt(uid, 10);
   useEffect(() => {
