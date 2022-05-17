@@ -45,13 +45,13 @@ export default function BookInformation({
         <InformationTextLine textBold fontSize={20}>
           {name ?? (book?.name?.toString() ? book.name.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="Year:">
+        <InformationTextLine textBold label="Year:" disableWhenEmpty>
           {year ?? (book?.year?.toString() ? book.year.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="ISBN-Number:">
+        <InformationTextLine textBold label="ISBN-Number:" disableWhenEmpty>
           {isbn ?? (book?.isbn?.toString() ? book.isbn.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="Author:">
+        <InformationTextLine textBold label="Author:" disableWhenEmpty>
           {authors?.toString() ?? book?.authors?.toString() ?? ''}
         </InformationTextLine>
       </Box>

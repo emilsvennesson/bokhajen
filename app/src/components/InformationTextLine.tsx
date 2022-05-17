@@ -7,6 +7,7 @@ interface IInformationTextLineProps {
   fontSize?: number;
   labelBold?: boolean;
   textBold?: boolean;
+  disableWhenEmpty?: boolean;
 }
 
 /**
@@ -24,7 +25,14 @@ export default function InformationTextLine({
   fontSize = 17,
   labelBold = false,
   textBold = false,
+  disableWhenEmpty = false,
 }: IInformationTextLineProps) {
+  if (disableWhenEmpty) {
+    if (!children || children === '') {
+      return null;
+    }
+  }
+
   /**
    * This formatts the label so that it will be displayed correctly
    * @param text the label that will be formatted
