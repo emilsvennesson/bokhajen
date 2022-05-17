@@ -29,7 +29,7 @@ export default function BookInformation({
   authors,
 }: BookInformationProps) {
   return (
-    <Stack padding="20px" flexDirection="row" overflow="hidden" flexWrap="wrap">
+    <Stack padding="10px" flexDirection="row" overflow="hidden" flexWrap="wrap">
       {/* Cover */}
       <Box component="div" height={200} width={150}>
         <Box
@@ -41,7 +41,6 @@ export default function BookInformation({
           maxWidth={150}
         />
       </Box>
-
       <Box display="flex" flexDirection="column">
         <InformationTextLine textBold fontSize={20}>
           {name ?? (book?.name?.toString() ? book.name.toString() : '')}

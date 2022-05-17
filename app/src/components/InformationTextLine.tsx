@@ -81,10 +81,11 @@ export default function InformationTextLine({
       flexDirection="row"
       marginLeft={1}
       minWidth="200px"
+      maxWidth="300px"
       flexWrap="wrap"
     >
-      <Box flexShrink={2}>{formatLabel(label)}</Box>
-      <Box flexGrow={4} display="flex" justifyContent="left">
+      <Box flexShrink={1}>{formatLabel(label)}</Box>
+      <Box flexGrow={1} display="flex" justifyContent="left">
         {formatText(children)}
       </Box>
     </Box>

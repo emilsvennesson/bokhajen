@@ -63,7 +63,7 @@ export default function SetPriceWindow({
               size="large"
               disabled={!active}
             >
-              Fortsätt
+              Publisera
             </Button>
           </Box>
         </Stack>

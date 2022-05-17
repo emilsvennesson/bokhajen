@@ -19,8 +19,7 @@ import { useAuth } from '../../hooks/FBAuthProvider';
 // eslint-disable-next-line import/no-named-as-default
 
 import { BookCondition } from '../../config/BookCondition';
-import ConfirmationModal from '../../components/ConfirmationModal';
-import InformationTextLine from '../../components/InformationTextLine';
+
 import CremonaService from '../../services/CremonaService';
 import CheckInformationWindow from './wizard/CheckInformationWIndow';
 import ConditionCheckWindow from './wizard/ConditionCheckWindow';
@@ -55,7 +54,6 @@ export default function SellingPage() {
     open: false,
     message: '',
   });
-  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
   const [activeStep, setActiveStep] = useState<number>(0);
   const [siteLoading, setSiteLoading] = useState(false);
@@ -127,10 +125,6 @@ export default function SellingPage() {
       displayError('Price is not set');
       return;
     }
-    if (!confirmationModalOpen) {
-      setConfirmationModalOpen(true);
-      return;
-    }
 
     const ad: NewAdvert = {
       userUid: user.uid,
@@ -152,29 +146,6 @@ export default function SellingPage() {
 
   return (
     <Box paddingTop={2}>
-      <ConfirmationModal
-        open={confirmationModalOpen}
-        title="Dubbelkoll"
-        onAccept={handleDone}
-        onCancel={() => setConfirmationModalOpen(false)}
-        acceptButtonText="Publisera"
-        cancelButtonText="Avbryt"
-      >
-        <Stack justifyContent="left" alignItems="left" spacing={1} padding={2}>
-          <InformationTextLine label="Book:" labelBold>
-            {book?.name ?? 'name'}
-          </InformationTextLine>
-          <InformationTextLine label="Tillstånd:" labelBold>
-            {bookCondition}
-          </InformationTextLine>
-          <InformationTextLine label="Beskrivning:" labelBold>
-            {description ?? 'kul grej'}
-          </InformationTextLine>
-          <InformationTextLine label="Pris:" labelBold>
-            {`${bookPrice} kr`}
-          </InformationTextLine>
-        </Stack>
-      </ConfirmationModal>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
