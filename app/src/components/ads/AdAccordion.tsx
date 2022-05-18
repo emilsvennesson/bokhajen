@@ -122,11 +122,27 @@ export default function AdAccordion({ ad, onChangesSaved, onAdDelete }: Props) {
         <AccordionDetails>
           <Stack direction="column">
             <Box sx={{ display: 'flex' }}>
-              <Stack direction="column">
-                <Stack direction="row">
-                  <MenuBookTwoToneIcon sx={{ marginRight: 1 }} />
-                  <Typography>{ad.condition}</Typography>
-                </Stack>
+              <Stack direction="column" width="100%">
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                  }}
+                >
+                  <Stack direction="row">
+                    <MenuBookTwoToneIcon sx={{ marginRight: 1 }} />
+                    <Typography>{ad.condition}</Typography>
+                  </Stack>
+                  <Typography variant="body2">
+                    {ad.modifiedAt
+                      ? `Uppdaterad ${
+                          ad.modifiedAt.toISOString().split('T')[0]
+                        }`
+                      : `Skapad ${ad.createdAt.toISOString().split('T')[0]}`}
+                  </Typography>
+                </Box>
+
                 <Stack direction="row" sx={{ marginTop: 1 }}>
                   <ChatBubbleTwoToneIcon sx={{ marginRight: 1 }} />
                   <Typography>{ad.conditionDescription}</Typography>
