@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography, useMediaQuery } from '@mui/material';
 import { Book } from 'cremona';
+import { Link } from 'react-router-dom';
 
 interface Props {
   book: Book;
@@ -55,6 +56,8 @@ export default function BookDetailViewDescription({ book }: Props) {
             </Stack>
 
             <Button
+              component={Link}
+              to={`/sell/${book.uid}`}
               variant="contained"
               sx={{ width: '200px', marginTop: '15px' }}
             >
