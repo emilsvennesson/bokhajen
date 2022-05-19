@@ -6,6 +6,7 @@ import InvalidPage from './pages/InvalidPage';
 import Login from './pages/login/Login';
 import SellingPage from './pages/SellingPage/SellingPage';
 import SignUp from './pages/signup/SignUp';
+import RequireAuth from './RequireAuth';
 
 export default function RoutesConfig() {
   return (
@@ -13,9 +14,32 @@ export default function RoutesConfig() {
       <Route path="/" element={<Home />} />
       <Route path="/article" element={<Article />} />
       <Route path="books/:uid" element={<BookDetailView />} />
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<SignUp />} />
-      <Route path="sell" element={<SellingPage />} />
+      <Route
+        path="login"
+        element={
+          <RequireAuth loggedIn={false}>
+            <Login />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="signup"
+        element={
+          <RequireAuth loggedIn={false}>
+            <SignUp />
+          </RequireAuth>
+        }
+      />
+
+      <Route
+        path="sell"
+        element={
+          <RequireAuth to="/login">
+            <SellingPage />
+          </RequireAuth>
+        }
+      />
+
       <Route path="*" element={<InvalidPage />} />
     </Routes>
   );

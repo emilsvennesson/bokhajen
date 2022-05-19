@@ -1,5 +1,5 @@
 import { Container, Box } from '@mui/material';
-import { Book, CremonaClient } from 'cremona';
+import { Book } from 'cremona';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -7,13 +7,12 @@ import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 import InvalidPage from '../InvalidPage';
 import BookDetailViewAds from './BookDetailViewAds';
 import BookDetailViewDescription from './BookDetailViewDescription';
-
-const client = new CremonaClient();
+import CremonaService from '../../services/CremonaService';
 
 export default function BookDetailView() {
   const [book, setBook] = useState<Book | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
-  const lg = useMediaQuery('(min-width:1300px)');
+  const lg = useMediaQuery('(min-width:1000px)');
 
   let { uid } = useParams();
   if (!uid) uid = ''; // this is sus, but it'll do
@@ -22,16 +21,14 @@ export default function BookDetailView() {
   useEffect(() => {
     const getBook = async () => {
       setLoading(true);
-      let cBooks: Book[] = [];
+      let cBook: Book;
       try {
-        cBooks = await client.getBook(uidInt);
+        cBook = await CremonaService.getBook(uidInt);
+        setBook(cBook);
       } catch (e) {
         // do some cringe
       }
-      if (cBooks[0]) {
-        // do some cringe
-        setBook(cBooks[0]);
-      }
+
       setLoading(false);
     };
     getBook();

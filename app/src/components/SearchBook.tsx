@@ -1,7 +1,8 @@
 import React from 'react';
 import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 
-import { Book, CremonaClient } from 'cremona';
+import { Book } from 'cremona';
+import CremonaService from '../services/CremonaService';
 
 interface SearchBookProps {
   bookSearchHandler: Function;
@@ -29,8 +30,7 @@ export default function SearchBook({
     }
 
     (async () => {
-      const client = new CremonaClient();
-      const cremonaBooks = await client.getBooks();
+      const cremonaBooks = await CremonaService.getBooks();
 
       if (active) {
         setOptions([...cremonaBooks]);
