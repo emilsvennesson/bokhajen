@@ -1,11 +1,12 @@
 /* eslint-disable react/require-default-props */
-import { Box, CardActionArea, Skeleton, Typography } from '@mui/material';
+import { Box, CardActionArea, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { Book } from 'cremona';
 import { Link } from 'react-router-dom';
 import { mainTheme } from '../../theme';
+import BookSkeletonCard from './BookSkeletonCard';
 
 const HEIGHT = 300;
 const WIDTH = 230;
@@ -15,11 +16,7 @@ interface CardProps {
 
 export default function BookCard({ book }: CardProps) {
   if (!book) {
-    return (
-      <Card sx={{ maxWidth: WIDTH, maxHeight: HEIGHT, minHeight: HEIGHT }}>
-        <Skeleton variant="rectangular" width={WIDTH} height={HEIGHT} />
-      </Card>
-    );
+    return <BookSkeletonCard />;
   }
   return (
     <Card sx={{ maxWidth: WIDTH, maxHeight: HEIGHT, minHeight: HEIGHT }}>
