@@ -9,6 +9,7 @@ import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/500.css';
 import '@fontsource/nunito/700.css';
 import RoutesConfig from './RoutesConfig';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <div className="App">
           <NavigationBar />
           <RoutesConfig />
+          <Footer />
         </div>
       </ThemeProvider>
     </FBAuthProvider>
