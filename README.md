@@ -53,11 +53,22 @@ Head to http://localhost:3000 to view it in the browser.
 
 [to be added at a later stage]
 
-## License
+## Contributors
 
-[MIT stuff here?]
+- [Johan Blickhammar](https://github.com/JohanBlickhammar)
+- [Hampus Edeland (Scrum Master)](https://github.com/hampusedeland)
+- [Elias Falk](https://github.com/EliasFalk)
+- [To Le](https://github.com/tole97)
+- [Daniel Rygaard](https://github.com/Danryg)
+- [Pouya Shirin](https://github.com/Kexon)
+- [Albin Sundström](https://github.com/sundstromalbin)
+- [Emil Svensson](https://github.com/emilsvennesson)
 
 ## Links
 
 - [Scrumboard](https://trello.com/b/S5gYZGke/scrumboard)
 - [STORE by Chalmers Studentkår](https://www.chalmersstore.se)
+
+## License
+
+This project is licensed under the **The MIT License**. Please see the [LICENSE](LICENSE) file for details.
