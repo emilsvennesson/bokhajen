@@ -47,11 +47,11 @@ export function FBAuthProvider({ children }: Props) {
   const [loading, setLoading] = React.useState(true);
 
   const signin = async (email: string, password: string) => {
-    setLoading(true);
     try {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCred.user);
     } catch (e) {
+      setLoading(false);
       throw e as Error;
     }
     setLoading(false);
@@ -63,7 +63,6 @@ export function FBAuthProvider({ children }: Props) {
     firstName: string,
     lastName: string,
   ) => {
-    setLoading(true);
     try {
       const { user: usr } = await createUserWithEmailAndPassword(
         auth,
