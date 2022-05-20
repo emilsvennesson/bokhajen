@@ -137,7 +137,7 @@ export default function SellingPage() {
 
     AdService.publishAd(ad)
       .then(() => {
-        navigate('/', { replace: true });
+        navigate('/account/ads', { replace: true });
       })
       .catch((res) => {
         displayError(`Error:${res.data.error}`);
