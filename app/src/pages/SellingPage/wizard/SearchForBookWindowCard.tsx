@@ -42,6 +42,7 @@ export default function SearchForBookWindowCard({
           setBook(book);
           setSearchModalOpen(false);
           setSearchQuery(book.name);
+          handleNext();
         }}
       />
       <Paper elevation={5}>
