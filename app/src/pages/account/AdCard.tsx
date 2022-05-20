@@ -64,7 +64,9 @@ export default function AdCard({ ad, onChange }: Props) {
                 }}
               >
                 <Box>
-                  <Typography>2022-05-13</Typography>
+                  <Typography>
+                    {ad.createdAt.toISOString().split('T')[0]}
+                  </Typography>
                 </Box>
                 <Box>
                   {ad && (
