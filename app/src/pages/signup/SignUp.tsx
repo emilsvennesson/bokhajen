@@ -52,6 +52,7 @@ export default function SignUp() {
       await auth.signup(email, password, firstName, lastName);
     } catch (err) {
       setError((err as Error).message);
+      setOpen(true);
       return;
     }
     navigate(from, { replace: true });

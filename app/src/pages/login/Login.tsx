@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -13,6 +14,7 @@ import {
   InputLabel,
   Link,
   OutlinedInput,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material';
@@ -30,8 +32,22 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  // TODO: do something with error, ideally match each error to each input field. Current solution with snackbar kind of trash.
+  const [error, setError] = useState('');
+  const [open, setOpen] = useState(true);
 
   const from = (location.state as any)?.from?.pathname || '/';
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    setError('');
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,9 +56,10 @@ export default function Login() {
       .then(() => {
         navigate(from, { replace: true });
       })
-      .catch((error) => {
-        // TODO: handle error
-        console.error(error);
+      .catch((err) => {
+        setError((err as Error).message);
+        setOpen(true);
+        console.error(err);
       });
   };
 
@@ -54,6 +71,18 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
+      {error && (
+        <Snackbar
+          open={open}
+          autoHideDuration={15000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {error}
+          </Alert>
+        </Snackbar>
+      )}
       <CssBaseline />
       <Box
         sx={{
