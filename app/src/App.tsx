@@ -10,6 +10,7 @@ import '@fontsource/nunito/500.css';
 import '@fontsource/nunito/700.css';
 import RoutesConfig from './RoutesConfig';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <NavigationBar />
           <RoutesConfig />
           <Footer />
+          <ScrollToTop />
         </div>
       </ThemeProvider>
     </FBAuthProvider>
