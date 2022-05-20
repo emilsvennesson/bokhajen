@@ -91,7 +91,7 @@ function NavigationBar() {
       />
 
       <Box component="nav" maxWidth="100%" sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ width: '100%' }}>
+        <AppBar position="fixed" sx={{ width: '100%' }}>
           <Container maxWidth="xl" sx={{ width: '100%' }} disableGutters>
             <Toolbar disableGutters>
               {/* Pre-MUI we used NavLink to navigate, e.g <NavLink to='/'> link </NavLink>
