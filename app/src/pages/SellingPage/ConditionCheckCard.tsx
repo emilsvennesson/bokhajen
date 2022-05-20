@@ -34,7 +34,7 @@ export default function ConditionCheckCard({
   active,
 }: ConditionCheckCardProps) {
   const [condition, setCondition] = React.useState(BookCondition.GOOD);
-  const [describtion, setDescribtion] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const handleConditionChange = (event: SelectChangeEvent) => {
     setCondition(event.target.value as any);
@@ -43,11 +43,11 @@ export default function ConditionCheckCard({
   const handleDescribtionChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setDescribtion((event.target as HTMLInputElement).value);
+    setDescription((event.target as HTMLInputElement).value);
   };
 
   const handleContinue = () => {
-    nextButtonHandler(condition, describtion);
+    nextButtonHandler(condition, description);
   };
   return (
     <Stack
@@ -93,9 +93,9 @@ export default function ConditionCheckCard({
         fullWidth
         multiline
         rows={4}
-        value={describtion}
+        value={description}
         onChange={handleDescribtionChange}
-        label="Beskriv kvaliten på boken"
+        label="Beskriv kvalitén på boken"
       />
       <Button
         variant="contained"

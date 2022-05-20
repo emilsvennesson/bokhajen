@@ -63,7 +63,7 @@ export default function SetPriceWindow({
               size="large"
               disabled={!active}
             >
-              Publisera
+              Publicera
             </Button>
           </Box>
         </Stack>
