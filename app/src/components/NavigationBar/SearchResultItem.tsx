@@ -12,6 +12,7 @@ import { Book } from 'cremona';
 import React, { useEffect, useState } from 'react';
 import AdService from '../../services/AdService';
 import { AdStatus } from '../../services/Advert';
+import BasicBookInformation from '../BasicBookInformation';
 
 interface Props {
   book?: Book;

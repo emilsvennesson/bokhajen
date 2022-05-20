@@ -1,4 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import AccountAds from './pages/account/AccountAds';
+import AccountDetails from './pages/account/AccountDetails';
+import AccountProfile from './pages/account/AccountProfile';
 import Article from './pages/Article';
 import BookDetailView from './pages/bookdetailview/BookDetailView';
 import Home from './pages/home/Home';
@@ -13,9 +16,9 @@ export default function RoutesConfig() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/article" element={<Article />} />
-      <Route path="books/:uid" element={<BookDetailView />} />
+      <Route path="/books/:uid" element={<BookDetailView />} />
       <Route
-        path="login"
+        path="/login"
         element={
           <RequireAuth loggedIn={false}>
             <Login />
@@ -23,7 +26,7 @@ export default function RoutesConfig() {
         }
       />
       <Route
-        path="signup"
+        path="/signup"
         element={
           <RequireAuth loggedIn={false}>
             <SignUp />
@@ -32,13 +35,26 @@ export default function RoutesConfig() {
       />
 
       <Route
-        path="sell"
+        path="/sell"
         element={
           <RequireAuth to="/login">
             <SellingPage />
           </RequireAuth>
         }
       />
+
+      <Route
+        path="/account"
+        element={
+          <RequireAuth to="/login">
+            <AccountProfile />
+          </RequireAuth>
+        }
+      >
+        <Route path="/account" element={<Navigate to="details" />} />
+        <Route path="details" element={<AccountDetails />} />
+        <Route path="ads" element={<AccountAds />} />
+      </Route>
 
       <Route path="*" element={<InvalidPage />} />
     </Routes>
