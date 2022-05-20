@@ -32,8 +32,9 @@ export default function NavAvatar() {
   };
   const auth = useAuth();
 
-  const goToAccount = () => {
-    navigate('/account', { replace: true });
+  const goToLink = (link: string) => {
+    navigate(`/${link}`, { replace: true });
+    handleCloseUserMenu();
   };
 
   const logoutUser = () => {
@@ -79,8 +80,21 @@ export default function NavAvatar() {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          <MenuItem key="profile" onClick={goToAccount}>
+          <MenuItem
+            key="profile"
+            onClick={() => {
+              goToLink('account');
+            }}
+          >
             <Typography textAlign="center">Profil</Typography>
+          </MenuItem>
+          <MenuItem
+            key="ads"
+            onClick={() => {
+              goToLink('account/ads');
+            }}
+          >
+            <Typography textAlign="center">Mina annonser</Typography>
           </MenuItem>
           <MenuItem key="logoutUser" onClick={logoutUser}>
             <Typography textAlign="center">Logga ut</Typography>
