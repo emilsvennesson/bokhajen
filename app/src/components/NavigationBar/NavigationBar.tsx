@@ -17,6 +17,8 @@ import SearchModal from './SearchModal';
 import NavAvatar from './NavAvatar';
 import bokWhite from '../../assets/images/bokWhite.png';
 
+const HEIGHT = '75px';
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -126,7 +128,7 @@ function NavigationBar() {
         }}
       >
         <Slide direction="down" in={show} mountOnEnter unmountOnExit>
-          <AppBar position="fixed" sx={{ width: '100%' }}>
+          <AppBar position="fixed" sx={{ width: '100%', height: HEIGHT }}>
             <Container maxWidth="xl" sx={{ width: '100%' }} disableGutters>
               <Toolbar disableGutters>
                 {/* Pre-MUI we used NavLink to navigate, e.g <NavLink to='/'> link </NavLink>
@@ -209,6 +211,7 @@ function NavigationBar() {
           </AppBar>
         </Slide>
       </Box>
+      <Box height={HEIGHT} />
     </>
   );
 }

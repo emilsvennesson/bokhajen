@@ -11,7 +11,7 @@ export default function HomeBanner() {
       justifyContent="center"
       alignItems="center"
     >
-      <Grid container sx={{ marginTop: '110px' }}>
+      <Grid container sx={{ marginTop: '50px' }}>
         <Grid item xs={12} md={6}>
           <Box
             width="100%"
