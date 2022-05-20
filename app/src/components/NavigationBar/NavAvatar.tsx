@@ -86,7 +86,7 @@ export default function NavAvatar() {
               goToLink('account');
             }}
           >
-            <Typography textAlign="center">Profil</Typography>
+            <Typography textAlign="center">Mina uppgifter</Typography>
           </MenuItem>
           <MenuItem
             key="ads"
@@ -94,7 +94,7 @@ export default function NavAvatar() {
               goToLink('account/ads');
             }}
           >
-            <Typography textAlign="center">Mina annonser</Typography>
+            <Typography textAlign="center">Annonser</Typography>
           </MenuItem>
           <MenuItem key="logoutUser" onClick={logoutUser}>
             <Typography textAlign="center">Logga ut</Typography>
