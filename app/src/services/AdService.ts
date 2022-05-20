@@ -11,6 +11,7 @@ import {
   getDoc,
   QueryDocumentSnapshot,
   DocumentData,
+  Timestamp,
 } from 'firebase/firestore';
 import db from '../firebase/db';
 import ServiceSuccessResponse from './ServiceSuccessResponse';
@@ -28,6 +29,7 @@ export default class AdService {
   static async publishAd(ad: NewAdvert): Promise<ServiceSuccessResponse> {
     const newAd: any = ad;
     newAd.user = doc(db, `users/${ad.userUid}`);
+    newAd.createdAt = Timestamp.now();
     delete newAd.userUid;
     try {
       await addDoc(collection(db, 'ads'), newAd);
@@ -78,8 +80,11 @@ export default class AdService {
       condition: adDoc.data().condition,
       conditionDescription: adDoc.data().conditionDescription,
       status: adDoc.data().status,
+      createdAt: adDoc.data().createdAt.toDate(),
     };
 
+    if (adDoc.data().modifiedAt)
+      ad.modifiedAt = adDoc.data().modifiedAt.toDate();
     return ad;
   }
 
@@ -98,7 +103,7 @@ export default class AdService {
     const docRef = doc(db, 'ads', adId);
 
     let res: ServiceSuccessResponse = { success: false };
-    await updateDoc(docRef, data)
+    await updateDoc(docRef, { ...data, modifiedAt: Timestamp.now() })
       .then(() => {
         res = { success: true };
       })
