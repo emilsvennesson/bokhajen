@@ -52,6 +52,7 @@ export function FBAuthProvider({ children }: Props) {
       const userCred = await signInWithEmailAndPassword(auth, email, password);
       setUser(userCred.user);
     } catch (e) {
+      setLoading(false);
       throw e as Error;
     }
     setLoading(false);
