@@ -15,8 +15,11 @@ export interface Advert {
   condition: BookCondition;
   conditionDescription: string;
   status: AdStatus;
+  createdAt: Date;
+  modifiedAt?: Date;
 }
 
-export interface NewAdvert extends Omit<Advert, 'user' | 'uid'> {
+export interface NewAdvert
+  extends Omit<Advert, 'user' | 'uid' | 'createdAt' | 'modifiedAt'> {
   userUid: string;
 }

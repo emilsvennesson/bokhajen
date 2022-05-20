@@ -137,7 +137,11 @@ function BookDetailViewAds({ bookUid }: Props) {
               Det finns inga annonser tillgängliga för den här boken.
             </Typography>
 
-            <Link component={RouterLink} to="/sell" variant="body1">
+            <Link
+              component={RouterLink}
+              to={`/sell/${bookUid}`}
+              variant="body1"
+            >
               Bli först med att sälja denna bok!
             </Link>
           </Box>
