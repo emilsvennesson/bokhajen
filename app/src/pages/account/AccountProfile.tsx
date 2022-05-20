@@ -8,6 +8,7 @@ export default function AccountProfile() {
       sx={{
         marginTop: '70px',
         /* backgroundColor: 'gray', */
+        height: '80vh',
         direction: 'row',
         display: 'flex',
       }}
