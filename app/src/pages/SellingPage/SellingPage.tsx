@@ -21,10 +21,11 @@ import { useAuth } from '../../hooks/FBAuthProvider';
 import { BookCondition } from '../../config/BookCondition';
 
 import CremonaService from '../../services/CremonaService';
-import CheckInformationWindow from './wizard/CheckInformationWIndow';
-import ConditionCheckWindow from './wizard/ConditionCheckWindow';
-import SearchForBookWindowCard from './wizard/SearchForBookWindowCard';
-import SetPriceWindow from './wizard/SetPriceWindow';
+import CheckInformationWindow from './wizard2/CheckInformationWIndow';
+import ConditionCheckWindow from './wizard2/ConditionCheckWindow';
+import SearchForBookWindowCard from './wizard2/SearchForBookWindowCard';
+import SetPriceWindow from './wizard2/SetPriceWindow';
+import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 const steps = [
   'Hitta din bok',
