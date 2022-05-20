@@ -1,5 +1,6 @@
 import './App.css';
 import { ThemeProvider } from '@emotion/react';
+import { Box } from '@mui/material';
 import NavigationBar from './components/NavigationBar/NavigationBar';
 import { mainTheme } from './theme';
 import { FBAuthProvider } from './hooks/FBAuthProvider';
@@ -17,7 +18,9 @@ function App() {
       <ThemeProvider theme={mainTheme}>
         <div className="App">
           <NavigationBar />
-          <RoutesConfig />
+          <Box minHeight="100vh">
+            <RoutesConfig />
+          </Box>
           <Footer />
         </div>
       </ThemeProvider>
