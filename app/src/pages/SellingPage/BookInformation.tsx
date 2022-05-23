@@ -1,6 +1,6 @@
 import React from 'react';
 import { Book } from 'cremona/dist/Book';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import InformationTextLine from '../../components/InformationTextLine';
 
 interface BookInformationProps {
@@ -29,7 +29,7 @@ export default function BookInformation({
   authors,
 }: BookInformationProps) {
   return (
-    <Box display="flex" padding="40px" flexDirection="row" overflow="hidden">
+    <Stack padding="10px" flexDirection="row" overflow="hidden" flexWrap="wrap">
       {/* Cover */}
       <Box component="div" height={200} width={150}>
         <Box
@@ -41,21 +41,20 @@ export default function BookInformation({
           maxWidth={150}
         />
       </Box>
-
       <Box display="flex" flexDirection="column">
         <InformationTextLine textBold fontSize={20}>
           {name ?? (book?.name?.toString() ? book.name.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="Year:">
+        <InformationTextLine textBold label="Year:" disableWhenEmpty>
           {year ?? (book?.year?.toString() ? book.year.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="ISBN-Number:">
+        <InformationTextLine textBold label="ISBN-Number:" disableWhenEmpty>
           {isbn ?? (book?.isbn?.toString() ? book.isbn.toString() : '')}
         </InformationTextLine>
-        <InformationTextLine textBold label="Author:">
+        <InformationTextLine textBold label="Author:" disableWhenEmpty>
           {authors?.toString() ?? book?.authors?.toString() ?? ''}
         </InformationTextLine>
       </Box>
-    </Box>
+    </Stack>
   );
 }

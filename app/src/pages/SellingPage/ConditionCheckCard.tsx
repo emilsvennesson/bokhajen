@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
-import conditions from '../../config/Conditions';
+import { BookCondition } from '../../config/BookCondition';
 
 interface ConditionCheckCardProps {
   backButtonHandler: Function;
@@ -33,21 +33,21 @@ export default function ConditionCheckCard({
   disabled = false,
   active,
 }: ConditionCheckCardProps) {
-  const [condition, setCondition] = React.useState(conditions.good);
-  const [describtion, setDescribtion] = React.useState('');
+  const [condition, setCondition] = React.useState(BookCondition.GOOD);
+  const [description, setDescription] = React.useState('');
 
   const handleConditionChange = (event: SelectChangeEvent) => {
-    setCondition((event.target as HTMLInputElement).value);
+    setCondition(event.target.value as any);
   };
 
   const handleDescribtionChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setDescribtion((event.target as HTMLInputElement).value);
+    setDescription((event.target as HTMLInputElement).value);
   };
 
   const handleContinue = () => {
-    nextButtonHandler(condition, describtion);
+    nextButtonHandler(condition, description);
   };
   return (
     <Stack
@@ -57,7 +57,8 @@ export default function ConditionCheckCard({
       padding={2}
       borderRadius={2}
       spacing={2}
-      height="360px"
+      minHeight="360px"
+      minWidth="300px"
     >
       <Stack direction="row" width="100%" alignContent="left">
         <Button
@@ -80,9 +81,11 @@ export default function ConditionCheckCard({
           value={condition}
           onChange={handleConditionChange}
         >
-          <MenuItem value={conditions.torn}>Torn</MenuItem>
-          <MenuItem value={conditions.good}>Good</MenuItem>
-          <MenuItem value={conditions.new}>New</MenuItem>
+          <MenuItem value={BookCondition.BAD}>{BookCondition.BAD}</MenuItem>
+          <MenuItem value={BookCondition.GOOD}>{BookCondition.GOOD}</MenuItem>
+          <MenuItem value={BookCondition.EXCELLENT}>
+            {BookCondition.EXCELLENT}
+          </MenuItem>
         </Select>
       </FormControl>
       <TextField
@@ -90,10 +93,9 @@ export default function ConditionCheckCard({
         fullWidth
         multiline
         rows={4}
-        maxRows={4}
-        value={describtion}
+        value={description}
         onChange={handleDescribtionChange}
-        label="Beskriv kvaliten på boken"
+        label="Beskriv kvalitén på boken"
       />
       <Button
         variant="contained"

@@ -36,8 +36,7 @@ export default function CheckInformationCard({
       flexDirection="column"
       alignItems="center"
       padding={2}
-      flexGrow={2}
-      height="360px"
+      minHeight="360px"
     >
       <Stack direction="row" alignItems="left" width="100%">
         <Button
@@ -53,10 +52,12 @@ export default function CheckInformationCard({
           Är informationen korrekt?
         </Typography>
       </Stack>
-      <BookInformation book={book} />
+      <Box flexGrow={4}>
+        <BookInformation book={book} />
+      </Box>
       <Stack direction="row" spacing={2}>
         <Button
-          disabled={disabled}
+          disabled={disabled || true}
           variant="contained"
           size="large"
           onClick={() => editButtonHandler()}

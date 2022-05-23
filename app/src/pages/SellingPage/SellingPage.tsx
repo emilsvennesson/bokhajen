@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import {
   Box,
   Stack,
@@ -7,19 +8,24 @@ import {
   StepLabel,
   Snackbar,
   Alert,
+  Grid,
 } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BookInformationInput from './BookInformationInput';
 import AdService from '../../services/AdService';
 import { NewAdvert, AdStatus } from '../../services/Advert';
 import { useAuth } from '../../hooks/FBAuthProvider';
 // eslint-disable-next-line import/no-named-as-default
-import SearchForBookWindowCard from './Wizard/SearchForBookWindowCard';
-import CheckInformationWindow from './Wizard/CheckInformationWIndow';
-import ConditionCheckWindow from './Wizard/ConditionCheckWindow';
-import SetPriceWindow from './Wizard/SetPriceWindow';
+
 import { BookCondition } from '../../config/BookCondition';
+
+import CremonaService from '../../services/CremonaService';
+import CheckInformationWindow from './wizard/CheckInformationWIndow';
+import ConditionCheckWindow from './wizard/ConditionCheckWindow';
+import SearchForBookWindowCard from './wizard/SearchForBookWindowCard';
+import SetPriceWindow from './wizard/SetPriceWindow';
+import OverlayCircularProgress from '../../components/OverlayCircularProgress';
 
 const steps = [
   'Hitta din bok',
@@ -51,9 +57,39 @@ export default function SellingPage() {
   });
 
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [siteLoading, setSiteLoading] = useState(false);
 
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
+
+  let { uid } = useParams();
+  if (!uid) uid = '';
+
+  const uidInt = parseInt(uid, 10);
+  useEffect(() => {
+    if (!loading) {
+      if (uid) {
+        const getBook = async () => {
+          setSiteLoading(true);
+          let cBook: Book;
+          try {
+            cBook = await CremonaService.getBook(uidInt);
+            setBook(cBook);
+            if (activeStep < 1) setActiveStep(1);
+          } catch (e) {
+            // do some cringe
+          }
+
+          setSiteLoading(false);
+        };
+        getBook();
+      }
+    }
+  }, [user, uid, uidInt, navigate, loading, activeStep]);
+
+  if (loading && siteLoading) {
+    return <OverlayCircularProgress />;
+  }
 
   /**
    * This is called to back the stepper in the page
@@ -66,6 +102,9 @@ export default function SellingPage() {
    * This is called to next the stepper in the page
    */
   const handleBack = () => {
+    if (activeStep === 1 && uid) {
+      navigate('/sell', { replace: true });
+    }
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -83,7 +122,7 @@ export default function SellingPage() {
    */
   const handleDone = () => {
     if (!user || !book) return;
-    if (bookPrice === undefined) {
+    if (bookPrice === undefined || bookPrice === 0) {
       displayError('Price is not set');
       return;
     }
@@ -99,7 +138,7 @@ export default function SellingPage() {
 
     AdService.publishAd(ad)
       .then(() => {
-        navigate('/', { replace: true });
+        navigate('/account/ads', { replace: true });
       })
       .catch((res) => {
         displayError(`Error:${res.data.error}`);
@@ -107,7 +146,7 @@ export default function SellingPage() {
   };
 
   return (
-    <Box height="500px">
+    <Box paddingTop={2}>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={error.open}
@@ -120,13 +159,13 @@ export default function SellingPage() {
         </Alert>
       </Snackbar>
       <Stack
-        padding="2%"
-        paddingTop={1}
         direction="column"
-        spacing={4}
+        spacing={2}
         alignItems="center"
+        flexWrap="wrap"
+        marginBottom="200px"
       >
-        <Box bgcolor="white" padding={2} borderRadius={2} width="90vw">
+        <Box bgcolor="white" borderRadius={2} maxWidth="100%" width="90%">
           <Stepper activeStep={activeStep}>
             {steps.map((label) => {
               const stepProps: { completed?: boolean } = {};
@@ -140,44 +179,59 @@ export default function SellingPage() {
           </Stepper>
         </Box>
         {/** Wizard */}
-        <Stack direction="row" width="100%" spacing={1}>
-          {/** Search ISBN */}
-          <SearchForBookWindowCard
-            setBook={setBook}
-            handleNext={handleNext}
-            active={activeStep === 0}
-            canNext={book !== undefined}
-          />
+        <Grid
+          container
+          direction="row"
+          width="95%"
+          rowGap={1}
+          columnSpacing={1}
+          justifyContent="space-evenly"
+          margin={0}
+        >
+          <Grid minWidth="340px" item maxWidth="370px" flexGrow={1} xl={3}>
+            {/** Search ISBN */}
+            <SearchForBookWindowCard
+              setBook={setBook}
+              handleNext={handleNext}
+              active={activeStep === 0}
+              canNext={book !== undefined}
+            />
+          </Grid>
+
           {/** Check information */}
-          <CheckInformationWindow
-            book={book}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            setEdit={setEdit}
-            active={activeStep === 1}
-            show={!edit && activeStep > 0}
-          />
+          <Grid item maxWidth="650px" minWidth="280px" flexGrow={2} xl={5}>
+            <CheckInformationWindow
+              book={book}
+              handleBack={handleBack}
+              handleNext={handleNext}
+              setEdit={setEdit}
+              active={activeStep === 1}
+              show={!edit && activeStep > 0}
+            />
+          </Grid>
 
           {/** Set quality */}
-
-          <ConditionCheckWindow
-            handleNext={handleNext}
-            handleBack={handleBack}
-            show={activeStep > 1 && book != null}
-            setCondition={setCondition}
-            setDescription={setDescription}
-            active={activeStep === 2}
-          />
-        </Stack>
-
-        <SetPriceWindow
-          book={book}
-          handleBack={handleBack}
-          handleNext={handleDone}
-          setPrice={setPrice}
-          show={book != null && activeStep > 2}
-          active={activeStep === 3}
-        />
+          <Grid item maxWidth="350px" flexGrow={1} xl={3}>
+            <ConditionCheckWindow
+              handleNext={handleNext}
+              handleBack={handleBack}
+              show={activeStep > 1 && book != null}
+              setCondition={setCondition}
+              setDescription={setDescription}
+              active={activeStep === 2}
+            />
+          </Grid>
+          <Grid item maxWidth="600px" flexGrow={2}>
+            <SetPriceWindow
+              book={book}
+              handleBack={handleBack}
+              handleNext={handleDone}
+              setPrice={setPrice}
+              show={book != null && activeStep > 2}
+              active={activeStep === 3}
+            />
+          </Grid>
+        </Grid>
       </Stack>
       <BookInformationInput
         book={book}

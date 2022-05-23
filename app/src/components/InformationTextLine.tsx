@@ -7,6 +7,7 @@ interface IInformationTextLineProps {
   fontSize?: number;
   labelBold?: boolean;
   textBold?: boolean;
+  disableWhenEmpty?: boolean;
 }
 
 /**
@@ -24,7 +25,14 @@ export default function InformationTextLine({
   fontSize = 17,
   labelBold = false,
   textBold = false,
+  disableWhenEmpty = false,
 }: IInformationTextLineProps) {
+  if (disableWhenEmpty) {
+    if (!children || children === '') {
+      return null;
+    }
+  }
+
   /**
    * This formatts the label so that it will be displayed correctly
    * @param text the label that will be formatted
@@ -34,18 +42,19 @@ export default function InformationTextLine({
     if (text.length === 0) return <Typography />;
 
     if (labelBold) {
-      <Typography
-        width="50px"
-        fontSize={fontSize}
-        fontWeight="bold"
-        marginRight={1}
-        noWrap
-      >
-        {text}
-      </Typography>;
+      return (
+        <Typography
+          fontSize={fontSize}
+          fontWeight="bold"
+          marginRight={1}
+          noWrap
+        >
+          {text}
+        </Typography>
+      );
     }
     return (
-      <Typography width="200px" fontSize={fontSize} marginRight={1}>
+      <Typography fontSize={fontSize} marginRight={1} flexShrink={5} noWrap>
         {text}
       </Typography>
     );
@@ -64,6 +73,7 @@ export default function InformationTextLine({
           fontWeight="bold"
           width="350px"
           paragraph
+          flexShrink={5}
         >
           {text}
         </Typography>
@@ -74,9 +84,18 @@ export default function InformationTextLine({
   }
 
   return (
-    <Box display="flex" flexDirection="row" marginLeft={1} width="340px">
-      {formatLabel(label)}
-      {formatText(children)}
+    <Box
+      display="flex"
+      flexDirection="row"
+      marginLeft={1}
+      minWidth="200px"
+      maxWidth="300px"
+      flexWrap="wrap"
+    >
+      <Box flexShrink={1}>{formatLabel(label)}</Box>
+      <Box flexGrow={1} display="flex" justifyContent="left">
+        {formatText(children)}
+      </Box>
     </Box>
   );
 }
