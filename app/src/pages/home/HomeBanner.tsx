@@ -40,7 +40,7 @@ export default function HomeBanner() {
                 pengar på nolltid.
               </Typography>
               <Grid container display="flex">
-                <Grid item xs={12} sm={6} sx={{ padding: 1 }}>
+                {/*                 <Grid item xs={12} sm={6} sx={{ padding: 1 }}>
                   <Button
                     component={Link}
                     to="/books"
@@ -51,8 +51,8 @@ export default function HomeBanner() {
                   >
                     Köp böcker
                   </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} sx={{ padding: 1 }}>
+                </Grid> */}
+                <Grid item xs={12} sm={12} sx={{ padding: 1 }}>
                   <Button
                     component={Link}
                     to="/sell"
