@@ -14,6 +14,7 @@ import { blueGrey } from '@mui/material/colors';
 export default function Footer() {
   return (
     <Box
+      component="footer"
       sx={{
         bottom: 0,
         width: '100%',
