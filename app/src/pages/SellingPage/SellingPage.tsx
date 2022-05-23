@@ -11,7 +11,7 @@ import {
   Grid,
 } from '@mui/material';
 import { Book } from 'cremona/dist/Book';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import BookInformationInput from './BookInformationInput';
 import AdService from '../../services/AdService';
 import { NewAdvert, AdStatus } from '../../services/Advert';
@@ -62,7 +62,8 @@ export default function SellingPage() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
-  let { uid } = useParams();
+  const [searchParams] = useSearchParams();
+  let uid = searchParams.get('book');
   if (!uid) uid = '';
 
   const uidInt = parseInt(uid, 10);

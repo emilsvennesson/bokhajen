@@ -139,7 +139,7 @@ function BookDetailViewAds({ bookUid }: Props) {
 
             <Link
               component={RouterLink}
-              to={`/sell/${bookUid}`}
+              to={`/sell?book=${bookUid}`}
               variant="body1"
             >
               Bli först med att sälja denna bok!

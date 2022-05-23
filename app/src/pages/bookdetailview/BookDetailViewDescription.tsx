@@ -57,7 +57,7 @@ export default function BookDetailViewDescription({ book }: Props) {
 
             <Button
               component={Link}
-              to={`/sell/${book.uid}`}
+              to={`/sell/?book=${book.uid}`}
               variant="contained"
               sx={{ width: '200px', marginTop: '15px' }}
             >
