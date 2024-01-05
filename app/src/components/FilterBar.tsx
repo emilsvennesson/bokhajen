@@ -48,10 +48,6 @@ function FilterBar({
           Sort by
         </Typography>
       </Grid>
-      {/* <div className='filterBarSmallTitleContainer'>
-            <p className="filterBarSmallTitle">Sort by</p>
-        </div> */}
-
       {/* Buttons (This will have own made button components later) */}
       <Grid
         item
